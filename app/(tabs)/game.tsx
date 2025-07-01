@@ -43,7 +43,6 @@ export default function GameScreen() {
           {/* Game Grid */}
           <GameGrid />
         
-          </View>
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>
