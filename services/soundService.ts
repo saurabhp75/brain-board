@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 export class SoundService {
   private static correctSound: HTMLAudioElement | null = null;
   private static errorSound: HTMLAudioElement | null = null;
+  private static victorySound: HTMLAudioElement | null = null;
   private static isInitialized = false;
 
   static initialize() {
@@ -12,14 +13,17 @@ export class SoundService {
       // Create audio elements for web
       this.correctSound = new Audio();
       this.errorSound = new Audio();
+      this.victorySound = new Audio();
 
-      // Generate correct sound (happy beep)
+      // Generate sounds
       this.correctSound.src = this.generateCorrectSound();
       this.errorSound.src = this.generateErrorSound();
+      this.victorySound.src = this.generateVictorySound();
 
       // Preload the sounds
       this.correctSound.load();
       this.errorSound.load();
+      this.victorySound.load();
 
       this.isInitialized = true;
     } catch (error) {
@@ -30,10 +34,6 @@ export class SoundService {
   private static generateCorrectSound(): string {
     // Generate a happy success sound using Web Audio API
     const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    // Create a buffer for the sound
     const sampleRate = audioContext.sampleRate;
     const duration = 0.3; // 300ms
     const buffer = audioContext.createBuffer(1, sampleRate * duration, sampleRate);
@@ -59,13 +59,6 @@ export class SoundService {
       const envelope = Math.sin(Math.PI * t / duration);
       data[i] = sample * envelope * 0.3;
     }
-
-    // Convert buffer to data URL
-    const offlineContext = new OfflineAudioContext(1, buffer.length, sampleRate);
-    const source = offlineContext.createBufferSource();
-    source.buffer = buffer;
-    source.connect(offlineContext.destination);
-    source.start();
 
     return this.bufferToDataURL(buffer, sampleRate);
   }
@@ -97,6 +90,69 @@ export class SoundService {
       // Apply envelope with longer decay
       const envelope = Math.exp(-t * 3) * Math.sin(Math.PI * t / duration);
       data[i] = sample * envelope * 0.3;
+    }
+
+    return this.bufferToDataURL(buffer, sampleRate);
+  }
+
+  private static generateVictorySound(): string {
+    // Generate an epic victory fanfare sound
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const sampleRate = audioContext.sampleRate;
+    const duration = 2.0; // 2 seconds for a proper celebration
+    const buffer = audioContext.createBuffer(1, sampleRate * duration, sampleRate);
+    const data = buffer.getChannelData(0);
+
+    // Victory fanfare sequence - classic "ta-da!" progression
+    const notes = [
+      { freq: 523.25, start: 0.0, end: 0.3 },   // C5
+      { freq: 659.25, start: 0.1, end: 0.4 },   // E5
+      { freq: 783.99, start: 0.2, end: 0.5 },   // G5
+      { freq: 1046.5, start: 0.3, end: 0.8 },   // C6 (octave)
+      { freq: 1318.5, start: 0.5, end: 1.2 },   // E6
+      { freq: 1568.0, start: 0.7, end: 1.5 },   // G6
+      { freq: 2093.0, start: 0.9, end: 2.0 },   // C7 (final high note)
+    ];
+
+    for (let i = 0; i < buffer.length; i++) {
+      const t = i / sampleRate;
+      let sample = 0;
+
+      // Layer multiple notes for rich harmony
+      for (const note of notes) {
+        if (t >= note.start && t <= note.end) {
+          const noteProgress = (t - note.start) / (note.end - note.start);
+          
+          // Main tone
+          const mainTone = Math.sin(2 * Math.PI * note.freq * t);
+          
+          // Add harmonics for richness
+          const harmonic2 = Math.sin(2 * Math.PI * note.freq * 2 * t) * 0.3;
+          const harmonic3 = Math.sin(2 * Math.PI * note.freq * 3 * t) * 0.1;
+          
+          // Create envelope for each note
+          let envelope;
+          if (noteProgress < 0.1) {
+            // Attack
+            envelope = noteProgress / 0.1;
+          } else if (noteProgress < 0.7) {
+            // Sustain
+            envelope = 1.0;
+          } else {
+            // Release
+            envelope = (1.0 - noteProgress) / 0.3;
+          }
+          
+          // Add some tremolo for excitement
+          const tremolo = 1 + 0.1 * Math.sin(2 * Math.PI * 6 * t);
+          
+          sample += (mainTone + harmonic2 + harmonic3) * envelope * tremolo * 0.15;
+        }
+      }
+
+      // Apply master envelope for the entire sound
+      const masterEnvelope = Math.min(1, Math.exp(-t * 0.5));
+      data[i] = Math.max(-1, Math.min(1, sample * masterEnvelope));
     }
 
     return this.bufferToDataURL(buffer, sampleRate);
@@ -170,6 +226,20 @@ export class SoundService {
     }
   }
 
+  static playVictorySound() {
+    if (Platform.OS !== 'web') return;
+
+    try {
+      if (this.victorySound) {
+        this.victorySound.currentTime = 0;
+        this.victorySound.volume = 0.6; // Slightly louder for celebration
+        this.victorySound.play().catch(e => console.warn('Failed to play victory sound:', e));
+      }
+    } catch (error) {
+      console.warn('Error playing victory sound:', error);
+    }
+  }
+
   static cleanup() {
     if (Platform.OS !== 'web') return;
 
@@ -180,8 +250,12 @@ export class SoundService {
       if (this.errorSound?.src) {
         URL.revokeObjectURL(this.errorSound.src);
       }
+      if (this.victorySound?.src) {
+        URL.revokeObjectURL(this.victorySound.src);
+      }
       this.correctSound = null;
       this.errorSound = null;
+      this.victorySound = null;
       this.isInitialized = false;
     } catch (error) {
       console.warn('Error cleaning up sounds:', error);

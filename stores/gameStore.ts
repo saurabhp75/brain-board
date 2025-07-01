@@ -146,7 +146,9 @@ export const useGameStore = create<GameState>((set, get) => ({
       const nextTarget = currentTarget + 1;
       
       if (nextTarget > 9) {
-        // Victory!
+        // Victory! Play celebration sound
+        SoundService.playVictorySound();
+        
         set({
           cells: newCells,
           gamePhase: 'victory',
