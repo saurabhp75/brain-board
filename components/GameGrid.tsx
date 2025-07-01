@@ -11,9 +11,9 @@ import {
 import { useGameStore, type GameCell } from '@/stores/gameStore';
 
 const { width, height } = Dimensions.get('window');
-const AVAILABLE_HEIGHT = height * 0.4; // Use 40% of screen height for grid
+const AVAILABLE_HEIGHT = Math.min(height * 0.35, 300); // Reduced from 40% to 35%
 const AVAILABLE_WIDTH = width - 40;
-const GRID_SIZE = Math.min(AVAILABLE_WIDTH, AVAILABLE_HEIGHT, 280);
+const GRID_SIZE = Math.min(AVAILABLE_WIDTH, AVAILABLE_HEIGHT, 260); // Reduced max size
 const GRID_PADDING = 12;
 const CELL_GAP = 6;
 const CELLS_PER_ROW = 3;

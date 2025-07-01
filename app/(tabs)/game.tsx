@@ -45,6 +45,9 @@ export default function GameScreen() {
           <View style={styles.gridContainer}>
             <GameGrid />
           </View>
+
+          {/* Bottom Spacer */}
+          <View style={styles.bottomSpacer} />
         </View>
       </LinearGradient>
     </SafeAreaView>
@@ -60,14 +63,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: 'space-between',
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   header: {
     alignItems: 'center',
     paddingTop: 10,
     paddingBottom: 5,
     paddingHorizontal: 20,
+    minHeight: 60,
   },
   title: {
     fontSize: 24,
@@ -81,13 +84,17 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   controlsContainer: {
-    flex: 0,
     paddingHorizontal: 10,
+    marginBottom: 15,
   },
   gridContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
+    minHeight: 200,
+  },
+  bottomSpacer: {
+    height: 20,
   },
 });
