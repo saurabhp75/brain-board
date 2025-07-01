@@ -35,7 +35,12 @@ export default function ProfileScreen() {
     try {
       await AuthService.signInWithGoogle();
     } catch (error) {
-      Alert.alert('Sign In Error', 'Failed to sign in. Please try again.');
+      Alert.alert(
+        'Sign In Error',
+        error instanceof Error
+          ? error.message
+          : 'Failed to sign in. Please try again.'
+      );
     }
   };
 

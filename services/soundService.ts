@@ -1,5 +1,4 @@
 import { createAudioPlayer, AudioPlayer } from 'expo-audio';
-import { Platform } from 'react-native';
 
 export class SoundService {
   private static correctSound: AudioPlayer | null = null;

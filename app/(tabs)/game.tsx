@@ -8,7 +8,7 @@ import { useGameStore } from '@/stores/gameStore';
 import { useAuthStore } from '@/stores/authStore';
 import { SoundService } from '@/services/soundService';
 
-const { height } = Dimensions.get('window');
+Dimensions.get('window');
 
 export default function GameScreen() {
   const { gamePhase, updateStats } = useGameStore();

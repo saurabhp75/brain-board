@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
 } from 'react-native';
 import { Play, RotateCcw } from 'lucide-react-native';
 import { useGameStore } from '@/stores/gameStore';

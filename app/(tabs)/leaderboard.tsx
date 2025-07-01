@@ -9,7 +9,14 @@ import {
   RefreshControl,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Trophy, Clock, Target, Medal, Crown, Award } from 'lucide-react-native';
+import {
+  Trophy,
+  Clock,
+  Target,
+  Medal,
+  Crown,
+  Award,
+} from 'lucide-react-native';
 import { useAuthStore } from '@/stores/authStore';
 import { useGameStore } from '@/stores/gameStore';
 
@@ -30,7 +37,9 @@ export default function LeaderboardScreen() {
   const { bestTime, gamesWon, gamesPlayed, score } = useGameStore();
   const [sortBy, setSortBy] = useState<SortType>('bestTime');
   const [refreshing, setRefreshing] = useState(false);
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>(
+    []
+  );
 
   // Mock leaderboard data for demonstration
   const generateMockLeaderboard = (): LeaderboardEntry[] => {
@@ -54,7 +63,7 @@ export default function LeaderboardScreen() {
         rank: 2,
       },
       {
-        id: 'player3', 
+        id: 'player3',
         name: 'Brain Trainer',
         bestTime: 23700,
         gamesWon: 22,
@@ -93,24 +102,26 @@ export default function LeaderboardScreen() {
         totalScore: score || 0,
         rank: 0, // Will be calculated
       };
-      
+
       mockData.push(userEntry);
     }
 
-    return mockData.sort((a, b) => {
-      switch (sortBy) {
-        case 'bestTime':
-          return a.bestTime - b.bestTime;
-        case 'gamesWon':
-          return b.gamesWon - a.gamesWon;
-        case 'winRate':
-          return b.winRate - a.winRate;
-        case 'totalScore':
-          return b.totalScore - a.totalScore;
-        default:
-          return a.bestTime - b.bestTime;
-      }
-    }).map((entry, index) => ({ ...entry, rank: index + 1 }));
+    return mockData
+      .sort((a, b) => {
+        switch (sortBy) {
+          case 'bestTime':
+            return a.bestTime - b.bestTime;
+          case 'gamesWon':
+            return b.gamesWon - a.gamesWon;
+          case 'winRate':
+            return b.winRate - a.winRate;
+          case 'totalScore':
+            return b.totalScore - a.totalScore;
+          default:
+            return a.bestTime - b.bestTime;
+        }
+      })
+      .map((entry, index) => ({ ...entry, rank: index + 1 }));
   };
 
   useEffect(() => {
@@ -155,41 +166,32 @@ export default function LeaderboardScreen() {
 
   const renderLeaderboardEntry = (entry: LeaderboardEntry, index: number) => {
     const isCurrentUser = user && entry.id === user.id;
-    
+
     return (
-      <View 
-        key={entry.id} 
+      <View
+        key={entry.id}
         style={[
           styles.leaderboardEntry,
           isCurrentUser && styles.currentUserEntry,
           index < 3 && styles.topThreeEntry,
         ]}
       >
-        <View style={styles.rankContainer}>
-          {getRankIcon(entry.rank)}
-        </View>
-        
+        <View style={styles.rankContainer}>{getRankIcon(entry.rank)}</View>
+
         <View style={styles.playerInfo}>
-          <Text style={[
-            styles.playerName,
-            isCurrentUser && styles.currentUserName
-          ]}>
+          <Text
+            style={[styles.playerName, isCurrentUser && styles.currentUserName]}
+          >
             {entry.name}
             {isCurrentUser && ' (You)'}
           </Text>
           <View style={styles.playerStats}>
-            <Text style={styles.statText}>
-              ⏱️ {formatTime(entry.bestTime)}
-            </Text>
-            <Text style={styles.statText}>
-              🏆 {entry.gamesWon} wins
-            </Text>
-            <Text style={styles.statText}>
-              📊 {entry.winRate.toFixed(1)}%
-            </Text>
+            <Text style={styles.statText}>⏱️ {formatTime(entry.bestTime)}</Text>
+            <Text style={styles.statText}>🏆 {entry.gamesWon} wins</Text>
+            <Text style={styles.statText}>📊 {entry.winRate.toFixed(1)}%</Text>
           </View>
         </View>
-        
+
         <View style={styles.scoreContainer}>
           <Text style={styles.totalScore}>{entry.totalScore}</Text>
           <Text style={styles.scoreLabel}>Score</Text>
@@ -208,15 +210,13 @@ export default function LeaderboardScreen() {
         <View style={styles.header}>
           <Trophy color="#3b82f6" size={32} />
           <Text style={styles.title}>Leaderboard</Text>
-          <Text style={styles.subtitle}>
-            Compete with players worldwide
-          </Text>
+          <Text style={styles.subtitle}>Compete with players worldwide</Text>
         </View>
 
         {/* Sort Options */}
         <View style={styles.sortContainer}>
-          <ScrollView 
-            horizontal 
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.sortScrollContent}
           >
@@ -224,7 +224,10 @@ export default function LeaderboardScreen() {
               style={getSortButtonStyle('bestTime')}
               onPress={() => setSortBy('bestTime')}
             >
-              <Clock size={16} color={sortBy === 'bestTime' ? '#ffffff' : '#6b7280'} />
+              <Clock
+                size={16}
+                color={sortBy === 'bestTime' ? '#ffffff' : '#6b7280'}
+              />
               <Text style={getSortButtonTextStyle('bestTime')}>Best Time</Text>
             </TouchableOpacity>
 
@@ -232,7 +235,10 @@ export default function LeaderboardScreen() {
               style={getSortButtonStyle('gamesWon')}
               onPress={() => setSortBy('gamesWon')}
             >
-              <Trophy size={16} color={sortBy === 'gamesWon' ? '#ffffff' : '#6b7280'} />
+              <Trophy
+                size={16}
+                color={sortBy === 'gamesWon' ? '#ffffff' : '#6b7280'}
+              />
               <Text style={getSortButtonTextStyle('gamesWon')}>Games Won</Text>
             </TouchableOpacity>
 
@@ -240,7 +246,10 @@ export default function LeaderboardScreen() {
               style={getSortButtonStyle('winRate')}
               onPress={() => setSortBy('winRate')}
             >
-              <Target size={16} color={sortBy === 'winRate' ? '#ffffff' : '#6b7280'} />
+              <Target
+                size={16}
+                color={sortBy === 'winRate' ? '#ffffff' : '#6b7280'}
+              />
               <Text style={getSortButtonTextStyle('winRate')}>Win Rate</Text>
             </TouchableOpacity>
 
@@ -248,8 +257,13 @@ export default function LeaderboardScreen() {
               style={getSortButtonStyle('totalScore')}
               onPress={() => setSortBy('totalScore')}
             >
-              <Award size={16} color={sortBy === 'totalScore' ? '#ffffff' : '#6b7280'} />
-              <Text style={getSortButtonTextStyle('totalScore')}>Total Score</Text>
+              <Award
+                size={16}
+                color={sortBy === 'totalScore' ? '#ffffff' : '#6b7280'}
+              />
+              <Text style={getSortButtonTextStyle('totalScore')}>
+                Total Score
+              </Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -263,7 +277,9 @@ export default function LeaderboardScreen() {
           showsVerticalScrollIndicator={false}
         >
           {leaderboardData.length > 0 ? (
-            leaderboardData.map((entry, index) => renderLeaderboardEntry(entry, index))
+            leaderboardData.map((entry, index) =>
+              renderLeaderboardEntry(entry, index)
+            )
           ) : (
             <View style={styles.emptyState}>
               <Trophy color="#9ca3af" size={48} />
