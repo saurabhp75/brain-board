@@ -87,7 +87,7 @@ export default function GameControls() {
 
       {/* Duration Input */}
       <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Memorization Duration (ms):</Text>
+        <Text style={styles.inputLabel}>Duration (ms):</Text>
         <TextInput
           style={styles.durationInput}
           value={durationInput}
@@ -96,7 +96,6 @@ export default function GameControls() {
           placeholder="3000"
           editable={gamePhase === 'setup'}
         />
-        <Text style={styles.inputHint}>Range: 1000-10000ms</Text>
       </View>
 
       {/* Control Buttons */}
@@ -110,7 +109,7 @@ export default function GameControls() {
           onPress={handleStartGame}
           disabled={isStartDisabled}
         >
-          <Play color="#ffffff" size={20} />
+          <Play color="#ffffff" size={16} />
           <Text style={styles.startButtonText}>
             {getButtonText()}
           </Text>
@@ -120,7 +119,7 @@ export default function GameControls() {
           style={styles.resetButton}
           onPress={handleReset}
         >
-          <RotateCcw color="#6b7280" size={20} />
+          <RotateCcw color="#6b7280" size={16} />
           <Text style={styles.resetButtonText}>Reset</Text>
         </TouchableOpacity>
       </View>
@@ -130,10 +129,10 @@ export default function GameControls() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: 15,
     backgroundColor: '#ffffff',
     borderRadius: 12,
-    margin: 20,
+    margin: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -145,14 +144,14 @@ const styles = StyleSheet.create({
   },
   statusContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
   },
   statusText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#1f2937',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   statusTextVictory: {
     color: '#059669',
@@ -163,36 +162,31 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   statText: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#6b7280',
     fontWeight: '500',
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 15,
   },
   inputLabel: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '500',
     color: '#374151',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   durationInput: {
     borderWidth: 1,
     borderColor: '#d1d5db',
     borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
+    padding: 10,
+    fontSize: 14,
     backgroundColor: '#f9fafb',
-  },
-  inputHint: {
-    fontSize: 12,
-    color: '#6b7280',
-    marginTop: 4,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    gap: 12,
+    gap: 10,
   },
   startButton: {
     flex: 1,
@@ -200,9 +194,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 14,
+    padding: 12,
     borderRadius: 8,
-    gap: 8,
+    gap: 6,
   },
   startButtonDisabled: {
     backgroundColor: '#9ca3af',
@@ -212,7 +206,7 @@ const styles = StyleSheet.create({
   },
   startButtonText: {
     color: '#ffffff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
   },
   resetButton: {
@@ -220,14 +214,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 14,
+    padding: 12,
     borderRadius: 8,
-    gap: 8,
-    minWidth: 80,
+    gap: 6,
+    minWidth: 70,
   },
   resetButtonText: {
     color: '#6b7280',
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '500',
   },
 });

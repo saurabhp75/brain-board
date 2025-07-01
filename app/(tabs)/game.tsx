@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { View, ScrollView, StyleSheet, SafeAreaView, Text } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Text, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
 import GameControls from '@/components/GameControls';
 import { useGameStore } from '@/stores/gameStore';
 import { useAuthStore } from '@/stores/authStore';
+
+const { height } = Dimensions.get('window');
 
 export default function GameScreen() {
   const { gamePhase, updateStats } = useGameStore();
@@ -27,10 +29,7 @@ export default function GameScreen() {
         colors={['#f0f9ff', '#e0f2fe', '#bae6fd']}
         style={styles.gradient}
       >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
+        <View style={styles.content}>
           {/* Header */}
           <View style={styles.header}>
             <Text style={styles.title}>Memory Game Pro</Text>
@@ -38,12 +37,15 @@ export default function GameScreen() {
           </View>
 
           {/* Game Controls */}
-          <GameControls />
+          <View style={styles.controlsContainer}>
+            <GameControls />
+          </View>
 
           {/* Game Grid */}
-          <GameGrid />
-        
-        </ScrollView>
+          <View style={styles.gridContainer}>
+            <GameGrid />
+          </View>
+        </View>
       </LinearGradient>
     </SafeAreaView>
   );
@@ -56,49 +58,36 @@ const styles = StyleSheet.create({
   gradient: {
     flex: 1,
   },
-  scrollContent: {
-    flexGrow: 1,
-    paddingBottom: 100,
+  content: {
+    flex: 1,
+    justifyContent: 'space-between',
+    paddingBottom: 20,
   },
   header: {
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 5,
+    paddingHorizontal: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#1f2937',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   welcome: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#6b7280',
     fontWeight: '500',
   },
-  instructionsContainer: {
-    margin: 20,
-    padding: 20,
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+  controlsContainer: {
+    flex: 0,
+    paddingHorizontal: 10,
   },
-  instructionsTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1f2937',
-    marginBottom: 12,
-  },
-  instructionsText: {
-    fontSize: 14,
-    color: '#4b5563',
-    lineHeight: 20,
+  gridContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
 });

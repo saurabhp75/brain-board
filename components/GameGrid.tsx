@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import { useGameStore, type GameCell } from '@/stores/gameStore';
 
-const { width } = Dimensions.get('window');
-const GRID_SIZE = Math.min(width - 40, 300);
-const GRID_PADDING = 16;
-const CELL_GAP = 8;
+const { width, height } = Dimensions.get('window');
+const AVAILABLE_HEIGHT = height * 0.4; // Use 40% of screen height for grid
+const AVAILABLE_WIDTH = width - 40;
+const GRID_SIZE = Math.min(AVAILABLE_WIDTH, AVAILABLE_HEIGHT, 280);
+const GRID_PADDING = 12;
+const CELL_GAP = 6;
 const CELLS_PER_ROW = 3;
 
 // Calculate the total space needed for 3 cells and 2 gaps
@@ -94,7 +96,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
   },
   grid: {
     width: GRID_SIZE,
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.9 }],
   },
   cellText: {
-    fontSize: Math.min(CELL_SIZE * 0.4, 24),
+    fontSize: Math.min(CELL_SIZE * 0.4, 20),
     fontWeight: 'bold',
     color: '#475569',
   },
