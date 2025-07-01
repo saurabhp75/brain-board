@@ -3,10 +3,10 @@ import { View, StyleSheet, SafeAreaView, Text, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
 import GameControls from '@/components/GameControls';
-import ConfettiCelebration from '@/components/ConfettiCelebration';
 import { useGameStore } from '@/stores/gameStore';
 import { useAuthStore } from '@/stores/authStore';
 import { SoundService } from '@/services/soundService';
+import { Confetti } from 'react-native-fast-confetti';
 
 Dimensions.get('window');
 
@@ -66,7 +66,7 @@ export default function GameScreen() {
         </View>
 
         {/* Confetti Animation */}
-        <ConfettiCelebration show={gamePhase === 'victory'} />
+        {gamePhase === 'victory' && <Confetti />}
       </LinearGradient>
     </SafeAreaView>
   );
