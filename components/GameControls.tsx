@@ -34,9 +34,9 @@ export default function GameControls() {
     }
   };
 
-  const handleStartGame = () => {
+  const handleStartGame = async () => {
     if (gamePhase === 'setup') {
-      initializeGame();
+      await initializeGame();
       setTimeout(() => startGame(), 100);
     } else if (gamePhase === 'victory') {
       resetGame();
@@ -70,13 +70,15 @@ export default function GameControls() {
     <View style={styles.container}>
       {/* Status Display */}
       <View style={styles.statusContainer}>
-        <Text style={[
-          styles.statusText,
-          gamePhase === 'victory' && styles.statusTextVictory
-        ]}>
+        <Text
+          style={[
+            styles.statusText,
+            gamePhase === 'victory' && styles.statusTextVictory,
+          ]}
+        >
           {statusMessage}
         </Text>
-        
+
         {gamePhase === 'playing' && (
           <View style={styles.statsContainer}>
             <Text style={styles.statText}>Moves: {moves}</Text>
@@ -110,15 +112,10 @@ export default function GameControls() {
           disabled={isStartDisabled}
         >
           <Play color="#ffffff" size={16} />
-          <Text style={styles.startButtonText}>
-            {getButtonText()}
-          </Text>
+          <Text style={styles.startButtonText}>{getButtonText()}</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.resetButton}
-          onPress={handleReset}
-        >
+        <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
           <RotateCcw color="#6b7280" size={16} />
           <Text style={styles.resetButtonText}>Reset</Text>
         </TouchableOpacity>

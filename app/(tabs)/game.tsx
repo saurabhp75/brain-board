@@ -17,7 +17,10 @@ export default function GameScreen() {
 
   useEffect(() => {
     // Initialize sound service when component mounts
-    SoundService.initialize();
+    const initializeSounds = async () => {
+      await SoundService.initialize();
+    };
+    initializeSounds();
 
     // Cleanup when component unmounts
     return () => {
