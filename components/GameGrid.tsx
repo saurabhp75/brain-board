@@ -11,8 +11,8 @@ import {
 import { useGameStore, type GameCell } from '@/stores/gameStore';
 
 const { width } = Dimensions.get('window');
-const GRID_SIZE = Math.min(width - 40, 400);
-const CELL_SIZE = (GRID_SIZE - 80) / 9; // Account for padding and borders
+const GRID_SIZE = Math.min(width - 40, 300);
+const CELL_SIZE = (GRID_SIZE - 32) / 3; // Account for padding and borders for 3x3 grid
 
 export default function GameGrid() {
   const { cells, gamePhase, handleCellClick } = useGameStore();
@@ -81,51 +81,54 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: '#f8fafc',
-    borderRadius: 12,
-    padding: 8,
+    borderRadius: 16,
+    padding: 16,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 4,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 8,
+    elevation: 5,
   },
   cell: {
     width: CELL_SIZE,
     height: CELL_SIZE,
     backgroundColor: '#ffffff',
-    borderRadius: 8,
-    margin: 2,
+    borderRadius: 12,
+    margin: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#e2e8f0',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 3,
   },
   cellRevealed: {
     backgroundColor: '#dbeafe',
     borderColor: '#3b82f6',
+    transform: [{ scale: 0.95 }],
   },
   cellCorrect: {
     backgroundColor: '#dcfce7',
     borderColor: '#10b981',
+    transform: [{ scale: 1.05 }],
   },
   cellError: {
     backgroundColor: '#fee2e2',
     borderColor: '#ef4444',
+    transform: [{ scale: 0.9 }],
   },
   cellText: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 24,
+    fontWeight: 'bold',
     color: '#475569',
   },
   cellTextCorrect: {

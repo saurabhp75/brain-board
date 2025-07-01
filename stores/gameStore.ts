@@ -36,7 +36,7 @@ export interface GameState {
 }
 
 const createEmptyGrid = (): GameCell[] => {
-  return Array.from({ length: 81 }, (_, index) => ({
+  return Array.from({ length: 9 }, (_, index) => ({
     id: index,
     value: null,
     isRevealed: false,
@@ -69,7 +69,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   
   initializeGame: () => {
     const cells = createEmptyGrid();
-    const positions = getRandomPositions(9, 81);
+    const positions = getRandomPositions(9, 9);
     
     // Place numbers 1-9 in random positions
     positions.forEach((position, index) => {
