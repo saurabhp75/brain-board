@@ -9,6 +9,8 @@ interface ConfettiPiece {
   y: Animated.Value;
   rotation: Animated.Value;
   scale: Animated.Value;
+  initialX: number;
+  initialScale: number;
   color: string;
   shape: 'circle' | 'square' | 'triangle';
 }
@@ -19,13 +21,24 @@ interface ConfettiCelebrationProps {
 }
 
 const CONFETTI_COLORS = [
-  '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
-  '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
+  '#FF6B6B',
+  '#4ECDC4',
+  '#45B7D1',
+  '#96CEB4',
+  '#FFEAA7',
+  '#DDA0DD',
+  '#98D8C8',
+  '#F7DC6F',
+  '#BB8FCE',
+  '#85C1E9',
 ];
 
 const CONFETTI_COUNT = 50;
 
-export default function ConfettiCelebration({ show, onComplete }: ConfettiCelebrationProps) {
+export default function ConfettiCelebration({
+  show,
+  onComplete,
+}: ConfettiCelebrationProps) {
   const confettiPieces = useRef<ConfettiPiece[]>([]);
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
 
@@ -42,20 +55,28 @@ export default function ConfettiCelebration({ show, onComplete }: ConfettiCelebr
   }, [show]);
 
   const createConfettiPiece = (id: number): ConfettiPiece => {
+    const initialX = Math.random() * width;
+    const initialScale = 0.5 + Math.random() * 0.5;
     return {
       id,
-      x: new Animated.Value(Math.random() * width),
+      x: new Animated.Value(initialX),
       y: new Animated.Value(-50),
       rotation: new Animated.Value(0),
-      scale: new Animated.Value(0.5 + Math.random() * 0.5),
-      color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
-      shape: ['circle', 'square', 'triangle'][Math.floor(Math.random() * 3)] as 'circle' | 'square' | 'triangle',
+      scale: new Animated.Value(initialScale),
+      initialX,
+      initialScale,
+      color:
+        CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+      shape: ['circle', 'square', 'triangle'][Math.floor(Math.random() * 3)] as
+        | 'circle'
+        | 'square'
+        | 'triangle',
     };
   };
 
   const startConfetti = () => {
     // Create confetti pieces
-    confettiPieces.current = Array.from({ length: CONFETTI_COUNT }, (_, i) => 
+    confettiPieces.current = Array.from({ length: CONFETTI_COUNT }, (_, i) =>
       createConfettiPiece(i)
     );
 
@@ -63,7 +84,7 @@ export default function ConfettiCelebration({ show, onComplete }: ConfettiCelebr
     const animations = confettiPieces.current.map((piece) => {
       const fallDuration = 3000 + Math.random() * 2000;
       const swayAmount = 50 + Math.random() * 100;
-      
+
       return Animated.parallel([
         // Fall down
         Animated.timing(piece.y, {
@@ -75,12 +96,12 @@ export default function ConfettiCelebration({ show, onComplete }: ConfettiCelebr
         Animated.loop(
           Animated.sequence([
             Animated.timing(piece.x, {
-              toValue: piece.x._value + swayAmount,
+              toValue: piece.initialX + swayAmount,
               duration: 1000 + Math.random() * 1000,
               useNativeDriver: true,
             }),
             Animated.timing(piece.x, {
-              toValue: piece.x._value - swayAmount,
+              toValue: piece.initialX - swayAmount,
               duration: 1000 + Math.random() * 1000,
               useNativeDriver: true,
             }),
@@ -100,12 +121,12 @@ export default function ConfettiCelebration({ show, onComplete }: ConfettiCelebr
         Animated.loop(
           Animated.sequence([
             Animated.timing(piece.scale, {
-              toValue: piece.scale._value * 1.2,
+              toValue: piece.initialScale * 1.2,
               duration: 500 + Math.random() * 500,
               useNativeDriver: true,
             }),
             Animated.timing(piece.scale, {
-              toValue: piece.scale._value,
+              toValue: piece.initialScale,
               duration: 500 + Math.random() * 500,
               useNativeDriver: true,
             }),
