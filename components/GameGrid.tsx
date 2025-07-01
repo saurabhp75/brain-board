@@ -14,8 +14,12 @@ const { width } = Dimensions.get('window');
 const GRID_SIZE = Math.min(width - 40, 300);
 const GRID_PADDING = 16;
 const CELL_GAP = 8;
-const AVAILABLE_SPACE = GRID_SIZE - (GRID_PADDING * 2) - (CELL_GAP * 2); // Space for 3x3 with gaps
-const CELL_SIZE = AVAILABLE_SPACE / 3;
+const CELLS_PER_ROW = 3;
+
+// Calculate the total space needed for 3 cells and 2 gaps
+const TOTAL_CELL_SPACE = GRID_SIZE - (GRID_PADDING * 2);
+const TOTAL_GAP_SPACE = CELL_GAP * (CELLS_PER_ROW - 1);
+const CELL_SIZE = (TOTAL_CELL_SPACE - TOTAL_GAP_SPACE) / CELLS_PER_ROW;
 
 export default function GameGrid() {
   const { cells, gamePhase, handleCellClick } = useGameStore();
@@ -40,14 +44,16 @@ export default function GameGrid() {
       cellStyle.push(styles.cellCorrect);
     }
 
-    // Calculate position for 3x3 grid
-    const row = Math.floor(index / 3);
-    const col = index % 3;
+    // Calculate position for 3x3 grid with proper centering
+    const row = Math.floor(index / CELLS_PER_ROW);
+    const col = index % CELLS_PER_ROW;
     
     const cellPosition: ViewStyle = {
       position: 'absolute',
       left: col * (CELL_SIZE + CELL_GAP),
       top: row * (CELL_SIZE + CELL_GAP),
+      width: CELL_SIZE,
+      height: CELL_SIZE,
     };
 
     return (
@@ -76,7 +82,9 @@ export default function GameGrid() {
   return (
     <View style={styles.container}>
       <View style={styles.grid}>
-        {cells.map((cell, index) => renderCell(cell, index))}
+        <View style={styles.cellContainer}>
+          {cells.map((cell, index) => renderCell(cell, index))}
+        </View>
       </View>
     </View>
   );
@@ -102,11 +110,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cellContainer: {
     position: 'relative',
+    width: TOTAL_CELL_SPACE,
+    height: TOTAL_CELL_SPACE,
   },
   cell: {
-    width: CELL_SIZE,
-    height: CELL_SIZE,
     backgroundColor: '#ffffff',
     borderRadius: 12,
     alignItems: 'center',
