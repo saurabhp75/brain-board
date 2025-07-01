@@ -12,7 +12,10 @@ import { useGameStore, type GameCell } from '@/stores/gameStore';
 
 const { width } = Dimensions.get('window');
 const GRID_SIZE = Math.min(width - 40, 300);
-const CELL_SIZE = (GRID_SIZE - 32) / 3; // Account for padding and borders for 3x3 grid
+const GRID_PADDING = 16;
+const CELL_GAP = 8;
+const AVAILABLE_SPACE = GRID_SIZE - (GRID_PADDING * 2) - (CELL_GAP * 2); // Space for 3x3 with gaps
+const CELL_SIZE = AVAILABLE_SPACE / 3;
 
 export default function GameGrid() {
   const { cells, gamePhase, handleCellClick } = useGameStore();
@@ -37,10 +40,20 @@ export default function GameGrid() {
       cellStyle.push(styles.cellCorrect);
     }
 
+    // Calculate position for 3x3 grid
+    const row = Math.floor(index / 3);
+    const col = index % 3;
+    
+    const cellPosition: ViewStyle = {
+      position: 'absolute',
+      left: col * (CELL_SIZE + CELL_GAP),
+      top: row * (CELL_SIZE + CELL_GAP),
+    };
+
     return (
       <TouchableOpacity
         key={cell.id}
-        style={cellStyle}
+        style={[cellStyle, cellPosition]}
         onPress={() => handleCellClick(cell.id)}
         disabled={!isClickable}
         activeOpacity={0.7}
@@ -78,11 +91,9 @@ const styles = StyleSheet.create({
   grid: {
     width: GRID_SIZE,
     height: GRID_SIZE,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     backgroundColor: '#f8fafc',
     borderRadius: 16,
-    padding: 16,
+    padding: GRID_PADDING,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -91,13 +102,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    position: 'relative',
   },
   cell: {
     width: CELL_SIZE,
     height: CELL_SIZE,
     backgroundColor: '#ffffff',
     borderRadius: 12,
-    margin: 4,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
@@ -127,7 +138,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.9 }],
   },
   cellText: {
-    fontSize: 24,
+    fontSize: Math.min(CELL_SIZE * 0.4, 24),
     fontWeight: 'bold',
     color: '#475569',
   },
