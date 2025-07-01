@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   StyleSheet,
   Dimensions,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
-import { useGameStore } from '@/stores/gameStore';
+import { useGameStore, type GameCell } from '@/stores/gameStore';
 
 const { width } = Dimensions.get('window');
 const GRID_SIZE = Math.min(width - 40, 400);
@@ -15,22 +17,22 @@ const CELL_SIZE = (GRID_SIZE - 80) / 9; // Account for padding and borders
 export default function GameGrid() {
   const { cells, gamePhase, handleCellClick } = useGameStore();
 
-  const renderCell = (cell: any, index: number) => {
+  const renderCell = (cell: GameCell, index: number) => {
     const isClickable = gamePhase === 'playing' && !cell.isCorrect;
-    
+
     let cellContent = '?';
-    let cellStyle = [styles.cell];
-    
+    let cellStyle: ViewStyle[] = [styles.cell];
+
     if (cell.isRevealed || cell.isCorrect) {
       cellContent = cell.value?.toString() || '?';
       cellStyle.push(styles.cellRevealed);
     }
-    
+
     if (cell.showError) {
       cellContent = '✕';
       cellStyle.push(styles.cellError);
     }
-    
+
     if (cell.isCorrect) {
       cellStyle.push(styles.cellCorrect);
     }
@@ -43,11 +45,15 @@ export default function GameGrid() {
         disabled={!isClickable}
         activeOpacity={0.7}
       >
-        <Text style={[
-          styles.cellText,
-          cell.isCorrect && styles.cellTextCorrect,
-          cell.showError && styles.cellTextError,
-        ]}>
+        <Text
+          style={
+            [
+              styles.cellText,
+              cell.isCorrect && styles.cellTextCorrect,
+              cell.showError && styles.cellTextError,
+            ] as TextStyle[]
+          }
+        >
           {cellContent}
         </Text>
       </TouchableOpacity>

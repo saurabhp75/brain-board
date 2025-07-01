@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  SafeAreaView,
-  Text,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, SafeAreaView, Text } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
 import GameControls from '@/components/GameControls';
@@ -40,9 +34,7 @@ export default function GameScreen() {
           {/* Header */}
           <View style={styles.header}>
             <Text style={styles.title}>Memory Game Pro</Text>
-            {user && (
-              <Text style={styles.welcome}>Welcome, {user.name}!</Text>
-            )}
+            {user && <Text style={styles.welcome}>Welcome, {user.name}!</Text>}
           </View>
 
           {/* Game Controls */}
@@ -50,18 +42,6 @@ export default function GameScreen() {
 
           {/* Game Grid */}
           <GameGrid />
-
-          {/* Instructions */}
-          <View style={styles.instructionsContainer}>
-            <Text style={styles.instructionsTitle}>How to Play:</Text>
-            <Text style={styles.instructionsText}>
-              1. Set your preferred memorization duration{'\n'}
-              2. Press "Start Game" to begin{'\n'}
-              3. Memorize the positions of numbers 1-9{'\n'}
-              4. After the time expires, click cells to find numbers in order{'\n'}
-              5. Find all numbers to win!
-            </Text>
-          </View>
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>

@@ -10,18 +10,25 @@ import {
   Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { LogIn, LogOut, Trophy, Clock, Target, Award } from 'lucide-react-native';
+import {
+  LogIn,
+  LogOut,
+  Trophy,
+  Clock,
+  Target,
+  Award,
+} from 'lucide-react-native';
 import { useAuthStore } from '@/stores/authStore';
 import { useGameStore } from '@/stores/gameStore';
 import { AuthService } from '@/services/authService';
 
 export default function ProfileScreen() {
   const { user, isLoading } = useAuthStore();
-  const { 
-    bestTime, 
-    gamesPlayed, 
-    gamesWon, 
-    score: currentScore 
+  const {
+    bestTime,
+    gamesPlayed,
+    gamesWon,
+    score: currentScore,
   } = useGameStore();
 
   const handleSignIn = async () => {
@@ -33,18 +40,14 @@ export default function ProfileScreen() {
   };
 
   const handleSignOut = async () => {
-    Alert.alert(
-      'Sign Out',
-      'Are you sure you want to sign out?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { 
-          text: 'Sign Out', 
-          style: 'destructive',
-          onPress: () => AuthService.signOut()
-        },
-      ]
-    );
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Sign Out',
+        style: 'destructive',
+        onPress: () => AuthService.signOut(),
+      },
+    ]);
   };
 
   const formatTime = (ms: number | null) => {
@@ -52,7 +55,8 @@ export default function ProfileScreen() {
     return `${(ms / 1000).toFixed(1)}s`;
   };
 
-  const winRate = gamesPlayed > 0 ? ((gamesWon / gamesPlayed) * 100).toFixed(1) : '0';
+  const winRate =
+    gamesPlayed > 0 ? ((gamesWon / gamesPlayed) * 100).toFixed(1) : '0';
 
   if (!user) {
     return (
@@ -68,11 +72,11 @@ export default function ProfileScreen() {
               <Text style={styles.authSubtitle}>
                 Sign in to track your progress and compete on the leaderboard
               </Text>
-              
+
               <TouchableOpacity
                 style={[
                   styles.signInButton,
-                  isLoading && styles.signInButtonDisabled
+                  isLoading && styles.signInButtonDisabled,
                 ]}
                 onPress={handleSignIn}
                 disabled={isLoading}
@@ -128,7 +132,7 @@ export default function ProfileScreen() {
                 <Text style={styles.statValue}>{gamesPlayed}</Text>
                 <Text style={styles.statLabel}>Games Played</Text>
               </View>
-              
+
               <View style={styles.statCard}>
                 <Trophy color="#10b981" size={24} />
                 <Text style={styles.statValue}>{gamesWon}</Text>
@@ -142,7 +146,7 @@ export default function ProfileScreen() {
                 <Text style={styles.statValue}>{formatTime(bestTime)}</Text>
                 <Text style={styles.statLabel}>Best Time</Text>
               </View>
-              
+
               <View style={styles.statCard}>
                 <Award color="#8b5cf6" size={24} />
                 <Text style={styles.statValue}>{winRate}%</Text>
@@ -163,50 +167,68 @@ export default function ProfileScreen() {
           <View style={styles.achievementsContainer}>
             <Text style={styles.sectionTitle}>Achievements</Text>
             <View style={styles.achievementsList}>
-              <View style={[
-                styles.achievementItem,
-                gamesWon >= 1 && styles.achievementUnlocked
-              ]}>
-                <Trophy 
-                  color={gamesWon >= 1 ? '#10b981' : '#9ca3af'} 
-                  size={20} 
+              <View
+                style={[
+                  styles.achievementItem,
+                  gamesWon >= 1 && styles.achievementUnlocked,
+                ]}
+              >
+                <Trophy
+                  color={gamesWon >= 1 ? '#10b981' : '#9ca3af'}
+                  size={20}
                 />
-                <Text style={[
-                  styles.achievementText,
-                  gamesWon >= 1 && styles.achievementTextUnlocked
-                ]}>
+                <Text
+                  style={[
+                    styles.achievementText,
+                    gamesWon >= 1 && styles.achievementTextUnlocked,
+                  ]}
+                >
                   First Victory
                 </Text>
               </View>
 
-              <View style={[
-                styles.achievementItem,
-                gamesWon >= 5 && styles.achievementUnlocked
-              ]}>
-                <Award 
-                  color={gamesWon >= 5 ? '#10b981' : '#9ca3af'} 
-                  size={20} 
+              <View
+                style={[
+                  styles.achievementItem,
+                  gamesWon >= 5 && styles.achievementUnlocked,
+                ]}
+              >
+                <Award
+                  color={gamesWon >= 5 ? '#10b981' : '#9ca3af'}
+                  size={20}
                 />
-                <Text style={[
-                  styles.achievementText,
-                  gamesWon >= 5 && styles.achievementTextUnlocked
-                ]}>
+                <Text
+                  style={[
+                    styles.achievementText,
+                    gamesWon >= 5 && styles.achievementTextUnlocked,
+                  ]}
+                >
                   Memory Master (5 wins)
                 </Text>
               </View>
 
-              <View style={[
-                styles.achievementItem,
-                bestTime && bestTime < 30000 && styles.achievementUnlocked
-              ]}>
-                <Clock 
-                  color={bestTime && bestTime < 30000 ? '#10b981' : '#9ca3af'} 
-                  size={20} 
+              <View
+                style={[
+                  styles.achievementItem,
+                  bestTime != null && bestTime < 30000
+                    ? styles.achievementUnlocked
+                    : null,
+                ]}
+              >
+                <Clock
+                  color={
+                    bestTime != null && bestTime < 30000 ? '#10b981' : '#9ca3af'
+                  }
+                  size={20}
                 />
-                <Text style={[
-                  styles.achievementText,
-                  bestTime && bestTime < 30000 && styles.achievementTextUnlocked
-                ]}>
+                <Text
+                  style={[
+                    styles.achievementText,
+                    bestTime != null && bestTime < 30000
+                      ? styles.achievementTextUnlocked
+                      : null,
+                  ]}
+                >
                   Speed Demon (Under 30s)
                 </Text>
               </View>

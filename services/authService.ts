@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import { useAuthStore } from '@/stores/authStore';
 
 export class AuthService {
