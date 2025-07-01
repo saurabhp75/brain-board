@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { SoundService } from '@/services/soundService';
 
 export interface GameCell {
   id: number;
@@ -68,6 +69,9 @@ export const useGameStore = create<GameState>((set, get) => ({
   gamesWon: 0,
   
   initializeGame: () => {
+    // Initialize sound service
+    SoundService.initialize();
+    
     const cells = createEmptyGrid();
     const positions = getRandomPositions(9, 9);
     
@@ -130,7 +134,9 @@ export const useGameStore = create<GameState>((set, get) => ({
     const newMoves = moves + 1;
     
     if (clickedCell.value === currentTarget) {
-      // Correct click
+      // Correct click - play success sound
+      SoundService.playCorrectSound();
+      
       const newCells = cells.map(cell =>
         cell.id === cellId
           ? { ...cell, isRevealed: true, isCorrect: true }
@@ -157,7 +163,9 @@ export const useGameStore = create<GameState>((set, get) => ({
         });
       }
     } else {
-      // Wrong click
+      // Wrong click - play error sound
+      SoundService.playErrorSound();
+      
       const newCells = cells.map(cell =>
         cell.id === cellId
           ? { ...cell, showError: true }

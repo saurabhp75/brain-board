@@ -6,6 +6,7 @@ import GameControls from '@/components/GameControls';
 import ConfettiCelebration from '@/components/ConfettiCelebration';
 import { useGameStore } from '@/stores/gameStore';
 import { useAuthStore } from '@/stores/authStore';
+import { SoundService } from '@/services/soundService';
 
 const { height } = Dimensions.get('window');
 
@@ -13,6 +14,16 @@ export default function GameScreen() {
   const { gamePhase, updateStats } = useGameStore();
   const { user } = useAuthStore();
   const [gameStartTime, setGameStartTime] = React.useState<number | null>(null);
+
+  useEffect(() => {
+    // Initialize sound service when component mounts
+    SoundService.initialize();
+
+    // Cleanup when component unmounts
+    return () => {
+      SoundService.cleanup();
+    };
+  }, []);
 
   useEffect(() => {
     if (gamePhase === 'playing' && gameStartTime === null) {
