@@ -27,9 +27,12 @@ export default function GameControls() {
 
   const handleDurationChange = (text: string) => {
     setDurationInput(text);
-    const numValue = parseInt(text, 10);
+    const cleanedValue = text.replace(/[^0-9]/g, '');
+    const numValue = parseInt(cleanedValue, 10);
     if (!isNaN(numValue)) {
       setDuration(numValue);
+    } else {
+      setDuration(3000); // Default value if input is invalid
     }
   };
 
