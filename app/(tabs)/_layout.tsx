@@ -1,10 +1,6 @@
 import { Tabs } from 'expo-router';
 import { GamepadIcon, User, Trophy } from 'lucide-react-native';
-import {
-  BannerAd,
-  BannerAdSize,
-  TestIds,
-} from 'react-native-google-mobile-ads';
+import AdBanner from '../../components/AdBanner';
 
 export default function TabLayout() {
   return (
@@ -54,16 +50,7 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      <BannerAd
-        unitId={TestIds.BANNER}
-        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-        requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
-          networkExtras: {
-            collapsible: 'bottom',
-          },
-        }}
-      />
+      <AdBanner />
     </>
   );
 }
