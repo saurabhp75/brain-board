@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
-  View,
-  Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import { Play, RotateCcw } from 'lucide-react-native';
 import { useGameStore } from '@/stores/gameStore';
+import ThemedView from './ThemedView';
+import ThemedText from './ThemedText';
 
 export default function GameControls() {
   const {
@@ -69,29 +69,29 @@ export default function GameControls() {
   const isStartDisabled = gamePhase === 'memorizing' || isLoading;
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       {/* Status Display */}
-      <View style={styles.statusContainer}>
-        <Text
+      <ThemedView style={styles.statusContainer}>
+        <ThemedText
           style={[
             styles.statusText,
             gamePhase === 'victory' && styles.statusTextVictory,
           ]}
         >
           {statusMessage}
-        </Text>
+        </ThemedText>
 
         {gamePhase === 'playing' && (
-          <View style={styles.statsContainer}>
-            <Text style={styles.statText}>Moves: {moves}</Text>
-            <Text style={styles.statText}>Score: {score}</Text>
-          </View>
+          <ThemedView style={styles.statsContainer}>
+            <ThemedText style={styles.statText}>Moves: {moves}</ThemedText>
+            <ThemedText style={styles.statText}>Score: {score}</ThemedText>
+          </ThemedView>
         )}
-      </View>
+      </ThemedView>
 
       {/* Duration Input */}
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>Duration (ms):</Text>
+      <ThemedView style={styles.inputContainer}>
+        <ThemedText style={styles.inputLabel}>Duration (ms):</ThemedText>
         <TextInput
           style={styles.durationInput}
           value={durationInput}
@@ -100,10 +100,10 @@ export default function GameControls() {
           placeholder="3000"
           editable={gamePhase === 'setup'}
         />
-      </View>
+      </ThemedView>
 
       {/* Control Buttons */}
-      <View style={styles.buttonContainer}>
+      <ThemedView style={styles.buttonContainer}>
         <TouchableOpacity
           style={[
             styles.startButton,
@@ -114,15 +114,15 @@ export default function GameControls() {
           disabled={isStartDisabled}
         >
           <Play color="#ffffff" size={16} />
-          <Text style={styles.startButtonText}>{getButtonText()}</Text>
+          <ThemedText style={styles.startButtonText}>{getButtonText()}</ThemedText>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
           <RotateCcw color="#6b7280" size={16} />
-          <Text style={styles.resetButtonText}>Reset</Text>
+          <ThemedText style={styles.resetButtonText}>Reset</ThemedText>
         </TouchableOpacity>
-      </View>
-    </View>
+      </ThemedView>
+    </ThemedView>
   );
 }
 

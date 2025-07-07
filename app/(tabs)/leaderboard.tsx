@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
   SafeAreaView,
   ScrollView,
@@ -19,6 +17,8 @@ import {
 } from 'lucide-react-native';
 import { useAuthStore } from '@/stores/authStore';
 import { useGameStore } from '@/stores/gameStore';
+import ThemedText from '@/components/ThemedText';
+import ThemedView from '@/components/ThemedView';
 
 interface LeaderboardEntry {
   id: string;
@@ -150,7 +150,7 @@ export default function LeaderboardScreen() {
       case 3:
         return <Award color="#cd7f32" size={20} />;
       default:
-        return <Text style={styles.rankNumber}>{rank}</Text>;
+        return <ThemedText style={styles.rankNumber}>{rank}</ThemedText>;
     }
   };
 
@@ -168,7 +168,7 @@ export default function LeaderboardScreen() {
     const isCurrentUser = user && entry.id === user.id;
 
     return (
-      <View
+      <ThemedView
         key={entry.id}
         style={[
           styles.leaderboardEntry,
@@ -176,27 +176,27 @@ export default function LeaderboardScreen() {
           index < 3 && styles.topThreeEntry,
         ]}
       >
-        <View style={styles.rankContainer}>{getRankIcon(entry.rank)}</View>
+        <ThemedView style={styles.rankContainer}>{getRankIcon(entry.rank)}</ThemedView>
 
-        <View style={styles.playerInfo}>
-          <Text
+        <ThemedView style={styles.playerInfo}>
+          <ThemedText
             style={[styles.playerName, isCurrentUser && styles.currentUserName]}
           >
             {entry.name}
             {isCurrentUser && ' (You)'}
-          </Text>
-          <View style={styles.playerStats}>
-            <Text style={styles.statText}>⏱️ {formatTime(entry.bestTime)}</Text>
-            <Text style={styles.statText}>🏆 {entry.gamesWon} wins</Text>
-            <Text style={styles.statText}>📊 {entry.winRate.toFixed(1)}%</Text>
-          </View>
-        </View>
+          </ThemedText>
+          <ThemedView style={styles.playerStats}>
+            <ThemedText style={styles.statText}>⏱️ {formatTime(entry.bestTime)}</ThemedText>
+            <ThemedText style={styles.statText}>🏆 {entry.gamesWon} wins</ThemedText>
+            <ThemedText style={styles.statText}>📊 {entry.winRate.toFixed(1)}%</ThemedText>
+          </ThemedView>
+        </ThemedView>
 
-        <View style={styles.scoreContainer}>
-          <Text style={styles.totalScore}>{entry.totalScore}</Text>
-          <Text style={styles.scoreLabel}>Score</Text>
-        </View>
-      </View>
+        <ThemedView style={styles.scoreContainer}>
+          <ThemedText style={styles.totalScore}>{entry.totalScore}</ThemedText>
+          <ThemedText style={styles.scoreLabel}>Score</ThemedText>
+        </ThemedView>
+      </ThemedView>
     );
   };
 
@@ -207,14 +207,14 @@ export default function LeaderboardScreen() {
         style={styles.gradient}
       >
         {/* Header */}
-        <View style={styles.header}>
+        <ThemedView style={styles.header}>
           <Trophy color="#3b82f6" size={32} />
-          <Text style={styles.title}>Leaderboard</Text>
-          <Text style={styles.subtitle}>Compete with players worldwide</Text>
-        </View>
+          <ThemedText style={styles.title}>Leaderboard</ThemedText>
+          <ThemedText style={styles.subtitle}>Compete with players worldwide</ThemedText>
+        </ThemedView>
 
         {/* Sort Options */}
-        <View style={styles.sortContainer}>
+        <ThemedView style={styles.sortContainer}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -228,7 +228,7 @@ export default function LeaderboardScreen() {
                 size={16}
                 color={sortBy === 'bestTime' ? '#ffffff' : '#6b7280'}
               />
-              <Text style={getSortButtonTextStyle('bestTime')}>Best Time</Text>
+              <ThemedText style={getSortButtonTextStyle('bestTime')}>Best Time</ThemedText>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -239,7 +239,7 @@ export default function LeaderboardScreen() {
                 size={16}
                 color={sortBy === 'gamesWon' ? '#ffffff' : '#6b7280'}
               />
-              <Text style={getSortButtonTextStyle('gamesWon')}>Games Won</Text>
+              <ThemedText style={getSortButtonTextStyle('gamesWon')}>Games Won</ThemedText>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -250,7 +250,7 @@ export default function LeaderboardScreen() {
                 size={16}
                 color={sortBy === 'winRate' ? '#ffffff' : '#6b7280'}
               />
-              <Text style={getSortButtonTextStyle('winRate')}>Win Rate</Text>
+              <ThemedText style={getSortButtonTextStyle('winRate')}>Win Rate</ThemedText>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -261,12 +261,12 @@ export default function LeaderboardScreen() {
                 size={16}
                 color={sortBy === 'totalScore' ? '#ffffff' : '#6b7280'}
               />
-              <Text style={getSortButtonTextStyle('totalScore')}>
+              <ThemedText style={getSortButtonTextStyle('totalScore')}>
                 Total Score
-              </Text>
+              </ThemedText>
             </TouchableOpacity>
           </ScrollView>
-        </View>
+        </ThemedView>
 
         {/* Leaderboard List */}
         <ScrollView
@@ -281,22 +281,22 @@ export default function LeaderboardScreen() {
               renderLeaderboardEntry(entry, index)
             )
           ) : (
-            <View style={styles.emptyState}>
+            <ThemedView style={styles.emptyState}>
               <Trophy color="#9ca3af" size={48} />
-              <Text style={styles.emptyStateText}>No leaderboard data yet</Text>
-              <Text style={styles.emptyStateSubtext}>
+              <ThemedText style={styles.emptyStateText}>No leaderboard data yet</ThemedText>
+              <ThemedText style={styles.emptyStateSubtext}>
                 Play some games to see rankings!
-              </Text>
-            </View>
+              </ThemedText>
+            </ThemedView>
           )}
         </ScrollView>
 
         {/* Info Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>
+        <ThemedView style={styles.footer}>
+          <ThemedText style={styles.footerText}>
             🎯 Rankings update in real-time • Pull to refresh
-          </Text>
-        </View>
+          </ThemedText>
+        </ThemedView>
       </LinearGradient>
     </SafeAreaView>
   );

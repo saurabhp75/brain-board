@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  View,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -9,6 +7,7 @@ import {
   TextStyle,
 } from 'react-native';
 import { useGameStore, type GameCell } from '@/stores/gameStore';
+import ThemedView from './ThemedView';
 
 const { width, height } = Dimensions.get('window');
 const AVAILABLE_HEIGHT = Math.min(height * 0.35, 300); // Reduced from 40% to 35%
@@ -19,7 +18,7 @@ const CELL_GAP = 6;
 const CELLS_PER_ROW = 3;
 
 // Calculate the total space needed for 3 cells and 2 gaps
-const TOTAL_CELL_SPACE = GRID_SIZE - (GRID_PADDING * 2);
+const TOTAL_CELL_SPACE = GRID_SIZE - GRID_PADDING * 2;
 const TOTAL_GAP_SPACE = CELL_GAP * (CELLS_PER_ROW - 1);
 const CELL_SIZE = (TOTAL_CELL_SPACE - TOTAL_GAP_SPACE) / CELLS_PER_ROW;
 
@@ -49,11 +48,11 @@ export default function GameGrid() {
     // Calculate position for 3x3 grid with proper centering
     const row = Math.floor(index / CELLS_PER_ROW);
     const col = index % CELLS_PER_ROW;
-    
+
     const cellPosition: ViewStyle = {
       position: 'absolute',
-      left: col * (CELL_SIZE + CELL_GAP),
-      top: row * (CELL_SIZE + CELL_GAP),
+      left: GRID_PADDING + col * (CELL_SIZE + CELL_GAP),
+      top: GRID_PADDING + row * (CELL_SIZE + CELL_GAP),
       width: CELL_SIZE,
       height: CELL_SIZE,
     };
@@ -82,13 +81,11 @@ export default function GameGrid() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.grid}>
-        <View style={styles.cellContainer}>
-          {cells.map((cell, index) => renderCell(cell, index))}
-        </View>
-      </View>
-    </View>
+    <ThemedView style={styles.container}>
+      <ThemedView style={styles.grid}>
+        {cells.map((cell, index) => renderCell(cell, index))}
+      </ThemedView>
+    </ThemedView>
   );
 }
 
@@ -116,6 +113,7 @@ const styles = StyleSheet.create({
   },
   cellContainer: {
     position: 'relative',
+    borderRadius: 16,
     width: TOTAL_CELL_SPACE,
     height: TOTAL_CELL_SPACE,
   },

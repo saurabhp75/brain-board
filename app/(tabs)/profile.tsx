@@ -1,7 +1,5 @@
-import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
@@ -21,6 +19,7 @@ import {
 import { useAuthStore } from '@/stores/authStore';
 import { useGameStore } from '@/stores/gameStore';
 import { AuthService } from '@/services/authService';
+import ThemedText from '@/components/ThemedText';
 
 export default function ProfileScreen() {
   const { user, isLoading } = useAuthStore();
@@ -73,10 +72,10 @@ export default function ProfileScreen() {
           <View style={styles.authContainer}>
             <View style={styles.authCard}>
               <Trophy color="#3b82f6" size={64} />
-              <Text style={styles.authTitle}>Memory Game Pro</Text>
-              <Text style={styles.authSubtitle}>
+              <ThemedText style={styles.authTitle}>Memory Game Pro</ThemedText>
+              <ThemedText style={styles.authSubtitle}>
                 Sign in to track your progress and compete on the leaderboard
-              </Text>
+              </ThemedText>
 
               <TouchableOpacity
                 style={[
@@ -87,14 +86,14 @@ export default function ProfileScreen() {
                 disabled={isLoading}
               >
                 <LogIn color="#ffffff" size={20} />
-                <Text style={styles.signInButtonText}>
+                <ThemedText style={styles.signInButtonText}>
                   {isLoading ? 'Signing In...' : 'Sign In with Google'}
-                </Text>
+                </ThemedText>
               </TouchableOpacity>
 
-              <Text style={styles.authFooter}>
+              <ThemedText style={styles.authFooter}>
                 Your stats and progress will be saved to your account
-              </Text>
+              </ThemedText>
             </View>
           </View>
         </LinearGradient>
@@ -119,14 +118,14 @@ export default function ProfileScreen() {
                 <Image source={{ uri: user.picture }} style={styles.avatar} />
               ) : (
                 <View style={styles.avatarPlaceholder}>
-                  <Text style={styles.avatarText}>
+                  <ThemedText style={styles.avatarText}>
                     {user.name.charAt(0).toUpperCase()}
-                  </Text>
+                  </ThemedText>
                 </View>
               )}
             </View>
-            <Text style={styles.userName}>{user.name}</Text>
-            <Text style={styles.userEmail}>{user.email}</Text>
+            <ThemedText style={styles.userName}>{user.name}</ThemedText>
+            <ThemedText style={styles.userEmail}>{user.email}</ThemedText>
           </View>
 
           {/* Stats Cards */}
@@ -134,28 +133,28 @@ export default function ProfileScreen() {
             <View style={styles.statsRow}>
               <View style={styles.statCard}>
                 <Target color="#3b82f6" size={24} />
-                <Text style={styles.statValue}>{gamesPlayed}</Text>
-                <Text style={styles.statLabel}>Games Played</Text>
+                <ThemedText style={styles.statValue}>{gamesPlayed}</ThemedText>
+                <ThemedText style={styles.statLabel}>Games Played</ThemedText>
               </View>
 
               <View style={styles.statCard}>
                 <Trophy color="#10b981" size={24} />
-                <Text style={styles.statValue}>{gamesWon}</Text>
-                <Text style={styles.statLabel}>Games Won</Text>
+                <ThemedText style={styles.statValue}>{gamesWon}</ThemedText>
+                <ThemedText style={styles.statLabel}>Games Won</ThemedText>
               </View>
             </View>
 
             <View style={styles.statsRow}>
               <View style={styles.statCard}>
                 <Clock color="#f59e0b" size={24} />
-                <Text style={styles.statValue}>{formatTime(bestTime)}</Text>
-                <Text style={styles.statLabel}>Best Time</Text>
+                <ThemedText style={styles.statValue}>{formatTime(bestTime)}</ThemedText>
+                <ThemedText style={styles.statLabel}>Best Time</ThemedText>
               </View>
 
               <View style={styles.statCard}>
                 <Award color="#8b5cf6" size={24} />
-                <Text style={styles.statValue}>{winRate}%</Text>
-                <Text style={styles.statLabel}>Win Rate</Text>
+                <ThemedText style={styles.statValue}>{winRate}%</ThemedText>
+                <ThemedText style={styles.statLabel}>Win Rate</ThemedText>
               </View>
             </View>
           </View>
@@ -163,14 +162,14 @@ export default function ProfileScreen() {
           {/* Current Score */}
           {currentScore > 0 && (
             <View style={styles.currentScoreCard}>
-              <Text style={styles.currentScoreTitle}>Latest Score</Text>
-              <Text style={styles.currentScoreValue}>{currentScore}</Text>
+              <ThemedText style={styles.currentScoreTitle}>Latest Score</ThemedText>
+              <ThemedText style={styles.currentScoreValue}>{currentScore}</ThemedText>
             </View>
           )}
 
           {/* Achievements Section */}
           <View style={styles.achievementsContainer}>
-            <Text style={styles.sectionTitle}>Achievements</Text>
+            <ThemedText style={styles.sectionTitle}>Achievements</ThemedText>
             <View style={styles.achievementsList}>
               <View
                 style={[
@@ -182,14 +181,14 @@ export default function ProfileScreen() {
                   color={gamesWon >= 1 ? '#10b981' : '#9ca3af'}
                   size={20}
                 />
-                <Text
+                <ThemedText
                   style={[
                     styles.achievementText,
                     gamesWon >= 1 && styles.achievementTextUnlocked,
                   ]}
                 >
                   First Victory
-                </Text>
+                </ThemedText>
               </View>
 
               <View
@@ -202,14 +201,14 @@ export default function ProfileScreen() {
                   color={gamesWon >= 5 ? '#10b981' : '#9ca3af'}
                   size={20}
                 />
-                <Text
+                <ThemedText
                   style={[
                     styles.achievementText,
                     gamesWon >= 5 && styles.achievementTextUnlocked,
                   ]}
                 >
                   Memory Master (5 wins)
-                </Text>
+                </ThemedText>
               </View>
 
               <View
@@ -226,7 +225,7 @@ export default function ProfileScreen() {
                   }
                   size={20}
                 />
-                <Text
+                <ThemedText
                   style={[
                     styles.achievementText,
                     bestTime != null && bestTime < 30000
@@ -235,7 +234,7 @@ export default function ProfileScreen() {
                   ]}
                 >
                   Speed Demon (Under 30s)
-                </Text>
+                </ThemedText>
               </View>
             </View>
           </View>
@@ -246,7 +245,7 @@ export default function ProfileScreen() {
             onPress={handleSignOut}
           >
             <LogOut color="#ef4444" size={20} />
-            <Text style={styles.signOutButtonText}>Sign Out</Text>
+            <ThemedText style={styles.signOutButtonText}>Sign Out</ThemedText>
           </TouchableOpacity>
         </ScrollView>
       </LinearGradient>

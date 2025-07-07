@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, SafeAreaView, Text, Dimensions } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
 import GameControls from '@/components/GameControls';
@@ -7,6 +7,7 @@ import { useGameStore } from '@/stores/gameStore';
 import { useAuthStore } from '@/stores/authStore';
 import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
+import ThemedView from '@/components/ThemedView';
 
 Dimensions.get('window');
 
@@ -44,26 +45,26 @@ export default function GameScreen() {
         colors={['#f0f9ff', '#e0f2fe', '#bae6fd']}
         style={styles.gradient}
       >
-        <View style={styles.content}>
+        <ThemedView style={styles.content}>
           {/* Header */}
-          <View style={styles.header}>
+          <ThemedView style={styles.header}>
             <Text style={styles.title}>Memory Game Pro</Text>
             {user && <Text style={styles.welcome}>Welcome, {user.name}!</Text>}
-          </View>
+          </ThemedView>
 
           {/* Game Controls */}
-          <View style={styles.controlsContainer}>
+          <ThemedView style={styles.controlsContainer}>
             <GameControls />
-          </View>
+          </ThemedView>
 
           {/* Game Grid */}
-          <View style={styles.gridContainer}>
+          <ThemedView style={styles.gridContainer}>
             <GameGrid />
-          </View>
+          </ThemedView>
 
           {/* Bottom Spacer */}
-          <View style={styles.bottomSpacer} />
-        </View>
+          <ThemedView style={styles.bottomSpacer} />
+        </ThemedView>
 
         {/* Confetti Animation */}
         {gamePhase === 'victory' && <Confetti />}
