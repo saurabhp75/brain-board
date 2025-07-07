@@ -144,6 +144,7 @@ const styles = StyleSheet.create({
   statusContainer: {
     alignItems: 'center',
     marginBottom: 15,
+    borderRadius: 8,
   },
   statusText: {
     fontSize: 16,
@@ -167,6 +168,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginBottom: 15,
+    borderRadius: 8,
   },
   inputLabel: {
     fontSize: 12,
@@ -186,6 +188,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 10,
+    borderRadius: 8,
   },
   startButton: {
     flex: 1,
