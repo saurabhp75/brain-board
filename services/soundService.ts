@@ -1,4 +1,7 @@
 import { createAudioPlayer, AudioPlayer } from 'expo-audio';
+const correctSound = require('@/assets/sounds/correct.mp3');
+const errorSound = require('@/assets/sounds/error.mp3');
+const victorySound = require('@/assets/sounds/victory.mp3');
 
 export class SoundService {
   private static correctSound: AudioPlayer | null = null;
@@ -11,14 +14,9 @@ export class SoundService {
 
     try {
       // Audio mode is handled automatically by expo-audio
-
-      this.correctSound = createAudioPlayer(
-        require('@/assets/sounds/correct.mp3')
-      );
-      this.errorSound = createAudioPlayer(require('@/assets/sounds/error.mp3'));
-      this.victorySound = createAudioPlayer(
-        require('@/assets/sounds/victory.mp3')
-      );
+      this.correctSound = createAudioPlayer(correctSound);
+      this.errorSound = createAudioPlayer(errorSound);
+      this.victorySound = createAudioPlayer(victorySound);
 
       this.isInitialized = true;
     } catch (error) {
