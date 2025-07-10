@@ -70,7 +70,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   initializeGame: async () => {
     // Initialize sound service
-    await SoundService.initialize();
+    // await SoundService.initialize();
 
     const cells = createEmptyGrid();
     const positions = getRandomPositions(9, 9);
