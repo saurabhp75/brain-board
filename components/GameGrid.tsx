@@ -25,67 +25,74 @@ const CELL_SIZE = (TOTAL_CELL_SPACE - TOTAL_GAP_SPACE) / CELLS_PER_ROW;
 export default function GameGrid() {
   const { cells, gamePhase, handleCellClick } = useGameStore();
 
-  const renderCell = (cell: GameCell, index: number) => {
-    const isClickable = gamePhase === 'playing' && !cell.isCorrect;
-
-    let cellContent = '?';
-    let cellStyle: ViewStyle[] = [styles.cell];
-
-    if (cell.isRevealed || cell.isCorrect) {
-      cellContent = cell.value?.toString() || '?';
-      cellStyle.push(styles.cellRevealed);
-    }
-
-    if (cell.showError) {
-      cellContent = '✕';
-      cellStyle.push(styles.cellError);
-    }
-
-    if (cell.isCorrect) {
-      cellStyle.push(styles.cellCorrect);
-    }
-
-    // Calculate position for 3x3 grid with proper centering
-    const row = Math.floor(index / CELLS_PER_ROW);
-    const col = index % CELLS_PER_ROW;
-
-    const cellPosition: ViewStyle = {
-      position: 'absolute',
-      left: GRID_PADDING + col * (CELL_SIZE + CELL_GAP),
-      top: GRID_PADDING + row * (CELL_SIZE + CELL_GAP),
-      width: CELL_SIZE,
-      height: CELL_SIZE,
-    };
-
-    return (
-      <TouchableOpacity
-        key={cell.id}
-        style={[cellStyle, cellPosition]}
-        onPress={() => handleCellClick(cell.id)}
-        disabled={!isClickable}
-        activeOpacity={0.7}
-      >
-        <Text
-          style={
-            [
-              styles.cellText,
-              cell.isCorrect && styles.cellTextCorrect,
-              cell.showError && styles.cellTextError,
-            ] as TextStyle[]
-          }
-        >
-          {cellContent}
-        </Text>
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.grid}>
-        {cells.map((cell, index) => renderCell(cell, index))}
+        {cells.map((cell, index) =>
+          Cell(cell, index, gamePhase, handleCellClick)
+        )}
       </ThemedView>
     </ThemedView>
+  );
+}
+
+function Cell(
+  cell: GameCell,
+  index: number,
+  gamePhase: string,
+  handleCellClick: (id: number) => void
+) {
+  const isClickable = gamePhase === 'playing' && !cell.isCorrect;
+
+  let cellContent = '?';
+  let cellStyle: ViewStyle[] = [styles.cell];
+
+  if (cell.isRevealed || cell.isCorrect) {
+    cellContent = cell.value?.toString() || '?';
+    cellStyle.push(styles.cellRevealed);
+  }
+
+  if (cell.showError) {
+    cellContent = '✕';
+    cellStyle.push(styles.cellError);
+  }
+
+  if (cell.isCorrect) {
+    cellStyle.push(styles.cellCorrect);
+  }
+
+  // Calculate position for 3x3 grid with proper centering
+  const row = Math.floor(index / CELLS_PER_ROW);
+  const col = index % CELLS_PER_ROW;
+
+  const cellPosition: ViewStyle = {
+    position: 'absolute',
+    left: GRID_PADDING + col * (CELL_SIZE + CELL_GAP),
+    top: GRID_PADDING + row * (CELL_SIZE + CELL_GAP),
+    width: CELL_SIZE,
+    height: CELL_SIZE,
+  };
+
+  return (
+    <TouchableOpacity
+      key={cell.id}
+      style={[cellStyle, cellPosition]}
+      onPress={() => handleCellClick(cell.id)}
+      disabled={!isClickable}
+      activeOpacity={0.7}
+    >
+      <Text
+        style={
+          [
+            styles.cellText,
+            cell.isCorrect && styles.cellTextCorrect,
+            cell.showError && styles.cellTextError,
+          ] as TextStyle[]
+        }
+      >
+        {cellContent}
+      </Text>
+    </TouchableOpacity>
   );
 }
 
