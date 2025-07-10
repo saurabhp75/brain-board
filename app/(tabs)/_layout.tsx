@@ -1,17 +1,22 @@
 import { Tabs } from 'expo-router';
 import { GamepadIcon, User, Trophy } from 'lucide-react-native';
 import AdBanner from '../../components/AdBanner';
+import { Colors } from '@/constants/Colors';
+import { useColorScheme } from 'react-native';
 
 export default function TabLayout() {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+
   return (
     <>
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#3b82f6',
-          tabBarInactiveTintColor: '#6b7280',
+          tabBarActiveTintColor: theme.iconColorFocused,
+          tabBarInactiveTintColor: theme.iconColor,
           tabBarStyle: {
-            backgroundColor: '#ffffff',
+            backgroundColor: theme.navBackground,
             borderTopWidth: 1,
             borderTopColor: '#e5e7eb',
             paddingBottom: 8,
@@ -28,8 +33,11 @@ export default function TabLayout() {
           name="game"
           options={{
             title: 'Game',
-            tabBarIcon: ({ size, color }) => (
-              <GamepadIcon size={size} color={color} />
+            tabBarIcon: ({ size, focused }) => (
+              <GamepadIcon
+                size={size}
+                color={focused ? theme.iconColorFocused : theme.iconColor}
+              />
             ),
           }}
         />
@@ -37,15 +45,23 @@ export default function TabLayout() {
           name="profile"
           options={{
             title: 'Profile',
-            tabBarIcon: ({ size, color }) => <User size={size} color={color} />,
+            tabBarIcon: ({ size, focused }) => (
+              <User
+                size={size}
+                color={focused ? theme.iconColorFocused : theme.iconColor}
+              />
+            ),
           }}
         />
         <Tabs.Screen
           name="leaderboard"
           options={{
             title: 'Leaderboard',
-            tabBarIcon: ({ size, color }) => (
-              <Trophy size={size} color={color} />
+            tabBarIcon: ({ size, focused }) => (
+              <Trophy
+                size={size}
+                color={focused ? theme.iconColorFocused : theme.iconColor}
+              />
             ),
           }}
         />

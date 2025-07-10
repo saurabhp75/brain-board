@@ -65,7 +65,8 @@ export default function GameControls() {
   const isStartDisabled = gamePhase === 'memorizing' || isLoading;
 
   return (
-    <ThemedView style={styles.container}>
+    // <ThemedView style={styles.container}>
+    <ThemedView >
       {/* Status Display */}
       <ThemedView style={styles.statusContainer}>
         <ThemedText
