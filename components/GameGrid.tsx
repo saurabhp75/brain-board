@@ -28,20 +28,28 @@ export default function GameGrid() {
   return (
     <ThemedView style={styles.container}>
       <ThemedView style={styles.grid}>
-        {cells.map((cell, index) =>
-          Cell(cell, index, gamePhase, handleCellClick)
-        )}
+        {cells.map((cell, index) => (
+          <Cell
+            key={cell.id}
+            cell={cell}
+            index={index}
+            gamePhase={gamePhase}
+            handleCellClick={handleCellClick}
+          />
+        ))}
       </ThemedView>
     </ThemedView>
   );
 }
 
-function Cell(
-  cell: GameCell,
-  index: number,
-  gamePhase: string,
-  handleCellClick: (id: number) => void
-) {
+interface CellProps {
+  cell: GameCell;
+  index: number;
+  gamePhase: string;
+  handleCellClick: (id: number) => void;
+}
+
+function Cell({ cell, index, gamePhase, handleCellClick }: CellProps) {
   const isClickable = gamePhase === 'playing' && !cell.isCorrect;
 
   let cellContent = '?';
@@ -75,7 +83,6 @@ function Cell(
 
   return (
     <TouchableOpacity
-      key={cell.id}
       style={[cellStyle, cellPosition]}
       onPress={() => handleCellClick(cell.id)}
       disabled={!isClickable}
