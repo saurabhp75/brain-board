@@ -1,9 +1,5 @@
 import { useState } from 'react';
-import {
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { Play, RotateCcw } from 'lucide-react-native';
 import { useGameStore } from '@/stores/gameStore';
 import ThemedView from './ThemedView';
@@ -73,25 +69,28 @@ export default function GameControls() {
       {/* Status Display */}
       <ThemedView style={styles.statusContainer}>
         <ThemedText
-          style={[
-            styles.statusText,
-            gamePhase === 'victory' && styles.statusTextVictory,
-          ]}
+        // style={[
+        //   styles.statusText,
+        //   gamePhase === 'victory' && styles.statusTextVictory,
+        // ]}
         >
           {statusMessage}
         </ThemedText>
 
         {gamePhase === 'playing' && (
           <ThemedView style={styles.statsContainer}>
-            <ThemedText style={styles.statText}>Moves: {moves}</ThemedText>
-            <ThemedText style={styles.statText}>Score: {score}</ThemedText>
+            {/* <ThemedText style={styles.statText}>Moves: {moves}</ThemedText>
+            <ThemedText style={styles.statText}>Score: {score}</ThemedText> */}
+            <ThemedText>Moves: {moves}</ThemedText>
+            <ThemedText>Score: {score}</ThemedText>
           </ThemedView>
         )}
       </ThemedView>
 
       {/* Duration Input */}
       <ThemedView style={styles.inputContainer}>
-        <ThemedText style={styles.inputLabel}>Duration (ms):</ThemedText>
+        {/* <ThemedText style={styles.inputLabel}>Duration (ms):</ThemedText> */}
+        <ThemedText>Duration (ms):</ThemedText>
         <TextInput
           style={styles.durationInput}
           value={durationInput}
@@ -114,7 +113,9 @@ export default function GameControls() {
           disabled={isStartDisabled}
         >
           <Play color="#ffffff" size={16} />
-          <ThemedText style={styles.startButtonText}>{getButtonText()}</ThemedText>
+          <ThemedText style={styles.startButtonText}>
+            {getButtonText()}
+          </ThemedText>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
@@ -145,6 +146,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 15,
     borderRadius: 8,
+    padding: 10,
   },
   statusText: {
     fontSize: 16,
@@ -169,6 +171,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 15,
     borderRadius: 8,
+    padding: 10,
   },
   inputLabel: {
     fontSize: 12,
