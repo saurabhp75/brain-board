@@ -65,23 +65,13 @@ export default function GameControls() {
   const isStartDisabled = gamePhase === 'memorizing' || isLoading;
 
   return (
-    // <ThemedView style={styles.container}>
-    <ThemedView >
+    <ThemedView>
       {/* Status Display */}
       <ThemedView style={styles.statusContainer}>
-        <ThemedText
-        // style={[
-        //   styles.statusText,
-        //   gamePhase === 'victory' && styles.statusTextVictory,
-        // ]}
-        >
-          {statusMessage}
-        </ThemedText>
+        <ThemedText>{statusMessage}</ThemedText>
 
         {gamePhase === 'playing' && (
           <ThemedView style={styles.statsContainer}>
-            {/* <ThemedText style={styles.statText}>Moves: {moves}</ThemedText>
-            <ThemedText style={styles.statText}>Score: {score}</ThemedText> */}
             <ThemedText>Moves: {moves}</ThemedText>
             <ThemedText>Score: {score}</ThemedText>
           </ThemedView>
@@ -90,7 +80,6 @@ export default function GameControls() {
 
       {/* Duration Input */}
       <ThemedView style={styles.inputContainer}>
-        {/* <ThemedText style={styles.inputLabel}>Duration (ms):</ThemedText> */}
         <ThemedText>Duration (ms):</ThemedText>
         <TextInput
           style={styles.durationInput}
@@ -129,32 +118,11 @@ export default function GameControls() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
-    margin: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
   statusContainer: {
     alignItems: 'center',
     marginBottom: 15,
     borderRadius: 8,
     padding: 10,
-  },
-  statusText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1f2937',
-    textAlign: 'center',
-    marginBottom: 6,
   },
   statusTextVictory: {
     color: '#059669',
@@ -164,21 +132,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
   },
-  statText: {
-    fontSize: 12,
-    color: '#6b7280',
-    fontWeight: '500',
-  },
   inputContainer: {
     marginBottom: 15,
     borderRadius: 8,
     padding: 10,
-  },
-  inputLabel: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#374151',
-    marginBottom: 6,
   },
   durationInput: {
     borderWidth: 1,

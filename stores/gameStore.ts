@@ -60,6 +60,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   currentTarget: 1,
   gamePhase: 'setup',
   isLoading: false,
+  // statusMessage can be derived from gamePhase
   statusMessage: 'Set duration and press Start Game to begin',
   duration: 3000,
   score: 0,
