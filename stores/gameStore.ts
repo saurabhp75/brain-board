@@ -2,11 +2,11 @@ import { create } from 'zustand';
 import { SoundService } from '@/services/soundService';
 
 export interface GameCell {
-  id: number;
-  value: number | null;
-  isRevealed: boolean;
-  isCorrect: boolean;
-  showError: boolean;
+  id: number; // Index
+  value: number | null; // Number value (1-9) or null(default) if empty
+  isRevealed: boolean; // default false
+  isCorrect: boolean; // default false
+  showError: boolean; // default false
 }
 
 export interface GameState {
@@ -46,21 +46,26 @@ const createEmptyGrid = (): GameCell[] => {
   }));
 };
 
-const getRandomPositions = (count: number, max: number): number[] => {
-  const positions = new Set<number>();
-  while (positions.size < count) {
-    positions.add(Math.floor(Math.random() * max));
+
+function getRandomBoard(n: number = 9): number[] {
+  const arr = Array.from({ length: n }, (_, i) => i + 1);
+
+  // Fisher-Yates shuffle algorithm 
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return Array.from(positions);
-};
+
+  return arr;
+}
 
 export const useGameStore = create<GameState>((set, get) => ({
-  // Initial state
+  // Initial state (TODO: Change it to create random grid)
   cells: createEmptyGrid(),
   currentTarget: 1,
   gamePhase: 'setup',
   isLoading: false,
-  // statusMessage can be derived from gamePhase
+  // TODO: statusMessage can be derived from gamePhase
   statusMessage: 'Set duration and press Start Game to begin',
   duration: 3000,
   score: 0,
@@ -74,11 +79,11 @@ export const useGameStore = create<GameState>((set, get) => ({
     // await SoundService.initialize();
 
     const cells = createEmptyGrid();
-    const positions = getRandomPositions(9, 9);
+    const positions = getRandomBoard(9);
 
     // Place numbers 1-9 in random positions
     positions.forEach((position, index) => {
-      cells[position].value = index + 1;
+      cells[index].value = position;
     });
 
     set({
@@ -97,6 +102,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     // Show all numbers during memorization phase
     const memoryCells = cells.map((cell) => ({
       ...cell,
+      // Check this logic to show cells
       isRevealed: cell.value !== null,
     }));
 
@@ -166,7 +172,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         });
       }
     } else {
-      // Wrong click - play error sound
+      // Wrong click - play error sound (TODO: Can we replace await with a void)
       await SoundService.playErrorSound();
 
       const newCells = cells.map((cell) =>
