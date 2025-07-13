@@ -165,7 +165,7 @@ export const useGameStore = create<GameState>((set, get) => ({
           cells: resetCells,
           statusMessage: `Find number ${currentTarget}!`,
         });
-      }, 500);
+      }, 200);
     }
   },
 
