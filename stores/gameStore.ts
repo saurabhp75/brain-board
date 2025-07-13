@@ -31,7 +31,7 @@ export interface GameState {
 
   // Actions
   startGame: () => void;
-  handleCellClick: (cellId: number) => Promise<void>;
+  handleCellClick: (cellId: number) => void;
   setDuration: (duration: number) => void;
   resetGame: () => void;
   updateStats: (timeElapsed: number) => void;
@@ -101,7 +101,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     }, duration);
   },
 
-  handleCellClick: async (cellId: number) => {
+  handleCellClick: (cellId: number) => {
     const { cells, currentTarget, gamePhase, moves } = get();
 
     if (gamePhase !== 'playing') return;
@@ -113,7 +113,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
     if (clickedCell.value === currentTarget) {
       // Correct click - play success sound
-      await SoundService.playCorrectSound();
+      SoundService.playCorrectSound();
 
       // Update the cell to be revealed and marked as correct
       const newCells = cells.map((cell) =>
@@ -124,7 +124,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
       if (nextTarget > 9) {
         // Victory! Play celebration sound
-        await SoundService.playVictorySound();
+        SoundService.playVictorySound();
 
         set({
           cells: newCells,
@@ -142,8 +142,8 @@ export const useGameStore = create<GameState>((set, get) => ({
         });
       }
     } else {
-      // Wrong click - play error sound (TODO: Can we replace await with a void)
-      await SoundService.playErrorSound();
+      // Wrong click - play error sound
+      SoundService.playErrorSound();
 
       const newCells = cells.map((cell) =>
         cell.id === cellId ? { ...cell, showError: true } : cell
