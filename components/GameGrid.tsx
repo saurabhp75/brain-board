@@ -14,7 +14,6 @@ export default function GameGrid() {
           <Cell
             key={cell.id}
             cell={cell}
-            index={index}
             gamePhase={gamePhase}
             handleCellClick={handleCellClick}
           />

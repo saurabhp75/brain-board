@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { SoundService } from '@/services/soundService';
 
+const SQUARES_IN_GRID = 9; // 3x3 grid
+
 export interface GameCell {
   id: number; // Index
-  value: number | null; // Number value (1-9) or null(default) if empty
-  isRevealed: boolean; // default false
-  isCorrect: boolean; // default false
-  showError: boolean; // default false
+  value: number; // Number value (1-9) or 0(default) if empty
+  isRevealed: boolean; // Show the cell value? default false
+  showError: boolean; // if true show 'X' instead of value (default false)
 }
 
 export interface GameState {
@@ -14,6 +15,7 @@ export interface GameState {
   cells: GameCell[];
   currentTarget: number;
   gamePhase: 'setup' | 'memorizing' | 'playing' | 'victory';
+  // TODO: Do we need this, as it is same as 'memorizing' phase?
   isLoading: boolean;
   statusMessage: string;
 
@@ -28,7 +30,6 @@ export interface GameState {
   gamesWon: number;
 
   // Actions
-  initializeGame: () => Promise<void>;
   startGame: () => void;
   handleCellClick: (cellId: number) => Promise<void>;
   setDuration: (duration: number) => void;
@@ -36,31 +37,24 @@ export interface GameState {
   updateStats: (timeElapsed: number) => void;
 }
 
-const createEmptyGrid = (): GameCell[] => {
-  return Array.from({ length: 9 }, (_, index) => ({
+const createEmptyGrid = (n: number = 9, show: boolean = false): GameCell[] => {
+  const arr = Array.from({ length: n }, (_, index) => ({
     id: index,
-    value: null,
-    isRevealed: false,
-    isCorrect: false,
+    value: index + 1,
+    isRevealed: show,
     showError: false,
   }));
-};
 
-
-function getRandomBoard(n: number = 9): number[] {
-  const arr = Array.from({ length: n }, (_, i) => i + 1);
-
-  // Fisher-Yates shuffle algorithm 
+  // Fisher-Yates shuffle algorithm
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    [arr[i].value, arr[j].value] = [arr[j].value, arr[i].value];
   }
 
   return arr;
-}
+};
 
 export const useGameStore = create<GameState>((set, get) => ({
-  // Initial state (TODO: Change it to create random grid)
   cells: createEmptyGrid(),
   currentTarget: 1,
   gamePhase: 'setup',
@@ -74,38 +68,13 @@ export const useGameStore = create<GameState>((set, get) => ({
   gamesPlayed: 0,
   gamesWon: 0,
 
-  initializeGame: async () => {
-    // Initialize sound service
-    // await SoundService.initialize();
-
-    const cells = createEmptyGrid();
-    const positions = getRandomBoard(9);
-
-    // Place numbers 1-9 in random positions
-    positions.forEach((position, index) => {
-      cells[index].value = position;
-    });
-
-    set({
-      cells,
-      currentTarget: 1,
-      gamePhase: 'setup',
-      statusMessage: 'Numbers placed! Press Start Game to begin memorizing',
-      moves: 0,
-      score: 0,
-    });
-  },
-
   startGame: () => {
-    const { cells, duration } = get();
+    const { duration } = get();
 
-    // Show all numbers during memorization phase
-    const memoryCells = cells.map((cell) => ({
-      ...cell,
-      // Check this logic to show cells
-      isRevealed: cell.value !== null,
-    }));
+    // Create grid with numbers showing for memorization phase
+    const memoryCells = createEmptyGrid(SQUARES_IN_GRID, true);
 
+    // Show the numbers for memorization phase
     set({
       cells: memoryCells,
       gamePhase: 'memorizing',
@@ -113,14 +82,16 @@ export const useGameStore = create<GameState>((set, get) => ({
       isLoading: true,
     });
 
-    // Hide numbers after duration
+    // Hide numbers after duration, We don't need to clear timeout to
+    // prevent memory leak (not needed as the timeout cannot be cleared,
+    // since button is disabled)
     setTimeout(() => {
-      const hiddenCells = cells.map((cell) => ({
+      const hiddenCells = memoryCells.map((cell) => ({
         ...cell,
-        isRevealed: false,
-        showError: false,
+        isRevealed: false, // Hide the number
       }));
 
+      // Hide the numbers and start the game
       set({
         cells: hiddenCells,
         gamePhase: 'playing',
@@ -136,7 +107,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     if (gamePhase !== 'playing') return;
 
     const clickedCell = cells[cellId];
-    if (clickedCell.isCorrect) return; // Already revealed
+    if (clickedCell.isRevealed) return;
 
     const newMoves = moves + 1;
 
@@ -144,10 +115,9 @@ export const useGameStore = create<GameState>((set, get) => ({
       // Correct click - play success sound
       await SoundService.playCorrectSound();
 
+      // Update the cell to be revealed and marked as correct
       const newCells = cells.map((cell) =>
-        cell.id === cellId
-          ? { ...cell, isRevealed: true, isCorrect: true }
-          : cell
+        cell.id === cellId ? { ...cell, isRevealed: true } : cell
       );
 
       const nextTarget = currentTarget + 1;

@@ -10,10 +10,8 @@ export default function GameControls() {
     duration,
     gamePhase,
     statusMessage,
-    isLoading,
     moves,
     score,
-    initializeGame,
     startGame,
     setDuration,
     resetGame,
@@ -33,18 +31,20 @@ export default function GameControls() {
   };
 
   const handleStartGame = async () => {
-    if (gamePhase === 'setup') {
-      await initializeGame();
-      setTimeout(() => startGame(), 100);
-    } else if (gamePhase === 'victory') {
-      resetGame();
-    } else {
-      startGame();
+    switch (gamePhase) {
+      case 'setup':
+        startGame();
+        break;
+      case 'playing':
+        resetGame();
+        break;
+      case 'victory':
+        resetGame();
+        break;
+      default:
+        resetGame();
+        break;
     }
-  };
-
-  const handleReset = () => {
-    resetGame();
   };
 
   const getButtonText = () => {
@@ -54,7 +54,7 @@ export default function GameControls() {
       case 'memorizing':
         return 'Memorizing...';
       case 'playing':
-        return 'Playing...';
+        return 'Reset Game';
       case 'victory':
         return 'Play Again';
       default:
@@ -62,7 +62,8 @@ export default function GameControls() {
     }
   };
 
-  const isStartDisabled = gamePhase === 'memorizing' || isLoading;
+  // const isStartDisabled = gamePhase === 'memorizing' || isLoading;
+  const isStartDisabled = gamePhase === 'memorizing';
 
   return (
     <ThemedView>
@@ -88,6 +89,7 @@ export default function GameControls() {
           keyboardType="numeric"
           placeholder="3000"
           editable={gamePhase === 'setup'}
+          selectTextOnFocus={gamePhase === 'setup'}
         />
       </ThemedView>
 
@@ -102,15 +104,13 @@ export default function GameControls() {
           onPress={handleStartGame}
           disabled={isStartDisabled}
         >
-          <Play color="#ffffff" size={16} />
+          {/* Show play icon in setup phase, reset icon in playing phase */}
+          {gamePhase === 'setup' && <Play color="#ffffff" size={16} />}
+          {gamePhase === 'victory' && <Play color="#ffffff" size={16} />}
+          {gamePhase === 'playing' && <RotateCcw color="#ffffff" size={16} />}
           <ThemedText style={styles.startButtonText}>
             {getButtonText()}
           </ThemedText>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
-          <RotateCcw color="#6b7280" size={16} />
-          <ThemedText style={styles.resetButtonText}>Reset</ThemedText>
         </TouchableOpacity>
       </ThemedView>
     </ThemedView>
@@ -123,9 +123,6 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderRadius: 8,
     padding: 10,
-  },
-  statusTextVictory: {
-    color: '#059669',
   },
   statsContainer: {
     flexDirection: 'row',
@@ -171,20 +168,5 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
-  },
-  resetButton: {
-    backgroundColor: '#f3f4f6',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 12,
-    borderRadius: 8,
-    gap: 6,
-    minWidth: 70,
-  },
-  resetButtonText: {
-    color: '#6b7280',
-    fontSize: 12,
-    fontWeight: '500',
   },
 });

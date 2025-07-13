@@ -9,8 +9,6 @@ import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
 import ThemedView from '@/components/ThemedView';
 
-Dimensions.get('window');
-
 export default function GameScreen() {
   const { gamePhase, updateStats } = useGameStore();
   const { user } = useAuthStore();

@@ -16,34 +16,29 @@ import {
 
 interface CellProps {
   cell: GameCell;
-  index: number;
   gamePhase: string;
   handleCellClick: (id: number) => void;
 }
 
-export function Cell({ cell, index, gamePhase, handleCellClick }: CellProps) {
-  const isClickable = gamePhase === 'playing' && !cell.isCorrect;
+export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
+  const isClickable = gamePhase === 'playing' && !cell.isRevealed;
 
   let cellContent = '?';
   let cellStyle: ViewStyle[] = [styles.cell];
 
-  if (cell.isRevealed || cell.isCorrect) {
-    cellContent = cell.value?.toString() || '?';
+  if (cell.isRevealed) {
+    cellContent = cell.value.toString();
     cellStyle.push(styles.cellRevealed);
   }
 
   if (cell.showError) {
-    cellContent = '✕';
+    cellContent = 'X';
     cellStyle.push(styles.cellError);
   }
 
-  if (cell.isCorrect) {
-    cellStyle.push(styles.cellCorrect);
-  }
-
-  // Calculate position for 3x3 grid with proper centering
-  const row = Math.floor(index / CELLS_PER_ROW);
-  const col = index % CELLS_PER_ROW;
+  // Calculate cell's row and column
+  const row = Math.floor(cell.id / CELLS_PER_ROW);
+  const col = cell.id % CELLS_PER_ROW;
 
   const cellPosition: ViewStyle = {
     position: 'absolute',
@@ -64,7 +59,7 @@ export function Cell({ cell, index, gamePhase, handleCellClick }: CellProps) {
         style={
           [
             styles.cellText,
-            cell.isCorrect && styles.cellTextCorrect,
+            cell.isRevealed && styles.cellTextCorrect,
             cell.showError && styles.cellTextError,
           ] as TextStyle[]
         }
