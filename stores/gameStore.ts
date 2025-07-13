@@ -170,7 +170,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   setDuration: (duration: number) => {
-    const clampedDuration = Math.max(1000, Math.min(10000, duration));
+    const clampedDuration = Math.min(10000, duration);
     set({ duration: clampedDuration });
   },
 
