@@ -10,13 +10,19 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.memorygamepro.app"
+      "bundleIdentifier": "com.memorygamepro.app",
+      "icon": {
+        "dark": "./assets/icons/ios-dark.png",
+        "light": "./assets/icons/ios-light.png",
+        "tinted": "./assets/icons/ios-tinted.png"
+      }
     },
     "android": {
       "package": "com.memorygamepro.app",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#3B82F6"
+        "foregroundImage": "./assets/icons/adaptive-icon.png",
+        "monochromeImage": "./assets/icons/android-mono.png",
+        "backgroundColor": "#ffffff"
       },
       "permissions": [
         "android.permission.RECORD_AUDIO",
@@ -33,6 +39,21 @@
       "expo-font",
       "expo-web-browser",
       "expo-audio",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/icons/splash-icon-dark.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/icons/splash-icon-light.png",
+            "imageWidth": 200,
+            "resizeMode": "contain",
+            "backgroundColor": "#000000"
+          }
+        }
+      ],
       [
         "react-native-google-mobile-ads",
         {
