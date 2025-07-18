@@ -1,4 +1,5 @@
 import { createAudioPlayer, AudioPlayer } from 'expo-audio';
+import * as Haptics from 'expo-haptics';
 const correctSound = require('@/assets/sounds/correct.mp3');
 const errorSound = require('@/assets/sounds/error.mp3');
 const victorySound = require('@/assets/sounds/victory.mp3');
@@ -29,6 +30,8 @@ export class SoundService {
   }
 
   static async playErrorSound() {
+    // Add haptic feedback for error
+    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
     await this.playSound(this.errorSound, 0.4);
   }
 
