@@ -16,10 +16,10 @@ const GameStatus = () => {
             <ThemedText style={styles.statLabel}>Moves</ThemedText>
             <ThemedText style={styles.statValue}>{moves}</ThemedText>
           </ThemedView>
-          <ThemedView style={styles.statItem}>
+          {/* <ThemedView style={styles.statItem}>
             <ThemedText style={styles.statLabel}>Score</ThemedText>
             <ThemedText style={styles.statValue}>{score}</ThemedText>
-          </ThemedView>
+          </ThemedView> */}
         </ThemedView>
       )}
     </ThemedView>

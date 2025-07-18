@@ -23,18 +23,18 @@ export interface GameState {
   duration: number;
 
   // Stats
-  score: number;
+  // score: number;
   moves: number;
-  bestTime: number | null;
-  gamesPlayed: number;
-  gamesWon: number;
+  // bestTime: number | null;
+  // gamesPlayed: number;
+  // gamesWon: number;
 
   // Actions
   startGame: () => void;
   handleCellClick: (cellId: number) => void;
   setDuration: (duration: number) => void;
   resetGame: () => void;
-  updateStats: (timeElapsed: number) => void;
+  // updateStats: (timeElapsed: number) => void;
 }
 
 const createEmptyGrid = (n: number = 9, show: boolean = false): GameCell[] => {
@@ -62,11 +62,11 @@ export const useGameStore = create<GameState>((set, get) => ({
   // TODO: statusMessage can be derived from gamePhase
   statusMessage: 'Set duration and press Start Game to begin',
   duration: 3000,
-  score: 0,
+  // score: 0,
   moves: 0,
-  bestTime: null,
-  gamesPlayed: 0,
-  gamesWon: 0,
+  // bestTime: null,
+  // gamesPlayed: 0,
+  // gamesWon: 0,
 
   startGame: () => {
     const { duration } = get();
@@ -131,7 +131,7 @@ export const useGameStore = create<GameState>((set, get) => ({
           gamePhase: 'victory',
           statusMessage: 'You have won! 🎉',
           moves: newMoves,
-          score: Math.max(0, 1000 - (newMoves - 9) * 10), // Bonus for fewer moves
+          // score: Math.max(0, 1000 - (newMoves - 9) * 10), // Bonus for fewer moves
         });
       } else {
         set({
@@ -182,18 +182,18 @@ export const useGameStore = create<GameState>((set, get) => ({
       statusMessage: 'Set duration and press Start Game to begin',
       isLoading: false,
       moves: 0,
-      score: 0,
+      // score: 0,
     });
   },
 
-  updateStats: (timeElapsed: number) => {
-    const { bestTime, gamesPlayed, gamesWon } = get();
+  // updateStats: (timeElapsed: number) => {
+  //   const { bestTime, gamesPlayed, gamesWon } = get();
 
-    set({
-      bestTime:
-        bestTime === null ? timeElapsed : Math.min(bestTime, timeElapsed),
-      gamesPlayed: gamesPlayed + 1,
-      gamesWon: gamesWon + 1,
-    });
-  },
+  //   set({
+  //     bestTime:
+  //       bestTime === null ? timeElapsed : Math.min(bestTime, timeElapsed),
+  //     gamesPlayed: gamesPlayed + 1,
+  //     gamesWon: gamesWon + 1,
+  //   });
+  // },
 }));

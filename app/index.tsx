@@ -14,9 +14,9 @@ import AdBanner from '@/components/AdBanner';
 import ThemedText from '@/components/ThemedText';
 
 export default function GameScreen() {
-  const { gamePhase, updateStats } = useGameStore();
+  const { gamePhase } = useGameStore();
   // const { user } = useAuthStore();
-  const [gameStartTime, setGameStartTime] = React.useState<number | null>(null);
+  // const [gameStartTime, setGameStartTime] = React.useState<number | null>(null);
 
   useEffect(() => {
     // Initialize sound service when component mounts
@@ -31,15 +31,15 @@ export default function GameScreen() {
     };
   }, []);
 
-  useEffect(() => {
-    if (gamePhase === 'playing' && gameStartTime === null) {
-      setGameStartTime(Date.now());
-    } else if (gamePhase === 'victory' && gameStartTime !== null) {
-      const timeElapsed = Date.now() - gameStartTime;
-      updateStats(timeElapsed);
-      setGameStartTime(null);
-    }
-  }, [gamePhase, gameStartTime, updateStats]);
+  // useEffect(() => {
+  //   if (gamePhase === 'playing' && gameStartTime === null) {
+  //     setGameStartTime(Date.now());
+  //   } else if (gamePhase === 'victory' && gameStartTime !== null) {
+  //     const timeElapsed = Date.now() - gameStartTime;
+  //     updateStats(timeElapsed);
+  //     setGameStartTime(null);
+  //   }
+  // }, [gamePhase, gameStartTime, updateStats]);
 
   return (
     <>
