@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, SafeAreaView, Text, Dimensions } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
 import GameStatus from '@/components/GameStatus';
@@ -67,14 +67,11 @@ export default function GameScreen() {
               <GameGrid />
             </ThemedView>
 
-            {/* Duration Input and Game Button - Below Grid */}
+            {/* Bottom Controls - Fixed at bottom */}
             <ThemedView style={styles.bottomControlsContainer}>
               <DurationInput />
               <GameButton />
             </ThemedView>
-
-            {/* Bottom Spacer */}
-            <ThemedView style={styles.bottomSpacer} />
           </ThemedView>
 
           {/* Confetti Animation */}
@@ -95,7 +92,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingBottom: 10,
+    paddingBottom: 80,
   },
   header: {
     alignItems: 'center',
@@ -135,16 +132,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
     minHeight: 200,
+    marginBottom: 20,
   },
   bottomControlsContainer: {
     paddingHorizontal: 15,
-    marginTop: 20,
-    marginBottom: 10,
-    flexDirection: 'row',
-    gap: 12,
+    paddingBottom: 10,
+    flexDirection: 'column',
+    gap: 28,
     alignItems: 'stretch',
-  },
-  bottomSpacer: {
-    height: 20,
   },
 });

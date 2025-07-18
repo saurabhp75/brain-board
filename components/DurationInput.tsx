@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import ThemedText from './ThemedText';
 import ThemedView from './ThemedView';
 import { useState } from 'react';
@@ -19,10 +25,28 @@ const DurationInput = () => {
       setDuration(3000); // Default value if input is invalid
     }
   };
+
+  function handleDecrement() {
+    const currentValue = parseInt(durationInput, 10);
+    const newValue = Math.max(1, currentValue - 100); // Minimum 1 ms
+    setDurationInput(newValue.toString());
+    setDuration(newValue);
+  }
+
+  function handleIncrement() {
+    const currentValue = parseInt(durationInput, 10);
+    const newValue = Math.min(10000, currentValue + 100); // Maximum 10 seconds
+    setDurationInput(newValue.toString());
+    setDuration(newValue);
+  }
+
   return (
     <ThemedView style={styles.inputContainer}>
+      <ThemedText>Duration:</ThemedText>
       <ThemedView style={styles.inputRow}>
-        <ThemedText style={styles.label}>Duration:</ThemedText>
+        <TouchableOpacity style={styles.button} onPress={handleDecrement}>
+          <ThemedText style={styles.buttonText}>-</ThemedText>
+        </TouchableOpacity>
         <TextInput
           style={styles.durationInput}
           value={durationInput}
@@ -32,6 +56,9 @@ const DurationInput = () => {
           editable={gamePhase === 'setup'}
           selectTextOnFocus={gamePhase === 'setup'}
         />
+        <TouchableOpacity style={styles.button} onPress={handleIncrement}>
+          <ThemedText style={styles.buttonText}>+</ThemedText>
+        </TouchableOpacity>
       </ThemedView>
     </ThemedView>
   );
@@ -69,10 +96,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#e5e7eb',
     borderRadius: 8,
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingTop: 16,
+    paddingBottom: 12,
     fontSize: 14,
     backgroundColor: '#ffffff',
-    height: 44,
+    height: 48,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    lineHeight: 18,
+    includeFontPadding: false,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -81,6 +114,27 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 2,
+  },
+  button: {
+    backgroundColor: '#4f46e5',
+    borderRadius: 8,
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#4f46e5',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 
