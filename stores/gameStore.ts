@@ -3,6 +3,13 @@ import { SoundService } from '@/services/soundService';
 
 const SQUARES_IN_GRID = 9; // 3x3 grid
 
+export const GAME_STATUS = {
+  setup: 'Set duration and press Start Game to begin',
+  memorizing: 'Memorize the positions!',
+  playing: 'Find number',
+  victory: 'Congratulations! You found all numbers!',
+};
+
 export interface GameCell {
   id: number; // Index
   value: number; // Number value (1-9) or 0(default) if empty
@@ -17,7 +24,7 @@ export interface GameState {
   gamePhase: 'setup' | 'memorizing' | 'playing' | 'victory';
   // TODO: Do we need this, as it is same as 'memorizing' phase?
   isLoading: boolean;
-  statusMessage: string;
+  // statusMessage: string;
 
   // Settings
   duration: number;
@@ -60,7 +67,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   gamePhase: 'setup',
   isLoading: false,
   // TODO: statusMessage can be derived from gamePhase
-  statusMessage: 'Set duration and press Start Game to begin',
+  // statusMessage: 'Set duration and press Start Game to begin',
   duration: 3000,
   // score: 0,
   moves: 0,
@@ -78,7 +85,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({
       cells: memoryCells,
       gamePhase: 'memorizing',
-      statusMessage: `Memorize the positions! Time: ${duration / 1000}s`,
+      // statusMessage: `Memorize the positions! Time: ${duration / 1000}s`,
       isLoading: true,
     });
 
@@ -95,7 +102,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       set({
         cells: hiddenCells,
         gamePhase: 'playing',
-        statusMessage: 'Find number 1!',
+        // statusMessage: 'Find number 1!',
         isLoading: false,
       });
     }, duration);
@@ -129,7 +136,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         set({
           cells: newCells,
           gamePhase: 'victory',
-          statusMessage: 'You have won! 🎉',
+          // statusMessage: 'You have won! 🎉',
           moves: newMoves,
           // score: Math.max(0, 1000 - (newMoves - 9) * 10), // Bonus for fewer moves
         });
@@ -137,7 +144,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         set({
           cells: newCells,
           currentTarget: nextTarget,
-          statusMessage: `Find number ${nextTarget}!`,
+          // statusMessage: `Find number ${nextTarget}!`,
           moves: newMoves,
         });
       }
@@ -151,7 +158,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
       set({
         cells: newCells,
-        statusMessage: 'Oh no! Try again.',
+        // statusMessage: 'Oh no! Try again.',
         moves: newMoves,
       });
 
@@ -163,7 +170,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 
         set({
           cells: resetCells,
-          statusMessage: `Find number ${currentTarget}!`,
+          // statusMessage: `Find number ${currentTarget}!`,
         });
       }, 200);
     }
@@ -179,7 +186,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       cells: createEmptyGrid(),
       currentTarget: 1,
       gamePhase: 'setup',
-      statusMessage: 'Set duration and press Start Game to begin',
+      // statusMessage: 'Set duration and press Start Game to begin',
       isLoading: false,
       moves: 0,
       // score: 0,

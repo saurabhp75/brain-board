@@ -28,7 +28,7 @@ const DurationInput = () => {
 
   function handleDecrement() {
     const currentValue = parseInt(durationInput, 10);
-    const newValue = Math.max(1, currentValue - 100); // Minimum 1 ms
+    const newValue = Math.max(0, currentValue - 100); // Minimum 1 ms
     setDurationInput(newValue.toString());
     setDuration(newValue);
   }

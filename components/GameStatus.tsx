@@ -2,13 +2,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import ThemedView from './ThemedView';
 import ThemedText from './ThemedText';
 import { useGameStore } from '@/stores/gameStore';
+import { GAME_STATUS } from '@/stores/gameStore';
 
 const GameStatus = () => {
-  const { gamePhase, statusMessage, moves, score } = useGameStore();
+  const { gamePhase, moves } = useGameStore();
 
   return (
     <ThemedView style={styles.statusContainer}>
-      <ThemedText style={styles.statusMessage}>{statusMessage}</ThemedText>
+      <ThemedText style={styles.statusMessage}>
+        {GAME_STATUS[gamePhase]}
+      </ThemedText>
 
       {gamePhase === 'playing' && (
         <ThemedView style={styles.statsContainer}>
