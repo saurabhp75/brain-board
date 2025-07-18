@@ -2,17 +2,20 @@ import React, { useEffect } from 'react';
 import { StyleSheet, SafeAreaView, Text, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
-import GameControls from '@/components/GameControls';
+import GameStatus from '@/components/GameStatus';
+import DurationInput from '@/components/DurationInput';
+import GameButton from '@/components/GameButton';
 import { useGameStore } from '@/stores/gameStore';
-import { useAuthStore } from '@/stores/authStore';
+// import { useAuthStore } from '@/stores/authStore';
 import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
 import ThemedView from '@/components/ThemedView';
 import AdBanner from '@/components/AdBanner';
+import ThemedText from '@/components/ThemedText';
 
 export default function GameScreen() {
   const { gamePhase, updateStats } = useGameStore();
-  const { user } = useAuthStore();
+  // const { user } = useAuthStore();
   const [gameStartTime, setGameStartTime] = React.useState<number | null>(null);
 
   useEffect(() => {
@@ -42,24 +45,32 @@ export default function GameScreen() {
     <>
       <SafeAreaView style={styles.container}>
         <LinearGradient
-          colors={['#f0f9ff', '#e0f2fe', '#bae6fd']}
+          colors={['#667eea', '#764ba2', '#f093fb']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
           style={styles.gradient}
         >
           <ThemedView style={styles.content}>
             {/* Header */}
             <ThemedView style={styles.header}>
-              <Text style={styles.title}>Memory Game Pro</Text>
-              {user && <Text style={styles.welcome}>Welcome, {user.name}!</Text>}
+              <ThemedText style={styles.title}>🧠 Memory Game Pro</ThemedText>
+              <ThemedView style={styles.headerDecoration} />
             </ThemedView>
 
-            {/* Game Controls */}
-            <ThemedView style={styles.controlsContainer}>
-              <GameControls />
+            {/* Game Status - Above Grid */}
+            <ThemedView style={styles.statusContainer}>
+              <GameStatus />
             </ThemedView>
 
             {/* Game Grid */}
             <ThemedView style={styles.gridContainer}>
               <GameGrid />
+            </ThemedView>
+
+            {/* Duration Input and Game Button - Below Grid */}
+            <ThemedView style={styles.bottomControlsContainer}>
+              <DurationInput />
+              <GameButton />
             </ThemedView>
 
             {/* Bottom Spacer */}
@@ -69,8 +80,8 @@ export default function GameScreen() {
           {/* Confetti Animation */}
           {gamePhase === 'victory' && <Confetti />}
         </LinearGradient>
+        <AdBanner />
       </SafeAreaView>
-      <AdBanner />
     </>
   );
 }
@@ -88,32 +99,50 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 5,
+    paddingTop: 20,
+    paddingBottom: 15,
     paddingHorizontal: 20,
-    minHeight: 60,
+    minHeight: 80,
+  },
+  headerDecoration: {
+    width: 60,
+    height: 4,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 2,
+    marginTop: 8,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 2,
+    color: '#ffffff',
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
   },
   welcome: {
     fontSize: 14,
     color: '#6b7280',
     fontWeight: '500',
   },
-  controlsContainer: {
-    paddingHorizontal: 10,
+  statusContainer: {
+    paddingHorizontal: 15,
     marginBottom: 15,
   },
   gridContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     minHeight: 200,
+  },
+  bottomControlsContainer: {
+    paddingHorizontal: 15,
+    marginTop: 20,
+    marginBottom: 10,
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'stretch',
   },
   bottomSpacer: {
     height: 20,
