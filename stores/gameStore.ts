@@ -23,7 +23,7 @@ export interface GameState {
   currentTarget: number;
   gamePhase: 'setup' | 'memorizing' | 'playing' | 'victory';
   // TODO: Do we need this, as it is same as 'memorizing' phase?
-  isLoading: boolean;
+  // isLoading: boolean;
 
   // Settings
   duration: number;
@@ -64,7 +64,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   cells: createEmptyGrid(),
   currentTarget: 1,
   gamePhase: 'setup',
-  isLoading: false,
+  // isLoading: false,
   duration: 3000,
   // score: 0,
   moves: 0,
@@ -82,7 +82,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({
       cells: memoryCells,
       gamePhase: 'memorizing',
-      isLoading: true,
+      // isLoading: true,
     });
 
     // Hide numbers after duration, We don't need to clear timeout to
@@ -99,7 +99,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         cells: hiddenCells,
         gamePhase: 'playing',
         // statusMessage: 'Find number 1!',
-        isLoading: false,
+        // isLoading: false,
       });
     }, duration);
   },
@@ -183,7 +183,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       cells: createEmptyGrid(),
       currentTarget: 1,
       gamePhase: 'setup',
-      isLoading: false,
+      // isLoading: false,
       moves: 0,
       // score: 0,
     });
