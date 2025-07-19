@@ -24,7 +24,6 @@ export interface GameState {
   gamePhase: 'setup' | 'memorizing' | 'playing' | 'victory';
   // TODO: Do we need this, as it is same as 'memorizing' phase?
   isLoading: boolean;
-  // statusMessage: string;
 
   // Settings
   duration: number;
@@ -66,8 +65,6 @@ export const useGameStore = create<GameState>((set, get) => ({
   currentTarget: 1,
   gamePhase: 'setup',
   isLoading: false,
-  // TODO: statusMessage can be derived from gamePhase
-  // statusMessage: 'Set duration and press Start Game to begin',
   duration: 3000,
   // score: 0,
   moves: 0,
@@ -85,7 +82,6 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({
       cells: memoryCells,
       gamePhase: 'memorizing',
-      // statusMessage: `Memorize the positions! Time: ${duration / 1000}s`,
       isLoading: true,
     });
 
@@ -177,7 +173,8 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   setDuration: (duration: number) => {
-    const clampedDuration = Math.min(10000, duration);
+    // Keep the duration within bounds
+    const clampedDuration = Math.max(0, Math.min(10000, duration));
     set({ duration: clampedDuration });
   },
 
@@ -186,7 +183,6 @@ export const useGameStore = create<GameState>((set, get) => ({
       cells: createEmptyGrid(),
       currentTarget: 1,
       gamePhase: 'setup',
-      // statusMessage: 'Set duration and press Start Game to begin',
       isLoading: false,
       moves: 0,
       // score: 0,

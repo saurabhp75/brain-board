@@ -1,44 +1,32 @@
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import ThemedText from './ThemedText';
 import ThemedView from './ThemedView';
-import { useState } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 
 const DurationInput = () => {
   const { duration, gamePhase, setDuration } = useGameStore();
 
-  const [durationInput, setDurationInput] = useState(duration.toString());
-
   const handleDurationChange = (text: string) => {
-    setDurationInput(text);
     const cleanedValue = text.replace(/[^0-9]/g, '');
     const numValue = parseInt(cleanedValue, 10);
     if (!isNaN(numValue)) {
       setDuration(numValue);
     } else {
-      setDuration(3000); // Default value if input is invalid
+      setDuration(0);
     }
   };
 
   function handleDecrement() {
-    const currentValue = parseInt(durationInput, 10);
-    const newValue = Math.max(0, currentValue - 100); // Minimum 1 ms
-    setDurationInput(newValue.toString());
+    const newValue = duration - 100;
     setDuration(newValue);
   }
 
   function handleIncrement() {
-    const currentValue = parseInt(durationInput, 10);
-    const newValue = Math.min(10000, currentValue + 100); // Maximum 10 seconds
-    setDurationInput(newValue.toString());
+    const newValue = duration + 100;
     setDuration(newValue);
   }
+
+  const disabled = gamePhase !== 'setup';
 
   return (
     <ThemedView style={styles.inputContainer}>
@@ -48,13 +36,14 @@ const DurationInput = () => {
           <ThemedText style={styles.buttonText}>-</ThemedText>
         </TouchableOpacity>
         <TextInput
+          // TODO: Set the style for duration
           style={styles.durationInput}
-          value={durationInput}
+          value={duration.toString()}
           onChangeText={handleDurationChange}
           keyboardType="numeric"
           placeholder="3000"
-          editable={gamePhase === 'setup'}
-          selectTextOnFocus={gamePhase === 'setup'}
+          editable={!disabled}
+          selectTextOnFocus={!disabled}
         />
         <TouchableOpacity style={styles.button} onPress={handleIncrement}>
           <ThemedText style={styles.buttonText}>+</ThemedText>
