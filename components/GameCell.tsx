@@ -9,12 +9,12 @@ import { GameCell } from '@/stores/gameStore';
 import {
   TouchableOpacity,
   ViewStyle,
-  Text,
-  TextStyle,
   StyleSheet,
   useColorScheme,
 } from 'react-native';
 import { Colors } from '@/constants/Colors';
+import { Fonts } from '@/constants/Fonts';
+import ThemedText from './ThemedText';
 
 interface CellProps {
   cell: GameCell;
@@ -37,7 +37,7 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
   }
 
   if (cell.showError) {
-    cellContent = 'X';
+    cellContent = '✕';
     cellStyle.push(styles.cellError);
   }
 
@@ -51,6 +51,12 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
     top: GRID_PADDING + row * (CELL_SIZE + CELL_GAP),
     width: CELL_SIZE,
     height: CELL_SIZE,
+  };
+
+  const getTextColor = () => {
+    if (cell.showError) return theme.error;
+    if (cell.isRevealed) return theme.info;
+    return theme.onSurface;
   };
 
   return (
@@ -70,18 +76,19 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
       disabled={!isClickable}
       activeOpacity={0.7}
     >
-      <Text
-        style={
-          [
-            styles.cellText,
-            { color: theme.onSurface },
-            cell.isRevealed && { color: theme.info },
-            cell.showError && { color: theme.error },
-          ] as TextStyle[]
-        }
+      <ThemedText
+        variant="numbers"
+        weight="extrabold"
+        style={[
+          styles.cellText,
+          {
+            color: getTextColor(),
+            fontSize: Math.min(CELL_SIZE * 0.45, 24),
+          },
+        ]}
       >
         {cellContent}
-      </Text>
+      </ThemedText>
     </TouchableOpacity>
   );
 }
@@ -116,8 +123,6 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.9 }],
   },
   cellText: {
-    fontSize: Math.min(CELL_SIZE * 0.45, 24),
-    fontWeight: '800',
     textShadowColor: 'rgba(0, 0, 0, 0.1)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,

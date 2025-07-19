@@ -53,7 +53,14 @@ export default function GameScreen() {
           <ThemedView style={styles.content}>
             {/* Header */}
             <ThemedView style={styles.header}>
-              <ThemedText style={styles.title}>🧠 Memory Game Pro</ThemedText>
+              <ThemedText
+                variant="heading"
+                size="3xl"
+                weight="bold"
+                style={styles.title}
+              >
+                🧠 Memory Game Pro
+              </ThemedText>
               <ThemedView style={styles.headerDecoration} />
             </ThemedView>
 
@@ -109,8 +116,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',

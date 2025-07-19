@@ -48,7 +48,9 @@ const DurationInput = () => {
         },
       ]}
     >
-      <ThemedText secondary>Duration:</ThemedText>
+      <ThemedText variant="caption" size="sm" weight="medium" secondary>
+        Duration:
+      </ThemedText>
       <ThemedView style={styles.inputRow}>
         <TouchableOpacity
           style={[
@@ -79,6 +81,8 @@ const DurationInput = () => {
                 : theme.inputSurface,
               color: disabled ? theme.onSurfaceDisabled : theme.inputText,
               shadowColor: theme.shadow,
+              fontFamily: 'System',
+              fontWeight: '600',
             },
           ]}
           value={duration.toString()}
@@ -133,11 +137,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 8,
   },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    minWidth: 60,
-  },
   durationInput: {
     flex: 1,
     borderWidth: 2,
@@ -172,11 +171,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 3,
-  },
-  buttonText: {
-    color: '#ffffff',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
 });
 

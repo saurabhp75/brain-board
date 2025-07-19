@@ -1,5 +1,6 @@
 import { Text, useColorScheme } from 'react-native';
 import { Colors } from '../constants/Colors';
+import { Fonts } from '../constants/Fonts';
 
 import type { TextProps, TextStyle } from 'react-native';
 
@@ -8,6 +9,9 @@ type ThemedTextProps = TextProps & {
   secondary?: boolean;
   tertiary?: boolean;
   disabled?: boolean;
+  variant?: 'body' | 'heading' | 'caption' | 'numbers' | 'score';
+  size?: keyof typeof Fonts.size;
+  weight?: keyof typeof Fonts.weight;
   style?: TextStyle | TextStyle[];
 };
 
@@ -17,6 +21,9 @@ const ThemedText = ({
   secondary = false,
   tertiary = false,
   disabled = false,
+  variant = 'body',
+  size = 'base',
+  weight = 'regular',
   ...props
 }: ThemedTextProps) => {
   const colorScheme = useColorScheme();
@@ -30,7 +37,43 @@ const ThemedText = ({
     return theme.onSurface;
   };
 
-  return <Text style={[{ color: getTextColor() }, style]} {...props} />;
+  const getFontFamily = () => {
+    switch (variant) {
+      case 'heading':
+        return Fonts.game.title;
+      case 'numbers':
+        return Fonts.game.numbers;
+      case 'score':
+        return Fonts.game.score;
+      case 'caption':
+        return Fonts.game.body;
+      default:
+        return Fonts.game.body;
+    }
+  };
+
+  const getLetterSpacing = () => {
+    switch (variant) {
+      case 'heading':
+        return Fonts.letterSpacing.tight;
+      case 'numbers':
+      case 'score':
+        return Fonts.letterSpacing.wide;
+      default:
+        return Fonts.letterSpacing.normal;
+    }
+  };
+
+  const modernTextStyle: TextStyle = {
+    color: getTextColor(),
+    fontFamily: getFontFamily(),
+    fontSize: Fonts.size[size],
+    fontWeight: Fonts.weight[weight],
+    letterSpacing: getLetterSpacing(),
+    lineHeight: Fonts.size[size] * Fonts.lineHeight.normal,
+  };
+
+  return <Text style={[modernTextStyle, style]} {...props} />;
 };
 
 export default ThemedText;

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
+import { StyleSheet, View, useColorScheme } from 'react-native';
 import ThemedView from './ThemedView';
 import ThemedText from './ThemedText';
 import { useGameStore } from '@/stores/gameStore';
@@ -21,7 +21,12 @@ const GameStatus = () => {
         },
       ]}
     >
-      <ThemedText style={[styles.statusMessage, { color: theme.onBackground }]}>
+      <ThemedText
+        variant="heading"
+        size="lg"
+        weight="semibold"
+        style={[styles.statusMessage, { color: theme.onBackground }]}
+      >
         {GAME_STATUS[gamePhase]}
       </ThemedText>
 
@@ -37,18 +42,22 @@ const GameStatus = () => {
             ]}
           >
             <ThemedText
+              variant="caption"
+              size="xs"
+              weight="medium"
               style={[styles.statLabel, { color: theme.onSurfaceVariant }]}
             >
-              Moves
+              MOVES
             </ThemedText>
-            <ThemedText style={[styles.statValue, { color: theme.primary }]}>
+            <ThemedText
+              variant="score"
+              size="2xl"
+              weight="bold"
+              style={[styles.statValue, { color: theme.primary }]}
+            >
               {moves}
             </ThemedText>
           </ThemedView>
-          {/* <ThemedView style={styles.statItem}>
-            <ThemedText style={styles.statLabel}>Score</ThemedText>
-            <ThemedText style={styles.statValue}>{score}</ThemedText>
-          </ThemedView> */}
         </ThemedView>
       )}
     </ThemedView>
@@ -71,8 +80,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   statusMessage: {
-    fontSize: 18,
-    fontWeight: '600',
     textAlign: 'center',
     marginBottom: 12,
   },
@@ -90,15 +97,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   statLabel: {
-    fontSize: 12,
-    fontWeight: '500',
     textTransform: 'uppercase',
-    letterSpacing: 0.5,
     marginBottom: 4,
   },
   statValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    // Modern typography handled by ThemedText variant
   },
 });
 

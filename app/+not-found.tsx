@@ -1,7 +1,8 @@
 import ThemedView from '@/components/ThemedView';
+import ThemedText from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
 import { Link, Stack } from 'expo-router';
-import { StyleSheet, Text, useColorScheme } from 'react-native';
+import { StyleSheet, useColorScheme } from 'react-native';
 
 export default function NotFoundScreen() {
   const colorScheme = useColorScheme();
@@ -16,16 +17,26 @@ export default function NotFoundScreen() {
         }}
       />
       <ThemedView style={styles.container}>
-        <Text style={[styles.text, { color: theme.onBackground }]}>
+        <ThemedText
+          variant="heading"
+          size="xl"
+          weight="semibold"
+          style={[styles.text, { color: theme.onBackground }]}
+        >
           This screen doesn&apos;t exist.
-        </Text>
+        </ThemedText>
         <Link
           href="/"
           style={[styles.link, { backgroundColor: theme.primary }]}
         >
-          <Text style={[styles.linkText, { color: '#ffffff' }]}>
+          <ThemedText
+            variant="heading"
+            size="base"
+            weight="semibold"
+            style={[styles.linkText, { color: '#ffffff' }]}
+          >
             Go to home screen!
-          </Text>
+          </ThemedText>
         </Link>
       </ThemedView>
     </>
@@ -40,8 +51,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   text: {
-    fontSize: 20,
-    fontWeight: 600,
+    // Modern typography handled by ThemedText
   },
   link: {
     marginTop: 15,
@@ -51,7 +61,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   linkText: {
-    fontSize: 16,
-    fontWeight: '600',
+    // Modern typography handled by ThemedText
   },
 });

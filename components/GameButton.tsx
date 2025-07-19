@@ -80,7 +80,12 @@ const GameButton = () => {
         {gamePhase === 'playing' && (
           <MaterialIcons name="refresh" color="#ffffff" size={16} />
         )}
-        <ThemedText style={styles.startButtonText}>
+        <ThemedText
+          variant="heading"
+          size="base"
+          weight="semibold"
+          style={styles.startButtonText}
+        >
           {getButtonText()}
         </ThemedText>
       </TouchableOpacity>
@@ -111,8 +116,6 @@ const styles = StyleSheet.create({
   },
   startButtonText: {
     color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '700',
     textShadowColor: 'rgba(0, 0, 0, 0.2)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
