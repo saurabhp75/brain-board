@@ -1,15 +1,27 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useColorScheme } from 'react-native';
 import { useGameStore } from '@/stores/gameStore';
 import ThemedView from './ThemedView';
 import { Cell } from './GameCell';
 import { GRID_PADDING, GRID_SIZE } from '@/constants/layouts';
+import { Colors } from '@/constants/Colors';
 
 export default function GameGrid() {
   const { cells, gamePhase, handleCellClick } = useGameStore();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedView style={styles.grid}>
+      <ThemedView
+        style={[
+          styles.grid,
+          {
+            backgroundColor: theme.surfaceElevated,
+            borderColor: theme.borderLight,
+            shadowColor: theme.shadow,
+          },
+        ]}
+      >
         {cells.map((cell, index) => (
           <Cell
             key={cell.id}
@@ -31,20 +43,17 @@ const styles = StyleSheet.create({
   grid: {
     width: GRID_SIZE,
     height: GRID_SIZE,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 20,
     padding: GRID_PADDING,
-    shadowColor: '#4f46e5',
     shadowOffset: {
       width: 0,
       height: 8,
     },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.15,
     shadowRadius: 12,
     elevation: 12,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.8)',
   },
 });

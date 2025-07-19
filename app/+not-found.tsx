@@ -16,9 +16,16 @@ export default function NotFoundScreen() {
         }}
       />
       <ThemedView style={styles.container}>
-        <Text style={styles.text}>This screen doesn&apos;t exist.</Text>
-        <Link href="/" style={styles.link}>
-          <Text>Go to home screen!</Text>
+        <Text style={[styles.text, { color: theme.title }]}>
+          This screen doesn&apos;t exist.
+        </Text>
+        <Link
+          href="/"
+          style={[styles.link, { backgroundColor: theme.buttonPrimary }]}
+        >
+          <Text style={[styles.linkText, { color: '#ffffff' }]}>
+            Go to home screen!
+          </Text>
         </Link>
       </ThemedView>
     </>
@@ -39,5 +46,12 @@ const styles = StyleSheet.create({
   link: {
     marginTop: 15,
     paddingVertical: 15,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  linkText: {
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

@@ -1,10 +1,18 @@
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  useColorScheme,
+} from 'react-native';
 import ThemedText from './ThemedText';
 import ThemedView from './ThemedView';
 import { useGameStore } from '@/stores/gameStore';
+import { Colors } from '@/constants/Colors';
 
 const DurationInput = () => {
   const { duration, gamePhase, setDuration } = useGameStore();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   const handleDurationChange = (text: string) => {
     const cleanedValue = text.replace(/[^0-9]/g, '');
@@ -29,23 +37,68 @@ const DurationInput = () => {
   const disabled = gamePhase !== 'setup';
 
   return (
-    <ThemedView style={styles.inputContainer}>
-      <ThemedText>Duration:</ThemedText>
+    <ThemedView
+      style={[
+        styles.inputContainer,
+        {
+          backgroundColor: theme.cardElevated,
+          borderColor: theme.border,
+          shadowColor: theme.shadow,
+        },
+      ]}
+    >
+      <ThemedText secondary>Duration:</ThemedText>
       <ThemedView style={styles.inputRow}>
-        <TouchableOpacity style={styles.button} onPress={handleDecrement}>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: disabled
+                ? theme.buttonDisabled
+                : theme.buttonPrimary,
+              shadowColor: disabled
+                ? theme.buttonDisabled
+                : theme.buttonPrimary,
+            },
+          ]}
+          onPress={handleDecrement}
+          disabled={disabled}
+        >
           <ThemedText style={styles.buttonText}>-</ThemedText>
         </TouchableOpacity>
         <TextInput
-          // TODO: Set the style for duration
-          style={styles.durationInput}
+          style={[
+            styles.durationInput,
+            {
+              borderColor: theme.inputBorder,
+              backgroundColor: theme.inputBackground,
+              color: theme.inputText,
+              shadowColor: theme.shadow,
+            },
+          ]}
           value={duration.toString()}
           onChangeText={handleDurationChange}
           keyboardType="numeric"
           placeholder="3000"
+          placeholderTextColor={theme.textPlaceholder}
           editable={!disabled}
           selectTextOnFocus={!disabled}
         />
-        <TouchableOpacity style={styles.button} onPress={handleIncrement}>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: disabled
+                ? theme.buttonDisabled
+                : theme.buttonPrimary,
+              shadowColor: disabled
+                ? theme.buttonDisabled
+                : theme.buttonPrimary,
+            },
+          ]}
+          onPress={handleIncrement}
+          disabled={disabled}
+        >
           <ThemedText style={styles.buttonText}>+</ThemedText>
         </TouchableOpacity>
       </ThemedView>
@@ -58,9 +111,8 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 12,
     justifyContent: 'center',
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
     padding: 12,
-    shadowColor: '#000',
+    borderWidth: 1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -78,24 +130,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     minWidth: 60,
-    color: '#374151',
   },
   durationInput: {
     flex: 1,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingTop: 16,
     paddingBottom: 12,
     fontSize: 14,
-    backgroundColor: '#ffffff',
     height: 48,
     textAlign: 'center',
     textAlignVertical: 'center',
     lineHeight: 18,
     includeFontPadding: false,
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -105,13 +153,11 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   button: {
-    backgroundColor: '#4f46e5',
     borderRadius: 8,
     width: 44,
     height: 44,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#4f46e5',
     shadowOffset: {
       width: 0,
       height: 2,

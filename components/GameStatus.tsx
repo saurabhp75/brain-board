@@ -1,23 +1,51 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import ThemedView from './ThemedView';
 import ThemedText from './ThemedText';
 import { useGameStore } from '@/stores/gameStore';
 import { GAME_STATUS } from '@/stores/gameStore';
+import { Colors } from '@/constants/Colors';
 
 const GameStatus = () => {
   const { gamePhase, moves } = useGameStore();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   return (
-    <ThemedView style={styles.statusContainer}>
-      <ThemedText style={styles.statusMessage}>
+    <ThemedView
+      style={[
+        styles.statusContainer,
+        {
+          backgroundColor: theme.cardElevated,
+          borderColor: theme.border,
+          shadowColor: theme.shadow,
+        },
+      ]}
+    >
+      <ThemedText style={[styles.statusMessage, { color: theme.title }]}>
         {GAME_STATUS[gamePhase]}
       </ThemedText>
 
       {gamePhase === 'playing' && (
         <ThemedView style={styles.statsContainer}>
-          <ThemedView style={styles.statItem}>
-            <ThemedText style={styles.statLabel}>Moves</ThemedText>
-            <ThemedText style={styles.statValue}>{moves}</ThemedText>
+          <ThemedView
+            style={[
+              styles.statItem,
+              {
+                backgroundColor: theme.surfaceHighlight,
+                borderColor: theme.borderLight,
+              },
+            ]}
+          >
+            <ThemedText
+              style={[styles.statLabel, { color: theme.textSecondary }]}
+            >
+              Moves
+            </ThemedText>
+            <ThemedText
+              style={[styles.statValue, { color: theme.buttonPrimary }]}
+            >
+              {moves}
+            </ThemedText>
           </ThemedView>
           {/* <ThemedView style={styles.statItem}>
             <ThemedText style={styles.statLabel}>Score</ThemedText>
@@ -35,8 +63,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderRadius: 16,
     padding: 16,
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-    shadowColor: '#000',
+    borderWidth: 1,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -48,7 +75,6 @@ const styles = StyleSheet.create({
   statusMessage: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1f2937',
     textAlign: 'center',
     marginBottom: 12,
   },
@@ -60,15 +86,14 @@ const styles = StyleSheet.create({
   },
   statItem: {
     alignItems: 'center',
-    backgroundColor: 'rgba(79, 70, 229, 0.1)',
     borderRadius: 12,
     padding: 12,
     flex: 1,
+    borderWidth: 1,
   },
   statLabel: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#6b7280',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: 4,
@@ -76,7 +101,6 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#4f46e5',
   },
 });
 

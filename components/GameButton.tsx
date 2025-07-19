@@ -1,11 +1,14 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import ThemedView from './ThemedView';
 import ThemedText from './ThemedText';
 import { useGameStore } from '@/stores/gameStore';
 import { Play, RotateCcw } from 'lucide-react-native';
+import { Colors } from '@/constants/Colors';
 
 const GameButton = () => {
   const { gamePhase, startGame, resetGame } = useGameStore();
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   const handleStartGame = async () => {
     switch (gamePhase) {
@@ -41,16 +44,31 @@ const GameButton = () => {
 
   const isStartDisabled = gamePhase === 'memorizing';
 
+  const getButtonColor = () => {
+    if (isStartDisabled) return theme.buttonDisabled;
+    if (gamePhase === 'victory') return theme.success;
+    return theme.buttonPrimary;
+  };
+
+  const getButtonPressedColor = () => {
+    if (isStartDisabled) return theme.buttonDisabled;
+    if (gamePhase === 'victory') return theme.successDark;
+    return theme.buttonPrimaryPressed;
+  };
+
   return (
     <ThemedView style={styles.buttonContainer}>
       <TouchableOpacity
         style={[
           styles.startButton,
-          isStartDisabled && styles.startButtonDisabled,
-          gamePhase === 'victory' && styles.startButtonVictory,
+          {
+            backgroundColor: getButtonColor(),
+            shadowColor: getButtonColor(),
+          },
         ]}
         onPress={handleStartGame}
         disabled={isStartDisabled}
+        activeOpacity={0.8}
       >
         {/* Show play icon in setup phase, reset icon in playing phase */}
         {gamePhase === 'setup' && <Play color="#ffffff" size={16} />}
@@ -70,7 +88,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   startButton: {
-    backgroundColor: '#4f46e5',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -78,7 +95,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     gap: 8,
     height: 56,
-    shadowColor: '#4f46e5',
     shadowOffset: {
       width: 0,
       height: 4,
@@ -86,15 +102,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 6,
     elevation: 8,
-  },
-  startButtonDisabled: {
-    backgroundColor: '#9ca3af',
-    shadowColor: '#9ca3af',
-    shadowOpacity: 0.2,
-  },
-  startButtonVictory: {
-    backgroundColor: '#10b981',
-    shadowColor: '#10b981',
   },
   startButtonText: {
     color: '#ffffff',

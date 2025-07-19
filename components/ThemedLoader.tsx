@@ -1,21 +1,21 @@
-import { ActivityIndicator, useColorScheme } from "react-native";
-import { Colors } from "../constants/Colors";
+import { ActivityIndicator, useColorScheme } from 'react-native';
+import { Colors } from '../constants/Colors';
 
-import ThemedView from "./ThemedView";
+import ThemedView from './ThemedView';
 
 const ThemedLoader = () => {
   const colorScheme = useColorScheme();
-  const theme = colorScheme === "dark" ? Colors.dark : Colors.light;
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   return (
     <ThemedView
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
-      <ActivityIndicator size="large" color={theme.text} />
+      <ActivityIndicator size="large" color={theme.buttonPrimary} />
     </ThemedView>
   );
 };

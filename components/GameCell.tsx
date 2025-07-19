@@ -12,7 +12,9 @@ import {
   Text,
   TextStyle,
   StyleSheet,
+  useColorScheme,
 } from 'react-native';
+import { Colors } from '@/constants/Colors';
 
 interface CellProps {
   cell: GameCell;
@@ -21,6 +23,9 @@ interface CellProps {
 }
 
 export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+
   const isClickable = gamePhase === 'playing' && !cell.isRevealed;
 
   let cellContent = '?';
@@ -50,7 +55,17 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
 
   return (
     <TouchableOpacity
-      style={[cellStyle, cellPosition]}
+      style={[
+        cellStyle,
+        cellPosition,
+        {
+          backgroundColor: cell.isRevealed
+            ? theme.surfaceHighlight
+            : theme.surface,
+          borderColor: cell.isRevealed ? theme.borderFocus : theme.border,
+          shadowColor: theme.shadow,
+        },
+      ]}
       onPress={() => handleCellClick(cell.id)}
       disabled={!isClickable}
       activeOpacity={0.7}
@@ -59,8 +74,9 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
         style={
           [
             styles.cellText,
-            cell.isRevealed && styles.cellTextCorrect,
-            cell.showError && styles.cellTextError,
+            { color: theme.text },
+            cell.isRevealed && { color: theme.info },
+            cell.showError && { color: theme.error },
           ] as TextStyle[]
         }
       >
@@ -78,13 +94,10 @@ const styles = StyleSheet.create({
     height: TOTAL_CELL_SPACE,
   },
   cell: {
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 3,
-    borderColor: 'rgba(79, 70, 229, 0.2)',
-    shadowColor: '#4f46e5',
+    borderWidth: 2,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -94,35 +107,21 @@ const styles = StyleSheet.create({
     elevation: 6,
   },
   cellRevealed: {
-    backgroundColor: '#ede9fe',
-    borderColor: '#8b5cf6',
     transform: [{ scale: 0.95 }],
-    shadowColor: '#8b5cf6',
   },
   cellCorrect: {
-    backgroundColor: '#ecfdf5',
-    borderColor: '#10b981',
     transform: [{ scale: 1.05 }],
-    shadowColor: '#10b981',
   },
   cellError: {
-    backgroundColor: '#fef2f2',
-    borderColor: '#ef4444',
     transform: [{ scale: 0.9 }],
-    shadowColor: '#ef4444',
   },
   cellText: {
     fontSize: Math.min(CELL_SIZE * 0.45, 24),
     fontWeight: '800',
-    color: '#374151',
     textShadowColor: 'rgba(0, 0, 0, 0.1)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
-  cellTextCorrect: {
-    color: '#059669',
-  },
-  cellTextError: {
-    color: '#dc2626',
-  },
+  cellTextCorrect: {},
+  cellTextError: {},
 });
