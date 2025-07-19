@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   useColorScheme,
 } from 'react-native';
-import { Plus, Minus } from 'lucide-react-native';
+import { AntDesign } from '@expo/vector-icons';
 import ThemedText from './ThemedText';
 import ThemedView from './ThemedView';
 import { useGameStore } from '@/stores/gameStore';
@@ -65,7 +65,11 @@ const DurationInput = () => {
           onPress={handleDecrement}
           disabled={disabled}
         >
-          <Minus color={disabled ? theme.textDisabled : '#ffffff'} size={20} />
+          <AntDesign
+            name="minus"
+            color={disabled ? theme.textDisabled : '#ffffff'}
+            size={20}
+          />
         </TouchableOpacity>
         <TextInput
           style={[
@@ -102,7 +106,11 @@ const DurationInput = () => {
           onPress={handleIncrement}
           disabled={disabled}
         >
-          <Plus color={disabled ? theme.textDisabled : '#ffffff'} size={20} />
+          <AntDesign
+            name="plus"
+            color={disabled ? theme.textDisabled : '#ffffff'}
+            size={20}
+          />
         </TouchableOpacity>
       </ThemedView>
     </ThemedView>

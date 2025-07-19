@@ -4,10 +4,10 @@ import { SoundService } from '@/services/soundService';
 const SQUARES_IN_GRID = 9; // 3x3 grid
 
 export const GAME_STATUS = {
-  setup: 'Set duration and press Start Game to begin',
-  memorizing: 'Memorize the positions!',
-  playing: 'Find number',
-  victory: 'Congratulations! You found all numbers!',
+  setup: 'Set duration and press Start Game',
+  memorizing: 'Memorize the numbers',
+  playing: 'Find the number',
+  victory: 'Congratulations! You have won! 🎉',
 };
 
 export interface GameCell {
@@ -98,7 +98,6 @@ export const useGameStore = create<GameState>((set, get) => ({
       set({
         cells: hiddenCells,
         gamePhase: 'playing',
-        // statusMessage: 'Find number 1!',
         // isLoading: false,
       });
     }, duration);
@@ -132,7 +131,6 @@ export const useGameStore = create<GameState>((set, get) => ({
         set({
           cells: newCells,
           gamePhase: 'victory',
-          // statusMessage: 'You have won! 🎉',
           moves: newMoves,
           // score: Math.max(0, 1000 - (newMoves - 9) * 10), // Bonus for fewer moves
         });
@@ -140,7 +138,6 @@ export const useGameStore = create<GameState>((set, get) => ({
         set({
           cells: newCells,
           currentTarget: nextTarget,
-          // statusMessage: `Find number ${nextTarget}!`,
           moves: newMoves,
         });
       }

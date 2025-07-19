@@ -122,6 +122,4 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
-  cellTextCorrect: {},
-  cellTextError: {},
 });

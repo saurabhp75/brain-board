@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import ThemedView from './ThemedView';
 import ThemedText from './ThemedText';
 import { useGameStore } from '@/stores/gameStore';
-import { Play, RotateCcw } from 'lucide-react-native';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 
 const GameButton = () => {
@@ -71,9 +71,15 @@ const GameButton = () => {
         activeOpacity={0.8}
       >
         {/* Show play icon in setup phase, reset icon in playing phase */}
-        {gamePhase === 'setup' && <Play color="#ffffff" size={16} />}
-        {gamePhase === 'victory' && <Play color="#ffffff" size={16} />}
-        {gamePhase === 'playing' && <RotateCcw color="#ffffff" size={16} />}
+        {gamePhase === 'setup' && (
+          <AntDesign name="caretright" color="#ffffff" size={16} />
+        )}
+        {gamePhase === 'victory' && (
+          <AntDesign name="caretright" color="#ffffff" size={16} />
+        )}
+        {gamePhase === 'playing' && (
+          <MaterialIcons name="refresh" color="#ffffff" size={16} />
+        )}
         <ThemedText style={styles.startButtonText}>
           {getButtonText()}
         </ThemedText>
