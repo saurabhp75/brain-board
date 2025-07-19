@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   useColorScheme,
 } from 'react-native';
+import { Plus, Minus } from 'lucide-react-native';
 import ThemedText from './ThemedText';
 import ThemedView from './ThemedView';
 import { useGameStore } from '@/stores/gameStore';
@@ -64,15 +65,17 @@ const DurationInput = () => {
           onPress={handleDecrement}
           disabled={disabled}
         >
-          <ThemedText style={styles.buttonText}>-</ThemedText>
+          <Minus color={disabled ? theme.textDisabled : '#ffffff'} size={20} />
         </TouchableOpacity>
         <TextInput
           style={[
             styles.durationInput,
             {
-              borderColor: theme.inputBorder,
-              backgroundColor: theme.inputBackground,
-              color: theme.inputText,
+              borderColor: disabled ? theme.borderLight : theme.inputBorder,
+              backgroundColor: disabled
+                ? theme.surfaceHighlight
+                : theme.inputBackground,
+              color: disabled ? theme.textDisabled : theme.inputText,
               shadowColor: theme.shadow,
             },
           ]}
@@ -99,7 +102,7 @@ const DurationInput = () => {
           onPress={handleIncrement}
           disabled={disabled}
         >
-          <ThemedText style={styles.buttonText}>+</ThemedText>
+          <Plus color={disabled ? theme.textDisabled : '#ffffff'} size={20} />
         </TouchableOpacity>
       </ThemedView>
     </ThemedView>
