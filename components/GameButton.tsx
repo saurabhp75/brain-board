@@ -45,15 +45,15 @@ const GameButton = () => {
   const isStartDisabled = gamePhase === 'memorizing';
 
   const getButtonColor = () => {
-    if (isStartDisabled) return theme.buttonDisabled;
+    if (isStartDisabled) return theme.surfaceContainerLow;
     if (gamePhase === 'victory') return theme.success;
-    return theme.buttonPrimary;
+    return theme.primary;
   };
 
   const getButtonPressedColor = () => {
-    if (isStartDisabled) return theme.buttonDisabled;
-    if (gamePhase === 'victory') return theme.successDark;
-    return theme.buttonPrimaryPressed;
+    if (isStartDisabled) return theme.surfaceContainerLow;
+    if (gamePhase === 'victory') return theme.successFixed;
+    return theme.primaryContainer;
   };
 
   return (

@@ -60,9 +60,9 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
         cellPosition,
         {
           backgroundColor: cell.isRevealed
-            ? theme.surfaceHighlight
+            ? theme.surfaceContainerHighest
             : theme.surface,
-          borderColor: cell.isRevealed ? theme.borderFocus : theme.border,
+          borderColor: cell.isRevealed ? theme.outlineFocus : theme.outline,
           shadowColor: theme.shadow,
         },
       ]}
@@ -74,7 +74,7 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
         style={
           [
             styles.cellText,
-            { color: theme.text },
+            { color: theme.onSurface },
             cell.isRevealed && { color: theme.info },
             cell.showError && { color: theme.error },
           ] as TextStyle[]

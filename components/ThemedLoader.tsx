@@ -15,7 +15,7 @@ const ThemedLoader = () => {
         alignItems: 'center',
       }}
     >
-      <ActivityIndicator size="large" color={theme.buttonPrimary} />
+      <ActivityIndicator size="large" color={theme.primary} />
     </ThemedView>
   );
 };

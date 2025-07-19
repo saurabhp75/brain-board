@@ -15,13 +15,13 @@ const GameStatus = () => {
       style={[
         styles.statusContainer,
         {
-          backgroundColor: theme.cardElevated,
-          borderColor: theme.border,
+          backgroundColor: theme.surfaceContainerHigh,
+          borderColor: theme.outline,
           shadowColor: theme.shadow,
         },
       ]}
     >
-      <ThemedText style={[styles.statusMessage, { color: theme.title }]}>
+      <ThemedText style={[styles.statusMessage, { color: theme.onBackground }]}>
         {GAME_STATUS[gamePhase]}
       </ThemedText>
 
@@ -31,19 +31,17 @@ const GameStatus = () => {
             style={[
               styles.statItem,
               {
-                backgroundColor: theme.surfaceHighlight,
-                borderColor: theme.borderLight,
+                backgroundColor: theme.surfaceContainerHighest,
+                borderColor: theme.outlineVariant,
               },
             ]}
           >
             <ThemedText
-              style={[styles.statLabel, { color: theme.textSecondary }]}
+              style={[styles.statLabel, { color: theme.onSurfaceVariant }]}
             >
               Moves
             </ThemedText>
-            <ThemedText
-              style={[styles.statValue, { color: theme.buttonPrimary }]}
-            >
+            <ThemedText style={[styles.statValue, { color: theme.primary }]}>
               {moves}
             </ThemedText>
           </ThemedView>

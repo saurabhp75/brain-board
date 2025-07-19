@@ -13,8 +13,10 @@ const ThemedCard = ({ style, elevated = false, ...props }: ThemedCardProps) => {
     <View
       style={[
         {
-          backgroundColor: elevated ? theme.cardElevated : theme.card,
-          borderColor: theme.border,
+          backgroundColor: elevated
+            ? theme.surfaceContainerHigh
+            : theme.surfaceContainerLow,
+          borderColor: theme.outline,
           shadowColor: theme.shadow,
         },
         styles.card,

@@ -42,8 +42,8 @@ const DurationInput = () => {
       style={[
         styles.inputContainer,
         {
-          backgroundColor: theme.cardElevated,
-          borderColor: theme.border,
+          backgroundColor: theme.surfaceContainerHigh,
+          borderColor: theme.outline,
           shadowColor: theme.shadow,
         },
       ]}
@@ -55,11 +55,9 @@ const DurationInput = () => {
             styles.button,
             {
               backgroundColor: disabled
-                ? theme.buttonDisabled
-                : theme.buttonPrimary,
-              shadowColor: disabled
-                ? theme.buttonDisabled
-                : theme.buttonPrimary,
+                ? theme.surfaceContainerLow
+                : theme.primary,
+              shadowColor: disabled ? theme.surfaceContainerLow : theme.primary,
             },
           ]}
           onPress={handleDecrement}
@@ -67,7 +65,7 @@ const DurationInput = () => {
         >
           <AntDesign
             name="minus"
-            color={disabled ? theme.textDisabled : '#ffffff'}
+            color={disabled ? theme.onSurfaceDisabled : '#ffffff'}
             size={20}
           />
         </TouchableOpacity>
@@ -75,11 +73,11 @@ const DurationInput = () => {
           style={[
             styles.durationInput,
             {
-              borderColor: disabled ? theme.borderLight : theme.inputBorder,
+              borderColor: disabled ? theme.outlineVariant : theme.inputOutline,
               backgroundColor: disabled
-                ? theme.surfaceHighlight
-                : theme.inputBackground,
-              color: disabled ? theme.textDisabled : theme.inputText,
+                ? theme.surfaceContainerHighest
+                : theme.inputSurface,
+              color: disabled ? theme.onSurfaceDisabled : theme.inputText,
               shadowColor: theme.shadow,
             },
           ]}
@@ -87,7 +85,7 @@ const DurationInput = () => {
           onChangeText={handleDurationChange}
           keyboardType="numeric"
           placeholder="3000"
-          placeholderTextColor={theme.textPlaceholder}
+          placeholderTextColor={theme.placeholder}
           editable={!disabled}
           selectTextOnFocus={!disabled}
         />
@@ -96,11 +94,9 @@ const DurationInput = () => {
             styles.button,
             {
               backgroundColor: disabled
-                ? theme.buttonDisabled
-                : theme.buttonPrimary,
-              shadowColor: disabled
-                ? theme.buttonDisabled
-                : theme.buttonPrimary,
+                ? theme.surfaceContainerLow
+                : theme.primary,
+              shadowColor: disabled ? theme.surfaceContainerLow : theme.primary,
             },
           ]}
           onPress={handleIncrement}
@@ -108,7 +104,7 @@ const DurationInput = () => {
         >
           <AntDesign
             name="plus"
-            color={disabled ? theme.textDisabled : '#ffffff'}
+            color={disabled ? theme.onSurfaceDisabled : '#ffffff'}
             size={20}
           />
         </TouchableOpacity>

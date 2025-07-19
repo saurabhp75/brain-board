@@ -11,17 +11,17 @@ export default function NotFoundScreen() {
       <Stack.Screen
         options={{
           title: 'Oops!',
-          headerStyle: { backgroundColor: theme.navBackground },
-          headerTintColor: theme.title,
+          headerStyle: { backgroundColor: theme.navigationBackground },
+          headerTintColor: theme.onBackground,
         }}
       />
       <ThemedView style={styles.container}>
-        <Text style={[styles.text, { color: theme.title }]}>
+        <Text style={[styles.text, { color: theme.onBackground }]}>
           This screen doesn&apos;t exist.
         </Text>
         <Link
           href="/"
-          style={[styles.link, { backgroundColor: theme.buttonPrimary }]}
+          style={[styles.link, { backgroundColor: theme.primary }]}
         >
           <Text style={[styles.linkText, { color: '#ffffff' }]}>
             Go to home screen!

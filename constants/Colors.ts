@@ -3,137 +3,137 @@ export const Colors = {
   warning: '#cc475a',
 
   dark: {
-    // Existing
-    text: '#d4d4d4',
-    title: '#fff',
-    background: '#252231',
-    navBackground: '#201e2b',
-    iconColor: '#9591a5',
-    iconColorFocused: '#fff',
-    uiBackground: '#2f2b3d',
-
-    // Text Hierarchy
-    textSecondary: '#a8a8a8',
-    textTertiary: '#757575',
-    textDisabled: '#525252',
-    textPlaceholder: '#6b6b6b',
-
-    // Semantic Colors
-    success: '#10b981',
-    successLight: '#34d399',
-    successDark: '#047857',
-    error: '#ef4444',
-    errorLight: '#f87171',
-    errorDark: '#dc2626',
-    warning: '#f59e0b',
-    warningLight: '#fbbf24',
-    warningDark: '#d97706',
-    info: '#3b82f6',
-    infoLight: '#60a5fa',
-    infoDark: '#2563eb',
+    // Text Colors
+    onSurface: '#d4d4d4',
+    onSurfaceVariant: '#a8a8a8',
+    onSurfaceDisabled: '#525252',
+    onBackground: '#fff',
+    onBackgroundVariant: '#757575',
+    placeholder: '#6b6b6b',
 
     // Surface Colors
+    background: '#252231',
     surface: '#1e1b26',
-    surfaceElevated: '#342f42',
-    surfaceHighlight: '#3d3751',
-    card: '#2a2536',
-    cardElevated: '#352f43',
+    surfaceVariant: '#342f42',
+    surfaceContainer: '#2f2b3d',
+    surfaceContainerLow: '#2a2536',
+    surfaceContainerHigh: '#352f43',
+    surfaceContainerHighest: '#3d3751',
 
-    // Border Colors
-    border: '#403a4d',
-    borderLight: '#4a4458',
-    borderFocus: '#6849a7',
+    // Navigation
+    navigationBackground: '#201e2b',
+
+    // Icons
+    iconDefault: '#9591a5',
+    iconActive: '#fff',
+
+    // Semantic Colors
+    primary: '#6849a7',
+    primaryContainer: '#553d87',
+    secondary: '#403a4d',
+    secondaryContainer: '#4a4458',
+    success: '#10b981',
+    successContainer: '#34d399',
+    successFixed: '#047857',
+    error: '#ef4444',
+    errorContainer: '#f87171',
+    errorFixed: '#dc2626',
+    warning: '#f59e0b',
+    warningContainer: '#fbbf24',
+    warningFixed: '#d97706',
+    info: '#3b82f6',
+    infoContainer: '#60a5fa',
+    infoFixed: '#2563eb',
+
+    // Borders & Outlines
+    outline: '#403a4d',
+    outlineVariant: '#4a4458',
+    outlineFocus: '#6849a7',
     divider: '#363041',
 
     // Interactive States
-    ripple: 'rgba(255, 255, 255, 0.1)',
+    stateLayerPressed: 'rgba(255, 255, 255, 0.1)',
     overlay: 'rgba(0, 0, 0, 0.7)',
     backdrop: 'rgba(0, 0, 0, 0.5)',
     shadow: 'rgba(0, 0, 0, 0.8)',
 
-    // Component-Specific
-    buttonPrimary: '#6849a7',
-    buttonPrimaryPressed: '#553d87',
-    buttonSecondary: '#403a4d',
-    buttonSecondaryPressed: '#4a4458',
-    buttonDisabled: '#2a2536',
-
-    inputBackground: '#2a2536',
-    inputBorder: '#403a4d',
-    inputBorderFocus: '#6849a7',
+    // Input Fields
+    inputSurface: '#2a2536',
+    inputOutline: '#403a4d',
+    inputOutlineFocused: '#6849a7',
     inputText: '#d4d4d4',
 
-    // Status Colors
-    online: '#10b981',
-    offline: '#6b7280',
-    away: '#f59e0b',
-    busy: '#ef4444',
+    // Status Indicators
+    statusOnline: '#10b981',
+    statusOffline: '#6b7280',
+    statusAway: '#f59e0b',
+    statusBusy: '#ef4444',
   },
   light: {
-    // Existing
-    text: '#625f72',
-    title: '#201e2b',
-    background: '#e0dfe8',
-    navBackground: '#e8e7ef',
-    iconColor: '#686477',
-    iconColorFocused: '#201e2b',
-    uiBackground: '#d6d5e1',
-
-    // Text Hierarchy
-    textSecondary: '#6b7280',
-    textTertiary: '#9ca3af',
-    textDisabled: '#d1d5db',
-    textPlaceholder: '#9ca3af',
-
-    // Semantic Colors
-    success: '#059669',
-    successLight: '#10b981',
-    successDark: '#047857',
-    error: '#dc2626',
-    errorLight: '#ef4444',
-    errorDark: '#b91c1c',
-    warning: '#d97706',
-    warningLight: '#f59e0b',
-    warningDark: '#b45309',
-    info: '#2563eb',
-    infoLight: '#3b82f6',
-    infoDark: '#1d4ed8',
+    // Text Colors
+    onSurface: '#625f72',
+    onSurfaceVariant: '#6b7280',
+    onSurfaceDisabled: '#d1d5db',
+    onBackground: '#201e2b',
+    onBackgroundVariant: '#9ca3af',
+    placeholder: '#9ca3af',
 
     // Surface Colors
+    background: '#e0dfe8',
     surface: '#ffffff',
-    surfaceElevated: '#f9fafb',
-    surfaceHighlight: '#f3f4f6',
-    card: '#ffffff',
-    cardElevated: '#f9fafb',
+    surfaceVariant: '#f9fafb',
+    surfaceContainer: '#d6d5e1',
+    surfaceContainerLow: '#ffffff',
+    surfaceContainerHigh: '#f9fafb',
+    surfaceContainerHighest: '#f3f4f6',
 
-    // Border Colors
-    border: '#e5e7eb',
-    borderLight: '#f3f4f6',
-    borderFocus: '#6849a7',
+    // Navigation
+    navigationBackground: '#e8e7ef',
+
+    // Icons
+    iconDefault: '#686477',
+    iconActive: '#201e2b',
+
+    // Semantic Colors
+    primary: '#6849a7',
+    primaryContainer: '#553d87',
+    secondary: '#f3f4f6',
+    secondaryContainer: '#e5e7eb',
+    success: '#059669',
+    successContainer: '#10b981',
+    successFixed: '#047857',
+    error: '#dc2626',
+    errorContainer: '#ef4444',
+    errorFixed: '#b91c1c',
+    warning: '#d97706',
+    warningContainer: '#f59e0b',
+    warningFixed: '#b45309',
+    info: '#2563eb',
+    infoContainer: '#3b82f6',
+    infoFixed: '#1d4ed8',
+
+    // Borders & Outlines
+    outline: '#e5e7eb',
+    outlineVariant: '#f3f4f6',
+    outlineFocus: '#6849a7',
     divider: '#e5e7eb',
 
     // Interactive States
-    ripple: 'rgba(0, 0, 0, 0.1)',
+    stateLayerPressed: 'rgba(0, 0, 0, 0.1)',
     overlay: 'rgba(0, 0, 0, 0.5)',
     backdrop: 'rgba(0, 0, 0, 0.3)',
     shadow: 'rgba(0, 0, 0, 0.1)',
 
-    // Component-Specific
-    buttonPrimary: '#6849a7',
-    buttonPrimaryPressed: '#553d87',
-    buttonSecondary: '#f3f4f6',
-    buttonSecondaryPressed: '#e5e7eb',
-    buttonDisabled: '#f9fafb',
-
-    inputBackground: '#ffffff',
-    inputBorder: '#e5e7eb',
-    inputBorderFocus: '#6849a7',
+    // Input Fields
+    inputSurface: '#ffffff',
+    inputOutline: '#e5e7eb',
+    inputOutlineFocused: '#6849a7',
     inputText: '#374151',
 
-    // Status Colors
-    online: '#059669',
-    offline: '#6b7280',
-    away: '#d97706',
-    busy: '#dc2626',
+    // Status Indicators
+    statusOnline: '#059669',
+    statusOffline: '#6b7280',
+    statusAway: '#d97706',
+    statusBusy: '#dc2626',
   },
 };

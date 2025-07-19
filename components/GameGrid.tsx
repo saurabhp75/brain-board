@@ -16,8 +16,8 @@ export default function GameGrid() {
         style={[
           styles.grid,
           {
-            backgroundColor: theme.surfaceElevated,
-            borderColor: theme.borderLight,
+            backgroundColor: theme.surfaceVariant,
+            borderColor: theme.outlineVariant,
             shadowColor: theme.shadow,
           },
         ]}

@@ -20,16 +20,16 @@ export default function ThemedTextInput({
     <TextInput
       style={[
         {
-          backgroundColor: theme.inputBackground,
+          backgroundColor: theme.inputSurface,
           color: theme.inputText,
-          borderColor: focused ? theme.inputBorderFocus : theme.inputBorder,
+          borderColor: focused ? theme.inputOutlineFocused : theme.inputOutline,
           borderWidth: 1,
           padding: 16,
           borderRadius: 8,
         },
         style,
       ]}
-      placeholderTextColor={theme.textPlaceholder}
+      placeholderTextColor={theme.placeholder}
       {...props}
     />
   );

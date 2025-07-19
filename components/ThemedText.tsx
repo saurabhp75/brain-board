@@ -23,11 +23,11 @@ const ThemedText = ({
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   const getTextColor = () => {
-    if (disabled) return theme.textDisabled;
-    if (title) return theme.title;
-    if (secondary) return theme.textSecondary;
-    if (tertiary) return theme.textTertiary;
-    return theme.text;
+    if (disabled) return theme.onSurfaceDisabled;
+    if (title) return theme.onBackground;
+    if (secondary) return theme.onSurfaceVariant;
+    if (tertiary) return theme.onBackgroundVariant;
+    return theme.onSurface;
   };
 
   return <Text style={[{ color: getTextColor() }, style]} {...props} />;

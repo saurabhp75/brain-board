@@ -26,17 +26,13 @@ function ThemedButton({
 
     if (variant === 'primary') {
       baseStyle.push({
-        backgroundColor: pressed
-          ? theme.buttonPrimaryPressed
-          : theme.buttonPrimary,
+        backgroundColor: pressed ? theme.primaryContainer : theme.primary,
       });
     } else {
       baseStyle.push({
-        backgroundColor: pressed
-          ? theme.buttonSecondaryPressed
-          : theme.buttonSecondary,
+        backgroundColor: pressed ? theme.secondaryContainer : theme.secondary,
         borderWidth: 1,
-        borderColor: theme.border,
+        borderColor: theme.outline,
       });
     }
 
