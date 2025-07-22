@@ -17,47 +17,21 @@ export default function AboutScreen() {
   const dynamicStyles = StyleSheet.create({
     title: {
       color: theme.onBackground,
-      textAlign: 'center',
-      textShadowColor: 'rgba(0, 0, 0, 0.3)',
-      textShadowOffset: { width: 1, height: 1 },
-      textShadowRadius: 3,
     },
     description: {
       color: theme.onBackground,
-      textAlign: 'center',
-      marginBottom: 20,
-      textShadowColor: 'rgba(0, 0, 0, 0.2)',
-      textShadowOffset: { width: 1, height: 1 },
-      textShadowRadius: 2,
     },
     bodyText: {
       color: theme.onSurfaceVariant,
-      textAlign: 'center',
-      marginBottom: 30,
-      lineHeight: 22,
-      opacity: 0.9,
     },
     sectionTitle: {
       color: theme.onBackground,
-      marginBottom: 12,
-      textShadowColor: 'rgba(0, 0, 0, 0.2)',
-      textShadowOffset: { width: 1, height: 1 },
-      textShadowRadius: 2,
     },
     feature: {
       color: theme.onSurfaceVariant,
-      marginBottom: 8,
-      paddingLeft: 10,
-      opacity: 0.9,
-      fontSize: 16,
     },
     headerDecoration: {
-      width: 60,
-      height: 4,
       backgroundColor: theme.onBackground,
-      opacity: 0.8,
-      borderRadius: 2,
-      marginTop: 8,
     },
   });
 
@@ -77,11 +51,16 @@ export default function AboutScreen() {
                 variant="heading"
                 size="3xl"
                 weight="bold"
-                style={dynamicStyles.title}
+                style={[styles.title, dynamicStyles.title]}
               >
                 🧠 About Memory Game Pro
               </ThemedText>
-              <ThemedView style={dynamicStyles.headerDecoration} />
+              <ThemedView
+                style={[
+                  styles.headerDecoration,
+                  dynamicStyles.headerDecoration,
+                ]}
+              />
             </ThemedView>
 
             {/* Content */}
@@ -89,7 +68,7 @@ export default function AboutScreen() {
               <ThemedText
                 variant="body"
                 size="lg"
-                style={dynamicStyles.description}
+                style={[styles.description, dynamicStyles.description]}
               >
                 Welcome to Memory Game Pro - the ultimate brain training
                 experience!
@@ -98,7 +77,7 @@ export default function AboutScreen() {
               <ThemedText
                 variant="body"
                 size="base"
-                style={dynamicStyles.bodyText}
+                style={[styles.bodyText, dynamicStyles.bodyText]}
               >
                 Test and improve your memory skills with our challenging card
                 matching game. Flip cards to find matching pairs and complete
@@ -110,21 +89,21 @@ export default function AboutScreen() {
                   variant="heading"
                   size="lg"
                   weight="semibold"
-                  style={dynamicStyles.sectionTitle}
+                  style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
                 >
                   Features:
                 </ThemedText>
 
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   • Multiple difficulty levels
                 </ThemedText>
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   • Timer and scoring system
                 </ThemedText>
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   • Sound effects and animations
                 </ThemedText>
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   • Dark and light theme support
                 </ThemedText>
               </ThemedView>
@@ -134,21 +113,21 @@ export default function AboutScreen() {
                   variant="heading"
                   size="lg"
                   weight="semibold"
-                  style={dynamicStyles.sectionTitle}
+                  style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
                 >
                   How to Play:
                 </ThemedText>
 
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   1. Choose your game duration
                 </ThemedText>
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   2. Tap "Start Game" to begin
                 </ThemedText>
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   3. Flip cards to find matching pairs
                 </ThemedText>
-                <ThemedText style={dynamicStyles.feature}>
+                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                   4. Complete all pairs to win!
                 </ThemedText>
               </ThemedView>
@@ -187,5 +166,43 @@ const styles = StyleSheet.create({
   },
   featureSection: {
     marginBottom: 25,
+  },
+  title: {
+    textAlign: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  description: {
+    textAlign: 'center',
+    marginBottom: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  bodyText: {
+    textAlign: 'center',
+    marginBottom: 30,
+    lineHeight: 22,
+    opacity: 0.9,
+  },
+  sectionTitle: {
+    marginBottom: 12,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  feature: {
+    marginBottom: 8,
+    paddingLeft: 10,
+    opacity: 0.9,
+    fontSize: 16,
+  },
+  headerDecoration: {
+    width: 60,
+    height: 4,
+    opacity: 0.8,
+    borderRadius: 2,
+    marginTop: 8,
   },
 });

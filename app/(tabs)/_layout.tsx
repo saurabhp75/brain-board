@@ -24,11 +24,10 @@ export default function TabLayout() {
         name="game"
         options={{
           title: 'Game',
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ size, focused }) => (
             <Gamepad2
-              size={24}
-              color={color}
-              fill={focused ? color : 'transparent'}
+              size={size}
+              color={focused ? theme.iconActive : theme.iconDefault}
             />
           ),
         }}
@@ -37,11 +36,10 @@ export default function TabLayout() {
         name="about"
         options={{
           title: 'About',
-          tabBarIcon: ({ color, focused }) => (
+          tabBarIcon: ({ size, focused }) => (
             <Info
-              size={24}
-              color={color}
-              fill={focused ? color : 'transparent'}
+              size={size}
+              color={focused ? theme.iconActive : theme.iconDefault}
             />
           ),
         }}
