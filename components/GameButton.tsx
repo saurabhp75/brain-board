@@ -81,12 +81,8 @@ const GameButton = () => {
         activeOpacity={0.8}
       >
         {/* Show play icon in setup phase, reset icon in playing phase */}
-        {gamePhase === 'setup' && (
-          <Play color={getIconColor()} size={16} />
-        )}
-        {gamePhase === 'victory' && (
-          <Play color={getIconColor()} size={16} />
-        )}
+        {gamePhase === 'setup' && <Play color={getIconColor()} size={16} />}
+        {gamePhase === 'victory' && <Play color={getIconColor()} size={16} />}
         {gamePhase === 'playing' && (
           <RotateCcw color={getIconColor()} size={16} />
         )}
