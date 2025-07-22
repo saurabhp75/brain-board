@@ -13,7 +13,6 @@ import {
   useColorScheme,
 } from 'react-native';
 import { Colors } from '@/constants/Colors';
-import { Fonts } from '@/constants/Fonts';
 import ThemedText from './ThemedText';
 
 interface CellProps {
@@ -25,6 +24,12 @@ interface CellProps {
 export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+
+  const dynamicStyles = StyleSheet.create({
+    cellText: {
+      textShadowColor: theme.shadow,
+    },
+  });
 
   const isClickable = gamePhase === 'playing' && !cell.isRevealed;
 
@@ -81,6 +86,7 @@ export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
         weight="extrabold"
         style={[
           styles.cellText,
+          dynamicStyles.cellText,
           {
             color: getTextColor(),
             fontSize: Math.min(CELL_SIZE * 0.45, 24),
@@ -123,7 +129,6 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.9 }],
   },
   cellText: {
-    textShadowColor: 'rgba(0, 0, 0, 0.1)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
