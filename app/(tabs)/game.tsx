@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView, useColorScheme } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
 import GameStatus from '@/components/GameStatus';
@@ -12,11 +12,26 @@ import { Confetti } from 'react-native-fast-confetti';
 import ThemedView from '@/components/ThemedView';
 import AdBanner from '@/components/AdBanner';
 import ThemedText from '@/components/ThemedText';
+import { Colors } from '@/constants/Colors';
 
 export default function GameScreen() {
   const { gamePhase } = useGameStore();
   // const { user } = useAuthStore();
   // const [gameStartTime, setGameStartTime] = React.useState<number | null>(null);
+  const colorScheme = useColorScheme();
+  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+
+  const dynamicStyles = StyleSheet.create({
+    title: {
+      color: theme.onBackground,
+    },
+    headerDecoration: {
+      backgroundColor: theme.onBackground,
+    },
+    welcome: {
+      color: theme.onBackgroundVariant,
+    },
+  });
 
   useEffect(() => {
     // Initialize sound service when component mounts
@@ -57,11 +72,16 @@ export default function GameScreen() {
                 variant="heading"
                 size="3xl"
                 weight="bold"
-                style={styles.title}
+                style={[styles.title, dynamicStyles.title]}
               >
                 🧠 Memory Game Pro
               </ThemedText>
-              <ThemedView style={styles.headerDecoration} />
+              <ThemedView
+                style={[
+                  styles.headerDecoration,
+                  dynamicStyles.headerDecoration,
+                ]}
+              />
             </ThemedView>
 
             {/* Game Status - Above Grid */}
@@ -111,12 +131,11 @@ const styles = StyleSheet.create({
   headerDecoration: {
     width: 60,
     height: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    opacity: 0.8,
     borderRadius: 2,
     marginTop: 8,
   },
   title: {
-    color: '#ffffff',
     textAlign: 'center',
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 1, height: 1 },
@@ -124,7 +143,6 @@ const styles = StyleSheet.create({
   },
   welcome: {
     fontSize: 14,
-    color: '#6b7280',
     fontWeight: '500',
   },
   statusContainer: {

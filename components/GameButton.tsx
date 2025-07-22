@@ -10,6 +10,16 @@ const GameButton = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
+  const dynamicStyles = StyleSheet.create({
+    startButtonText: {
+      color: theme.onBackground,
+    },
+  });
+
+  const getIconColor = () => {
+    return theme.onBackground;
+  };
+
   const handleStartGame = async () => {
     switch (gamePhase) {
       case 'setup':
@@ -72,19 +82,19 @@ const GameButton = () => {
       >
         {/* Show play icon in setup phase, reset icon in playing phase */}
         {gamePhase === 'setup' && (
-          <Play color="#ffffff" size={16} />
+          <Play color={getIconColor()} size={16} />
         )}
         {gamePhase === 'victory' && (
-          <Play color="#ffffff" size={16} />
+          <Play color={getIconColor()} size={16} />
         )}
         {gamePhase === 'playing' && (
-          <RotateCcw color="#ffffff" size={16} />
+          <RotateCcw color={getIconColor()} size={16} />
         )}
         <ThemedText
           variant="heading"
           size="base"
           weight="semibold"
-          style={styles.startButtonText}
+          style={[styles.startButtonText, dynamicStyles.startButtonText]}
         >
           {getButtonText()}
         </ThemedText>
@@ -115,7 +125,6 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   startButtonText: {
-    color: '#ffffff',
     textShadowColor: 'rgba(0, 0, 0, 0.2)',
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
