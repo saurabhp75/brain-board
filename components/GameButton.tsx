@@ -12,12 +12,12 @@ const GameButton = () => {
 
   const dynamicStyles = StyleSheet.create({
     startButtonText: {
-      color: theme.onBackground,
+      color: theme.surface,
     },
   });
 
   const getIconColor = () => {
-    return theme.onBackground;
+    return theme.surface;
   };
 
   const handleStartGame = async () => {
