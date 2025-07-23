@@ -9,6 +9,8 @@ export class SoundService {
   private static errorSound: AudioPlayer | null = null;
   private static victorySound: AudioPlayer | null = null;
   private static isInitialized = false;
+  private static isSoundEnabled = true;
+  private static isHapticsEnabled = true;
 
   static async initialize() {
     if (this.isInitialized) return;
@@ -26,16 +28,21 @@ export class SoundService {
   }
 
   static async playCorrectSound() {
+    if (!this.isSoundEnabled) return;
     await this.playSound(this.correctSound, 0.4);
   }
 
   static async playErrorSound() {
     // Add haptic feedback for error
-    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    if (this.isHapticsEnabled) {
+      await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+    }
+    if (!this.isSoundEnabled) return;
     await this.playSound(this.errorSound, 0.4);
   }
 
   static async playVictorySound() {
+    if (!this.isSoundEnabled) return;
     await this.playSound(this.victorySound, 0.6);
   }
 
@@ -48,6 +55,22 @@ export class SoundService {
     } catch (error: any) {
       console.warn('Error playing sound:', error);
     }
+  }
+
+  static setSoundEnabled(enabled: boolean) {
+    this.isSoundEnabled = enabled;
+  }
+
+  static setHapticsEnabled(enabled: boolean) {
+    this.isHapticsEnabled = enabled;
+  }
+
+  static isSoundServiceEnabled(): boolean {
+    return this.isSoundEnabled;
+  }
+
+  static isHapticServiceEnabled(): boolean {
+    return this.isHapticsEnabled;
   }
 
   static cleanup() {
