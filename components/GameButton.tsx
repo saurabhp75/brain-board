@@ -10,15 +10,23 @@ const GameButton = () => {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
-  const dynamicStyles = StyleSheet.create({
-    startButtonText: {
-      color: theme.surface,
-    },
-  });
+  const isStartDisabled = gamePhase === 'memorizing';
 
   const getIconColor = () => {
+    if (isStartDisabled) return theme.onSurfaceVariant;
     return theme.surface;
   };
+
+  const getTextColor = () => {
+    if (isStartDisabled) return theme.onSurfaceVariant;
+    return theme.surface;
+  };
+
+  const dynamicStyles = StyleSheet.create({
+    startButtonText: {
+      color: getTextColor(),
+    },
+  });
 
   const handleStartGame = async () => {
     switch (gamePhase) {
@@ -52,8 +60,6 @@ const GameButton = () => {
     }
   };
 
-  const isStartDisabled = gamePhase === 'memorizing';
-
   const getButtonColor = () => {
     if (isStartDisabled) return theme.surfaceContainerLow;
     if (gamePhase === 'victory') return theme.success;
@@ -81,10 +87,14 @@ const GameButton = () => {
         activeOpacity={0.8}
       >
         {/* Show play icon in setup phase, reset icon in playing phase */}
-        {gamePhase === 'setup' && <Play color={getIconColor()} size={16} />}
-        {gamePhase === 'victory' && <Play color={getIconColor()} size={16} />}
+        {gamePhase === 'setup' && (
+          <Play color={getIconColor()} size={16} fill={getIconColor()} />
+        )}
+        {gamePhase === 'victory' && (
+          <Play color={getIconColor()} size={16} fill={getIconColor()} />
+        )}
         {gamePhase === 'playing' && (
-          <RotateCcw color={getIconColor()} size={16} />
+          <RotateCcw color={getIconColor()} size={16} strokeWidth={3} />
         )}
         <ThemedText
           variant="heading"
