@@ -4,11 +4,11 @@ import {
   SafeAreaView,
   ScrollView,
   useColorScheme,
-  Switch,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import ThemedView from '@/components/ThemedView';
 import ThemedText from '@/components/ThemedText';
+import ThemedSwitch from '@/components/ThemedSwitch';
 import { Colors } from '@/constants/Colors';
 import { SoundService } from '@/services/soundService';
 
@@ -119,16 +119,9 @@ export default function SettingsScreen() {
                       Play sounds for game actions and feedback
                     </ThemedText>
                   </ThemedView>
-                  <Switch
+                  <ThemedSwitch
                     value={soundEnabled}
                     onValueChange={handleSoundToggle}
-                    trackColor={{
-                      false: theme.surfaceContainerLow,
-                      true: theme.primary,
-                    }}
-                    thumbColor={
-                      soundEnabled ? theme.iconActive : theme.onSurfaceVariant
-                    }
                   />
                 </ThemedView>
               </ThemedView>
@@ -158,16 +151,9 @@ export default function SettingsScreen() {
                       Vibrate on touch and game interactions
                     </ThemedText>
                   </ThemedView>
-                  <Switch
+                  <ThemedSwitch
                     value={hapticsEnabled}
                     onValueChange={handleHapticsToggle}
-                    trackColor={{
-                      false: theme.surfaceContainerLow,
-                      true: theme.primary,
-                    }}
-                    thumbColor={
-                      hapticsEnabled ? theme.iconActive : theme.onSurfaceVariant
-                    }
                   />
                 </ThemedView>
               </ThemedView>
