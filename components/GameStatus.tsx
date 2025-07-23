@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    borderRadius: 8,
     width: '100%',
     gap: 20,
   },
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
+    borderRadius: 8,
     padding: 12,
     flex: 1,
     borderWidth: 1,
