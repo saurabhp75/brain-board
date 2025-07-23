@@ -43,17 +43,17 @@ const GameStatus = () => {
           >
             <ThemedText
               variant="caption"
-              size="xs"
+              size="sm"
               weight="bold"
-              style={[styles.statLabel, { color: theme.onSurfaceVariant }]}
+              style={[styles.statLabel, { color: theme.onBackground }]}
             >
-              MOVES
+              MOVES :
             </ThemedText>
             <ThemedText
               variant="score"
               size="2xl"
               weight="bold"
-              style={[styles.statValue, { color: theme.primary }]}
+              style={[styles.statValue, { color: theme.onBackground }]}
             >
               {moves}
             </ThemedText>
@@ -90,15 +90,17 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   statItem: {
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
     padding: 12,
     flex: 1,
     borderWidth: 1,
+    gap: 8,
   },
   statLabel: {
     textTransform: 'uppercase',
-    marginBottom: 4,
   },
   statValue: {
     // Modern typography handled by ThemedText variant

@@ -14,12 +14,12 @@ const GameButton = () => {
 
   const getIconColor = () => {
     if (isStartDisabled) return theme.onSurfaceVariant;
-    return theme.iconActive; // Use theme's active icon color
+    return theme.surface; // Use surface color for better contrast on colored backgrounds
   };
 
   const getTextColor = () => {
     if (isStartDisabled) return theme.onSurfaceVariant;
-    return theme.iconActive; // Use theme's active icon color for consistency
+    return theme.surface; // Use surface color for better contrast on colored backgrounds
   };
 
   const dynamicStyles = StyleSheet.create({
