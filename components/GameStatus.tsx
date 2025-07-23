@@ -24,7 +24,7 @@ const GameStatus = () => {
       <ThemedText
         variant="heading"
         size="lg"
-        weight="semibold"
+        weight="bold"
         style={[styles.statusMessage, { color: theme.onBackground }]}
       >
         {GAME_STATUS[gamePhase]}
@@ -44,7 +44,7 @@ const GameStatus = () => {
             <ThemedText
               variant="caption"
               size="xs"
-              weight="medium"
+              weight="bold"
               style={[styles.statLabel, { color: theme.onSurfaceVariant }]}
             >
               MOVES
