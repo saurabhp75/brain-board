@@ -10,7 +10,6 @@ import { useGameStore } from '@/stores/gameStore';
 import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
 import ThemedView from '@/components/ThemedView';
-import AdBanner from '@/components/AdBanner';
 import ThemedText from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
 
@@ -104,7 +103,6 @@ export default function GameScreen() {
           {/* Confetti Animation */}
           {gamePhase === 'victory' && <Confetti />}
         </LinearGradient>
-        <AdBanner />
       </SafeAreaView>
     </>
   );
