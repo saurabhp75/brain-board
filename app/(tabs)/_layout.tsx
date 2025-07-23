@@ -29,7 +29,7 @@ export default function TabLayout() {
             title: 'Game',
             tabBarIcon: ({ size, focused }) => (
               <Gamepad2
-                size={size}
+                size={size + 4}
                 color={focused ? theme.iconActive : theme.iconDefault}
               />
             ),
@@ -41,7 +41,7 @@ export default function TabLayout() {
             title: 'About',
             tabBarIcon: ({ size, focused }) => (
               <Info
-                size={size}
+                size={size + 4}
                 color={focused ? theme.iconActive : theme.iconDefault}
               />
             ),
