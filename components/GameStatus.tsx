@@ -6,7 +6,7 @@ import { GAME_STATUS } from '@/stores/gameStore';
 import { Colors } from '@/constants/Colors';
 
 const GameStatus = () => {
-  const { gamePhase, moves } = useGameStore();
+  const { gamePhase, moves, currentTarget } = useGameStore();
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
@@ -21,15 +21,16 @@ const GameStatus = () => {
         },
       ]}
     >
-      <ThemedText
-        variant="heading"
-        size="lg"
-        weight="bold"
-        style={[styles.statusMessage, { color: theme.onBackground }]}
-      >
-        {GAME_STATUS[gamePhase]}
-      </ThemedText>
-
+      {gamePhase !== 'playing' && (
+        <ThemedText
+          variant="heading"
+          size="lg"
+          weight="bold"
+          style={[styles.statusMessage, { color: theme.onBackground }]}
+        >
+          {GAME_STATUS[gamePhase]}
+        </ThemedText>
+      )}
       {gamePhase === 'playing' && (
         <ThemedView style={styles.statsContainer}>
           <ThemedView
@@ -42,21 +43,22 @@ const GameStatus = () => {
             ]}
           >
             <ThemedText
-              variant="caption"
+              variant="score"
               size="sm"
               weight="bold"
               style={[styles.statLabel, { color: theme.onBackground }]}
             >
-              MOVES :
+              Search For : {currentTarget}
+              {'  '}Moves : {moves}
             </ThemedText>
-            <ThemedText
+            {/* <ThemedText
               variant="score"
               size="2xl"
               weight="bold"
               style={[styles.statValue, { color: theme.onBackground }]}
             >
               {moves}
-            </ThemedText>
+            </ThemedText> */}
           </ThemedView>
         </ThemedView>
       )}
