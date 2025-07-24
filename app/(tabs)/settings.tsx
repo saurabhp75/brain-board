@@ -1,11 +1,9 @@
-import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
   useColorScheme,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import ThemedView from '@/components/ThemedView';
 import ThemedText from '@/components/ThemedText';
 import ThemedSwitch from '@/components/ThemedSwitch';
@@ -57,12 +55,6 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient
-        colors={['#667eea', '#764ba2', '#f093fb']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}
-      >
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <ThemedView style={styles.content}>
             {/* Header */}
@@ -160,7 +152,6 @@ export default function SettingsScreen() {
             </ThemedView>
           </ThemedView>
         </ScrollView>
-      </LinearGradient>
     </SafeAreaView>
   );
 }

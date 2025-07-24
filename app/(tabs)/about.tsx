@@ -1,11 +1,9 @@
-import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
   ScrollView,
   useColorScheme,
 } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import ThemedView from '@/components/ThemedView';
 import ThemedText from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
@@ -37,104 +35,69 @@ export default function AboutScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <LinearGradient
-        colors={['#667eea', '#764ba2', '#f093fb']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}
-      >
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <ThemedView style={styles.content}>
-            {/* Header */}
-            <ThemedView style={styles.header}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ThemedView style={styles.content}>
+          {/* Header */}
+          <ThemedView style={styles.header}>
+            <ThemedText
+              variant="heading"
+              size="3xl"
+              weight="bold"
+              style={[styles.title, dynamicStyles.title]}
+            >
+              🧠 Memory Game Pro
+            </ThemedText>
+            <ThemedView
+              style={[styles.headerDecoration, dynamicStyles.headerDecoration]}
+            />
+          </ThemedView>
+
+          {/* Content */}
+          <ThemedView style={styles.section}>
+            <ThemedText
+              variant="body"
+              size="lg"
+              style={[styles.description, dynamicStyles.description]}
+            >
+              Welcome to Memory Game Pro - the ultimate brain challenge!
+            </ThemedText>
+
+            <ThemedText
+              variant="body"
+              size="base"
+              style={[styles.bodyText, dynamicStyles.bodyText]}
+            >
+              Test and improve your memory skills with our fun and challenging
+              game. Flip cards to find the numbers in sequence as quickly as
+              possible.
+            </ThemedText>
+
+            <ThemedView style={styles.featureSection}>
               <ThemedText
                 variant="heading"
-                size="3xl"
-                weight="bold"
-                style={[styles.title, dynamicStyles.title]}
-              >
-                🧠 About Memory Game Pro
-              </ThemedText>
-              <ThemedView
-                style={[
-                  styles.headerDecoration,
-                  dynamicStyles.headerDecoration,
-                ]}
-              />
-            </ThemedView>
-
-            {/* Content */}
-            <ThemedView style={styles.section}>
-              <ThemedText
-                variant="body"
                 size="lg"
-                style={[styles.description, dynamicStyles.description]}
+                weight="semibold"
+                style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
               >
-                Welcome to Memory Game Pro - the ultimate brain training
-                experience!
+                How to Play:
               </ThemedText>
 
-              <ThemedText
-                variant="body"
-                size="base"
-                style={[styles.bodyText, dynamicStyles.bodyText]}
-              >
-                Test and improve your memory skills with our challenging card
-                matching game. Flip cards to find matching pairs and complete
-                levels as quickly as possible.
+              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
+                1. Choose your game duration.
               </ThemedText>
-
-              <ThemedView style={styles.featureSection}>
-                <ThemedText
-                  variant="heading"
-                  size="lg"
-                  weight="semibold"
-                  style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
-                >
-                  Features:
-                </ThemedText>
-
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  • Multiple difficulty levels
-                </ThemedText>
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  • Timer and scoring system
-                </ThemedText>
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  • Sound effects and animations
-                </ThemedText>
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  • Dark and light theme support
-                </ThemedText>
-              </ThemedView>
-
-              <ThemedView style={styles.featureSection}>
-                <ThemedText
-                  variant="heading"
-                  size="lg"
-                  weight="semibold"
-                  style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
-                >
-                  How to Play:
-                </ThemedText>
-
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  1. Choose your game duration
-                </ThemedText>
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  2. Tap "Start Game" to begin
-                </ThemedText>
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  3. Flip cards to find matching pairs
-                </ThemedText>
-                <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                  4. Complete all pairs to win!
-                </ThemedText>
-              </ThemedView>
+              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
+                2. Tap "Start Game" to begin.
+              </ThemedText>
+              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
+                3. Flip cards to find the next number starting from 1.
+              </ThemedText>
+              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
+                4. Repeat until all numbers are found in sequence.
+              </ThemedText>
             </ThemedView>
           </ThemedView>
-        </ScrollView>
-      </LinearGradient>
+        </ThemedView>
+      </ScrollView>
     </SafeAreaView>
   );
 }

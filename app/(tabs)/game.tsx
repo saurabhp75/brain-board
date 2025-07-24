@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import * as React from 'react';
+import { useEffect } from 'react';
 import { StyleSheet, SafeAreaView, useColorScheme } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import GameGrid from '@/components/GameGrid';
 import GameStatus from '@/components/GameStatus';
 import DurationInput from '@/components/DurationInput';
@@ -12,6 +12,10 @@ import { Confetti } from 'react-native-fast-confetti';
 import ThemedView from '@/components/ThemedView';
 import ThemedText from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
+import {
+  KeyboardProvider,
+  KeyboardAvoidingView,
+} from 'react-native-keyboard-controller';
 
 export default function GameScreen() {
   const { gamePhase } = useGameStore();
@@ -56,14 +60,13 @@ export default function GameScreen() {
   // }, [gamePhase, gameStartTime, updateStats]);
 
   return (
-    <>
-      <SafeAreaView style={styles.container}>
-        <LinearGradient
-          colors={['#667eea', '#764ba2', '#f093fb']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.gradient}
-        >
+    <KeyboardProvider>
+      <KeyboardAvoidingView
+        behavior={'padding'}
+        keyboardVerticalOffset={100}
+        style={styles.content}
+      >
+        <SafeAreaView style={styles.container}>
           <ThemedView style={styles.content}>
             {/* Header */}
             <ThemedView style={styles.header}>
@@ -102,9 +105,9 @@ export default function GameScreen() {
 
           {/* Confetti Animation */}
           {gamePhase === 'victory' && <Confetti />}
-        </LinearGradient>
-      </SafeAreaView>
-    </>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
+    </KeyboardProvider>
   );
 }
 
