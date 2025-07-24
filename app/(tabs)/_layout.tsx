@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { useColorScheme, StyleSheet } from 'react-native';
+import { useColorScheme, StyleSheet, SafeAreaView } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { Gamepad2, Info, Settings } from 'lucide-react-native';
 import AdBanner from '@/components/AdBanner';
@@ -11,6 +11,9 @@ export default function TabLayout() {
 
   return (
     <ThemedView style={styles.container}>
+      <SafeAreaView style={styles.adBannerContainer}>
+        <AdBanner />
+      </SafeAreaView>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: theme.primary,
@@ -60,7 +63,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      <AdBanner />
     </ThemedView>
   );
 }
@@ -68,5 +70,8 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  adBannerContainer: {
+    backgroundColor: 'transparent',
   },
 });
