@@ -23,6 +23,7 @@ export default function GameScreen() {
   // const [gameStartTime, setGameStartTime] = React.useState<number | null>(null);
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const disabled = gamePhase !== 'setup';
 
   const dynamicStyles = StyleSheet.create({
     title: {
@@ -94,6 +95,18 @@ export default function GameScreen() {
             {/* Game Grid */}
             <ThemedView style={styles.gridContainer}>
               <GameGrid />
+            </ThemedView>
+
+            <ThemedView
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <ThemedText weight="bold" disabled={gamePhase !== 'setup'}>
+                Time (ms):
+              </ThemedText>
             </ThemedView>
 
             {/* Bottom Controls - Fixed at bottom */}

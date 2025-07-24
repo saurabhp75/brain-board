@@ -83,7 +83,7 @@ export default function AboutScreen() {
               </ThemedText>
 
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                1. Choose your game duration.
+                1. Choose your game time (milliseconds).
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                 2. Tap "Start Game" to begin.
