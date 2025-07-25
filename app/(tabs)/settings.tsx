@@ -9,6 +9,7 @@ import ThemedText from '@/components/ThemedText';
 import ThemedSwitch from '@/components/ThemedSwitch';
 import { Colors } from '@/constants/Colors';
 import { SoundService } from '@/services/soundService';
+import * as React from 'react';
 
 export default function SettingsScreen() {
   const colorScheme = useColorScheme();
@@ -55,103 +56,96 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-          <ThemedView style={styles.content}>
-            {/* Header */}
-            <ThemedView style={styles.header}>
-              <ThemedText
-                variant="heading"
-                size="3xl"
-                weight="bold"
-                style={[styles.title, dynamicStyles.title]}
-              >
-                ⚙️ Settings
-              </ThemedText>
-              <ThemedView
-                style={[
-                  styles.headerDecoration,
-                  dynamicStyles.headerDecoration,
-                ]}
-              />
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ThemedView style={styles.content}>
+          {/* Header */}
+          <ThemedView style={styles.header}>
+            <ThemedText
+              variant="heading"
+              size="3xl"
+              weight="bold"
+              style={[styles.title, dynamicStyles.title]}
+            >
+              ⚙️ Settings
+            </ThemedText>
+            <ThemedView
+              style={[styles.headerDecoration, dynamicStyles.headerDecoration]}
+            />
+          </ThemedView>
+
+          {/* Settings Section */}
+          <ThemedView style={styles.section}>
+            <ThemedText
+              variant="heading"
+              size="lg"
+              weight="bold"
+              style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
+            >
+              Audio & Feedback
+            </ThemedText>
+
+            {/* Sound Toggle */}
+            <ThemedView style={[styles.settingItem, dynamicStyles.settingItem]}>
+              <ThemedView style={styles.settingContent}>
+                <ThemedView style={styles.settingTextContainer}>
+                  <ThemedText
+                    variant="body"
+                    size="base"
+                    weight="semibold"
+                    style={[styles.settingTitle, dynamicStyles.sectionTitle]}
+                  >
+                    Sound Effects
+                  </ThemedText>
+                  <ThemedText
+                    variant="body"
+                    size="sm"
+                    style={[
+                      styles.settingDescription,
+                      dynamicStyles.description,
+                    ]}
+                  >
+                    Play sounds in game.
+                  </ThemedText>
+                </ThemedView>
+                <ThemedSwitch
+                  value={soundEnabled}
+                  onValueChange={handleSoundToggle}
+                />
+              </ThemedView>
             </ThemedView>
 
-            {/* Settings Section */}
-            <ThemedView style={styles.section}>
-              <ThemedText
-                variant="heading"
-                size="lg"
-                weight="bold"
-                style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
-              >
-                Audio & Feedback
-              </ThemedText>
-
-              {/* Sound Toggle */}
-              <ThemedView
-                style={[styles.settingItem, dynamicStyles.settingItem]}
-              >
-                <ThemedView style={styles.settingContent}>
-                  <ThemedView style={styles.settingTextContainer}>
-                    <ThemedText
-                      variant="body"
-                      size="base"
-                      weight="semibold"
-                      style={[styles.settingTitle, dynamicStyles.sectionTitle]}
-                    >
-                      Sound Effects
-                    </ThemedText>
-                    <ThemedText
-                      variant="body"
-                      size="sm"
-                      style={[
-                        styles.settingDescription,
-                        dynamicStyles.description,
-                      ]}
-                    >
-                      Play sounds for game actions and feedback
-                    </ThemedText>
-                  </ThemedView>
-                  <ThemedSwitch
-                    value={soundEnabled}
-                    onValueChange={handleSoundToggle}
-                  />
+            {/* Haptics Toggle */}
+            <ThemedView style={[styles.settingItem, dynamicStyles.settingItem]}>
+              <ThemedView style={styles.settingContent}>
+                <ThemedView style={styles.settingTextContainer}>
+                  <ThemedText
+                    variant="body"
+                    size="base"
+                    weight="semibold"
+                    style={[styles.settingTitle, dynamicStyles.sectionTitle]}
+                  >
+                    Haptic Feedback
+                  </ThemedText>
+                  <ThemedText
+                    variant="body"
+                    size="sm"
+                    style={[
+                      styles.settingDescription,
+                      dynamicStyles.description,
+                    ]}
+                  >
+                    Vibrate on game interactions
+                  </ThemedText>
                 </ThemedView>
-              </ThemedView>
-
-              {/* Haptics Toggle */}
-              <ThemedView
-                style={[styles.settingItem, dynamicStyles.settingItem]}
-              >
-                <ThemedView style={styles.settingContent}>
-                  <ThemedView style={styles.settingTextContainer}>
-                    <ThemedText
-                      variant="body"
-                      size="base"
-                      weight="semibold"
-                      style={[styles.settingTitle, dynamicStyles.sectionTitle]}
-                    >
-                      Haptic Feedback
-                    </ThemedText>
-                    <ThemedText
-                      variant="body"
-                      size="sm"
-                      style={[
-                        styles.settingDescription,
-                        dynamicStyles.description,
-                      ]}
-                    >
-                      Vibrate on touch and game interactions
-                    </ThemedText>
-                  </ThemedView>
-                  <ThemedSwitch
-                    value={hapticsEnabled}
-                    onValueChange={handleHapticsToggle}
-                  />
-                </ThemedView>
+                <ThemedSwitch
+                  value={hapticsEnabled}
+                  onValueChange={handleHapticsToggle}
+                />
               </ThemedView>
             </ThemedView>
           </ThemedView>
-        </ScrollView>
+        </ThemedView>
+      </ScrollView>
     </SafeAreaView>
   );
 }

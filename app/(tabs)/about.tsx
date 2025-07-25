@@ -83,13 +83,13 @@ export default function AboutScreen() {
               </ThemedText>
 
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                1. Choose your game time (milliseconds).
+                1. Set your game time in milliseconds.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                 2. Tap "Start Game" to begin.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                3. Flip cards to find the next number starting from 1.
+                3. Tap the squares to find the next number starting from 1.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                 4. Repeat until all numbers are found in sequence.
