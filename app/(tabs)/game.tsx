@@ -17,12 +17,11 @@ import {
 } from 'react-native-keyboard-controller';
 
 export default function GameScreen() {
-  const { gamePhase } = useGameStore();
+  const gamePhase = useGameStore((state) => state.gamePhase);
   // const { user } = useAuthStore();
   // const [gameStartTime, setGameStartTime] = React.useState<number | null>(null);
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-  const disabled = gamePhase !== 'setup';
 
   const dynamicStyles = StyleSheet.create({
     title: {

@@ -6,7 +6,10 @@ import { Play, RotateCcw } from 'lucide-react-native';
 import { Colors } from '@/constants/Colors';
 
 const GameButton = () => {
-  const { gamePhase, startGame, resetGame } = useGameStore();
+  const gamePhase = useGameStore((state) => state.gamePhase);
+  const startGame = useGameStore((state) => state.startGame);
+  const resetGame = useGameStore((state) => state.resetGame);
+
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 

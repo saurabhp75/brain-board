@@ -7,7 +7,10 @@ import { useGameStore } from '@/stores/gameStore';
 import { Colors } from '@/constants/Colors';
 
 const DurationInput = () => {
-  const { duration, gamePhase, setDuration } = useGameStore();
+  const duration = useGameStore((state) => state.duration);
+  const gamePhase = useGameStore((state) => state.gamePhase);
+  const setDuration = useGameStore((state) => state.setDuration);
+
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 

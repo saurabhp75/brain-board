@@ -6,7 +6,8 @@ import { GRID_PADDING, GRID_SIZE } from '@/constants/layouts';
 import { Colors } from '@/constants/Colors';
 
 export default function GameGrid() {
-  const { cells, gamePhase, handleCellClick } = useGameStore();
+  const cells = useGameStore((state) => state.cells);
+
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
@@ -22,12 +23,10 @@ export default function GameGrid() {
           },
         ]}
       >
-        {cells.map((cell, index) => (
+        {cells.map((cell) => (
           <Cell
             key={cell.id}
             cell={cell}
-            gamePhase={gamePhase}
-            handleCellClick={handleCellClick}
           />
         ))}
       </ThemedView>

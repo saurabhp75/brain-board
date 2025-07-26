@@ -5,7 +5,7 @@ import {
   GRID_PADDING,
   TOTAL_CELL_SPACE,
 } from '@/constants/layouts';
-import { GameCell } from '@/stores/gameStore';
+import { GameCell, useGameStore } from '@/stores/gameStore';
 import {
   TouchableOpacity,
   ViewStyle,
@@ -17,11 +17,12 @@ import ThemedText from './ThemedText';
 
 interface CellProps {
   cell: GameCell;
-  gamePhase: string;
-  handleCellClick: (id: number) => void;
 }
 
-export function Cell({ cell, gamePhase, handleCellClick }: CellProps) {
+export function Cell({ cell }: CellProps) {
+  const gamePhase = useGameStore((state) => state.gamePhase);
+  const handleCellClick = useGameStore((state) => state.handleCellClick);
+
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 

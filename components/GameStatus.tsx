@@ -6,7 +6,10 @@ import { GAME_STATUS } from '@/stores/gameStore';
 import { Colors } from '@/constants/Colors';
 
 const GameStatus = () => {
-  const { gamePhase, moves, currentTarget } = useGameStore();
+  const gamePhase = useGameStore((state) => state.gamePhase);
+  const moves = useGameStore((state) => state.moves);
+  const currentTarget = useGameStore((state) => state.currentTarget);
+
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
