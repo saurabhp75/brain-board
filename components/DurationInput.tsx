@@ -47,9 +47,6 @@ const DurationInput = () => {
         },
       ]}
     >
-      <ThemedText variant="caption" size="sm" weight="medium" secondary>
-        Duration:
-      </ThemedText>
       <ThemedView style={styles.inputRow}>
         <TouchableOpacity
           style={[
