@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useEffect } from 'react';
 import { StyleSheet, SafeAreaView, useColorScheme } from 'react-native';
 import GameGrid from '@/components/GameGrid';

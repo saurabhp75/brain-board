@@ -9,17 +9,17 @@ import ThemedText from '@/components/ThemedText';
 import ThemedSwitch from '@/components/ThemedSwitch';
 import { Colors } from '@/constants/Colors';
 import { SoundService } from '@/services/soundService';
-import * as React from 'react';
+import { useState } from 'react';
 
 export default function SettingsScreen() {
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   // Initialize state from SoundService
-  const [soundEnabled, setSoundEnabled] = React.useState(
+  const [soundEnabled, setSoundEnabled] = useState(
     SoundService.isSoundServiceEnabled()
   );
-  const [hapticsEnabled, setHapticsEnabled] = React.useState(
+  const [hapticsEnabled, setHapticsEnabled] = useState(
     SoundService.isHapticServiceEnabled()
   );
 
