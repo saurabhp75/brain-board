@@ -1,6 +1,5 @@
 import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
 import { Minus, Plus } from 'lucide-react-native';
-import ThemedText from './ThemedText';
 import ThemedView from './ThemedView';
 import ThemedTextInput from './ThemedTextInput';
 import { useGameStore } from '@/stores/gameStore';
