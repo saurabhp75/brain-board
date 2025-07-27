@@ -24,17 +24,7 @@ const GameStatus = () => {
         },
       ]}
     >
-      {gamePhase !== 'playing' && (
-        <ThemedText
-          variant="heading"
-          size="lg"
-          weight="bold"
-          style={[styles.statusMessage, { color: theme.onBackground }]}
-        >
-          {GAME_STATUS[gamePhase]}
-        </ThemedText>
-      )}
-      {gamePhase === 'playing' && (
+      {gamePhase === 'playing' ? (
         <ThemedView style={styles.statsContainer}>
           <ThemedView
             style={[
@@ -54,16 +44,17 @@ const GameStatus = () => {
               Search For : {currentTarget}
               {'  '}Moves : {moves}
             </ThemedText>
-            {/* <ThemedText
-              variant="score"
-              size="2xl"
-              weight="bold"
-              style={[styles.statValue, { color: theme.onBackground }]}
-            >
-              {moves}
-            </ThemedText> */}
           </ThemedView>
         </ThemedView>
+      ) : (
+        <ThemedText
+          variant="heading"
+          size="lg"
+          weight="bold"
+          style={[styles.statusMessage, { color: theme.onBackground }]}
+        >
+          {GAME_STATUS[gamePhase] || 'Game Status'}
+        </ThemedText>
       )}
     </ThemedView>
   );
@@ -76,6 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     borderWidth: 1,
+    // minHeight: 60, // Ensure minimum height
     shadowOffset: {
       width: 0,
       height: 2,

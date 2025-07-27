@@ -10,60 +10,60 @@ export default function TabLayout() {
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.adBannerContainer}>
+    <SafeAreaView style={styles.container}>
+      <ThemedView style={styles.content}>
         <AdBanner />
-      </SafeAreaView>
-      <Tabs
-        screenOptions={{
-          tabBarActiveTintColor: theme.primary,
-          tabBarInactiveTintColor: theme.iconDefault,
-          tabBarStyle: {
-            backgroundColor: theme.background,
-            borderTopColor: theme.outline,
-          },
-          headerShown: false,
-        }}
-        initialRouteName="game"
-      >
-        <Tabs.Screen
-          name="game"
-          options={{
-            title: 'Game',
-            tabBarIcon: ({ size, focused }) => (
-              <Gamepad2
-                size={size + 4}
-                color={focused ? theme.iconActive : theme.iconDefault}
-              />
-            ),
+        <Tabs
+          screenOptions={{
+            tabBarActiveTintColor: theme.primary,
+            tabBarInactiveTintColor: theme.iconDefault,
+            tabBarStyle: {
+              backgroundColor: theme.background,
+              borderTopColor: theme.outline,
+            },
+            headerShown: false,
           }}
-        />
-        <Tabs.Screen
-          name="about"
-          options={{
-            title: 'About',
-            tabBarIcon: ({ size, focused }) => (
-              <Info
-                size={size + 4}
-                color={focused ? theme.iconActive : theme.iconDefault}
-              />
-            ),
-          }}
-        />
-        <Tabs.Screen
-          name="settings"
-          options={{
-            title: 'Settings',
-            tabBarIcon: ({ size, focused }) => (
-              <Settings
-                size={size + 4}
-                color={focused ? theme.iconActive : theme.iconDefault}
-              />
-            ),
-          }}
-        />
-      </Tabs>
-    </ThemedView>
+          initialRouteName="game"
+        >
+          <Tabs.Screen
+            name="game"
+            options={{
+              title: 'Game',
+              tabBarIcon: ({ size, focused }) => (
+                <Gamepad2
+                  size={size}
+                  color={focused ? theme.iconActive : theme.iconDefault}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="about"
+            options={{
+              title: 'About',
+              tabBarIcon: ({ size, focused }) => (
+                <Info
+                  size={size}
+                  color={focused ? theme.iconActive : theme.iconDefault}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="settings"
+            options={{
+              title: 'Settings',
+              tabBarIcon: ({ size, focused }) => (
+                <Settings
+                  size={size}
+                  color={focused ? theme.iconActive : theme.iconDefault}
+                />
+              ),
+            }}
+          />
+        </Tabs>
+      </ThemedView>
+    </SafeAreaView>
   );
 }
 
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  adBannerContainer: {
-    backgroundColor: 'transparent',
+  content: {
+    flex: 1,
   },
 });

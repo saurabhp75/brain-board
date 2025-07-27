@@ -1,9 +1,4 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  ScrollView,
-  useColorScheme,
-} from 'react-native';
+import { StyleSheet, ScrollView, useColorScheme } from 'react-native';
 import ThemedView from '@/components/ThemedView';
 import ThemedText from '@/components/ThemedText';
 import ThemedSwitch from '@/components/ThemedSwitch';
@@ -55,7 +50,7 @@ export default function SettingsScreen() {
   });
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <ThemedView style={styles.content}>
           {/* Header */}
@@ -146,7 +141,7 @@ export default function SettingsScreen() {
           </ThemedView>
         </ThemedView>
       </ScrollView>
-    </SafeAreaView>
+    </ThemedView>
   );
 }
 
