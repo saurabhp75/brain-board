@@ -3,7 +3,6 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   useColorScheme,
-  Platform,
 } from 'react-native';
 import GameGrid from '@/components/GameGrid';
 import GameStatus from '@/components/GameStatus';
