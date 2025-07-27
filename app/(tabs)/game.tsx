@@ -64,8 +64,8 @@ export default function GameScreen() {
   return (
     <KeyboardAvoidingView
       style={styles.keyboardView}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+      behavior={process.env.EXPO_OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={process.env.EXPO_OS === 'ios' ? 10 : 0}
     >
       <ThemedView style={styles.container}>
         {/* Header */}
