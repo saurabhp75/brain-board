@@ -37,3 +37,8 @@ yarn-error.*
 android
 ios
 *.apk
+
+credentials/
+*.keystore
+*.jks
+*.p12
