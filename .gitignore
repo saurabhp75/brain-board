@@ -42,3 +42,6 @@ credentials/
 *.keystore
 *.jks
 *.p12
+
+credentials.json
+*.aab
