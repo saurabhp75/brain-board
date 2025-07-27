@@ -1,6 +1,10 @@
 import { useEffect } from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  KeyboardAvoidingView,
+  StyleSheet,
+  useColorScheme,
+  Platform,
+} from 'react-native';
 import GameGrid from '@/components/GameGrid';
 import GameStatus from '@/components/GameStatus';
 import DurationInput from '@/components/DurationInput';
@@ -21,7 +25,6 @@ export default function GameScreen() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-  const insets = useSafeAreaInsets();
 
   const dynamicStyles = StyleSheet.create({
     title: {
@@ -59,57 +62,61 @@ export default function GameScreen() {
   // }, [gamePhase, gameStartTime, updateStats]);
 
   return (
-    <ThemedView style={styles.container}>
-      {/* Header */}
-      <ThemedView style={styles.header}>
-        <ThemedText
-          variant="heading"
-          size="3xl"
-          weight="bold"
-          style={[styles.title, dynamicStyles.title]}
-        >
-          🧠 Memory Game Pro
-        </ThemedText>
-        <ThemedView
-          style={[styles.headerDecoration, dynamicStyles.headerDecoration]}
-        />
-      </ThemedView>
+    <KeyboardAvoidingView
+      style={styles.keyboardView}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+    >
+      <ThemedView style={styles.container}>
+        {/* Header */}
+        <ThemedView style={styles.header}>
+          <ThemedText
+            variant="heading"
+            size="3xl"
+            weight="bold"
+            style={[styles.title, dynamicStyles.title]}
+          >
+            🧠 Memory Game Pro
+          </ThemedText>
+          <ThemedView
+            style={[styles.headerDecoration, dynamicStyles.headerDecoration]}
+          />
+        </ThemedView>
 
-      {/* Game Status - Above Grid */}
-      <ThemedView style={styles.statusContainer}>
-        <GameStatus />
-      </ThemedView>
+        {/* Game Status - Above Grid */}
+        <ThemedView style={styles.statusContainer}>
+          <GameStatus />
+        </ThemedView>
 
-      {/* Game Grid */}
-      <ThemedView style={styles.gridContainer}>
-        <GameGrid />
-      </ThemedView>
+        {/* Game Grid */}
+        <ThemedView style={styles.gridContainer}>
+          <GameGrid />
+        </ThemedView>
 
-      {/* Bottom Controls - Fixed at bottom */}
-      <ThemedView
-        style={[
-          styles.bottomControlsContainer,
-          { paddingBottom: insets.bottom + 80 },
-        ]}
-      >
-        <ThemedText
-          weight="bold"
-          disabled={gamePhase !== 'setup'}
-          style={styles.timeLabel}
-        >
-          Time (ms):
-        </ThemedText>
-        <DurationInput />
-        <GameButton />
-      </ThemedView>
+        {/* Bottom Controls - Fixed at bottom */}
+        <ThemedView style={styles.bottomControlsContainer}>
+          <ThemedText
+            weight="bold"
+            disabled={gamePhase !== 'setup'}
+            style={styles.timeLabel}
+          >
+            Time (ms):
+          </ThemedText>
+          <DurationInput />
+          <GameButton />
+        </ThemedView>
 
-      {/* Confetti Animation */}
-      {gamePhase === 'victory' && <Confetti />}
-    </ThemedView>
+        {/* Confetti Animation */}
+        {gamePhase === 'victory' && <Confetti />}
+      </ThemedView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  keyboardView: {
+    flex: 1,
+  },
   container: {
     flex: 1,
   },
@@ -149,6 +156,7 @@ const styles = StyleSheet.create({
   bottomControlsContainer: {
     paddingHorizontal: 15,
     paddingTop: 10,
+    paddingBottom: 100, // Space for tab bar
     flexDirection: 'column',
     gap: 15,
     alignItems: 'stretch',
