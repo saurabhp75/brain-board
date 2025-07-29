@@ -87,7 +87,7 @@ export default function AboutScreen() {
                 3. Tap the squares to find the next number starting from 1.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                4. Repeat until all numbers are found in sequence.
+                4. Repeat until you have found all numbers in sequence.
               </ThemedText>
             </ThemedView>
           </ThemedView>
