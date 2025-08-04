@@ -66,6 +66,7 @@ const ANDROID_COLORS = {
   },
 } as const;
 
-const COLORS = Platform.OS === 'ios' ? IOS_SYSTEM_COLORS : ANDROID_COLORS;
+const COLORS =
+  process.env.EXPO_OS === 'ios' ? IOS_SYSTEM_COLORS : ANDROID_COLORS;
 
 export { COLORS };
