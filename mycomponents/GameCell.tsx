@@ -9,11 +9,10 @@ import { GameCell, useGameStore } from '@/stores/gameStore';
 import {
   TouchableOpacity,
   ViewStyle,
-  StyleSheet,
   useColorScheme,
+  Text,
 } from 'react-native';
-import { Colors } from '@/constants/Colors';
-import ThemedText from './ThemedText';
+import { COLORS } from '@/theme/colors';
 
 interface CellProps {
   cell: GameCell;
@@ -24,27 +23,21 @@ export function Cell({ cell }: CellProps) {
   const handleCellClick = useGameStore((state) => state.handleCellClick);
 
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-
-  const dynamicStyles = StyleSheet.create({
-    cellText: {
-      textShadowColor: theme.shadow,
-    },
-  });
+  const isDark = colorScheme === 'dark';
 
   const isClickable = gamePhase === 'playing' && !cell.isRevealed;
 
   let cellContent = '?';
-  let cellStyle: ViewStyle[] = [styles.cell];
+  let scaleClass = '';
 
   if (cell.isRevealed) {
     cellContent = cell.value.toString();
-    cellStyle.push(styles.cellRevealed);
+    scaleClass = 'scale-95';
   }
 
   if (cell.showError) {
     cellContent = '✕';
-    cellStyle.push(styles.cellError);
+    scaleClass = 'scale-90';
   }
 
   // Calculate cell's row and column
@@ -60,77 +53,42 @@ export function Cell({ cell }: CellProps) {
   };
 
   const getTextColor = () => {
-    if (cell.showError) return theme.error;
-    if (cell.isRevealed) return theme.info;
-    return theme.onSurface;
+    if (cell.showError) return isDark ? '#ef4444' : '#dc2626'; // red
+    if (cell.isRevealed) return isDark ? '#3b82f6' : '#2563eb'; // blue
+    return isDark ? '#ffffff' : '#000000'; // default
+  };
+
+  const getBackgroundClasses = () => {
+    const baseClasses = `rounded-2xl items-center justify-center border-2 shadow-lg ${scaleClass}`;
+
+    if (cell.isRevealed) {
+      return `${baseClasses} ${
+        isDark ? 'bg-gray-800 border-blue-500' : 'bg-gray-100 border-blue-400'
+      }`;
+    }
+
+    return `${baseClasses} ${
+      isDark ? 'bg-gray-900 border-gray-600' : 'bg-white border-gray-300'
+    }`;
   };
 
   return (
     <TouchableOpacity
-      style={[
-        cellStyle,
-        cellPosition,
-        {
-          backgroundColor: cell.isRevealed
-            ? theme.surfaceContainerHighest
-            : theme.surface,
-          borderColor: cell.isRevealed ? theme.outlineFocus : theme.outline,
-          shadowColor: theme.shadow,
-        },
-      ]}
+      className={getBackgroundClasses()}
+      style={cellPosition}
       onPress={() => handleCellClick(cell.id)}
       disabled={!isClickable}
       activeOpacity={0.7}
     >
-      <ThemedText
-        variant="numbers"
-        weight="extrabold"
-        style={[
-          styles.cellText,
-          dynamicStyles.cellText,
-          {
-            color: getTextColor(),
-            fontSize: Math.min(CELL_SIZE * 0.45, 24),
-          },
-        ]}
+      <Text
+        className="font-black text-center"
+        style={{
+          color: getTextColor(),
+          fontSize: Math.min(CELL_SIZE * 0.45, 24),
+        }}
       >
         {cellContent}
-      </ThemedText>
+      </Text>
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  cellContainer: {
-    position: 'relative',
-    borderRadius: 16,
-    width: TOTAL_CELL_SPACE,
-    height: TOTAL_CELL_SPACE,
-  },
-  cell: {
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 6,
-    elevation: 6,
-  },
-  cellRevealed: {
-    transform: [{ scale: 0.95 }],
-  },
-  cellCorrect: {
-    transform: [{ scale: 1.05 }],
-  },
-  cellError: {
-    transform: [{ scale: 0.9 }],
-  },
-  cellText: {
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-});

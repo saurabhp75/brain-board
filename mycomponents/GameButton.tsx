@@ -1,9 +1,7 @@
-import { StyleSheet, TouchableOpacity, useColorScheme } from 'react-native';
-import ThemedView from './ThemedView';
-import ThemedText from './ThemedText';
+import { TouchableOpacity, useColorScheme, View, Text } from 'react-native';
 import { useGameStore } from '@/stores/gameStore';
 import { Play, RotateCcw } from 'lucide-react-native';
-import { Colors } from '@/constants/Colors';
+import { COLORS } from '@/theme/colors';
 
 const GameButton = () => {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -11,27 +9,9 @@ const GameButton = () => {
   const resetGame = useGameStore((state) => state.resetGame);
 
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const isDark = colorScheme === 'dark';
 
   const isStartDisabled = gamePhase === 'memorizing';
-
-  const getIconColor = () => {
-    if (isStartDisabled) return theme.onSurfaceVariant;
-    // Use white text on both primary and success colored backgrounds for consistency
-    return '#ffffff';
-  };
-
-  const getTextColor = () => {
-    if (isStartDisabled) return theme.onSurfaceVariant;
-    // Use white text on both primary and success colored backgrounds for consistency
-    return '#ffffff';
-  };
-
-  const dynamicStyles = StyleSheet.create({
-    startButtonText: {
-      color: getTextColor(),
-    },
-  });
 
   const handleStartGame = async () => {
     switch (gamePhase) {
@@ -65,81 +45,40 @@ const GameButton = () => {
     }
   };
 
-  const getButtonColor = () => {
-    if (isStartDisabled) return theme.surfaceContainerLow;
-    if (gamePhase === 'victory') return theme.success;
-    return theme.primary;
-  };
-
-  const getButtonPressedColor = () => {
-    if (isStartDisabled) return theme.surfaceContainerLow;
-    if (gamePhase === 'victory') return theme.successFixed;
-    return theme.primaryContainer;
+  const getButtonClasses = () => {
+    if (isStartDisabled) {
+      return isDark ? 'bg-gray-700' : 'bg-gray-300';
+    }
+    if (gamePhase === 'victory') {
+      return 'bg-green-500';
+    }
+    return isDark ? 'bg-blue-600' : 'bg-blue-500';
   };
 
   return (
-    <ThemedView style={styles.buttonContainer}>
+    <View className="flex-[2] rounded-xl">
       <TouchableOpacity
-        style={[
-          styles.startButton,
-          {
-            backgroundColor: getButtonColor(),
-            shadowColor: getButtonColor(),
-          },
-        ]}
+        className={`flex-row items-center justify-center p-3.5 rounded-xl gap-2 h-14 shadow-lg ${getButtonClasses()}`}
         onPress={handleStartGame}
         disabled={isStartDisabled}
         activeOpacity={0.8}
       >
         {/* Show play icon in setup phase, reset icon in playing phase */}
         {gamePhase === 'setup' && (
-          <Play color={getIconColor()} size={16} fill={getIconColor()} />
+          <Play color="#ffffff" size={16} fill="#ffffff" />
         )}
         {gamePhase === 'victory' && (
-          <Play color={getIconColor()} size={16} fill={getIconColor()} />
+          <Play color="#ffffff" size={16} fill="#ffffff" />
         )}
         {gamePhase === 'playing' && (
-          <RotateCcw color={getIconColor()} size={16} strokeWidth={3} />
+          <RotateCcw color="#ffffff" size={16} strokeWidth={3} />
         )}
-        <ThemedText
-          variant="heading"
-          size="base"
-          weight="semibold"
-          style={[styles.startButtonText, dynamicStyles.startButtonText]}
-        >
+        <Text className="text-base font-semibold text-white">
           {getButtonText()}
-        </ThemedText>
+        </Text>
       </TouchableOpacity>
-    </ThemedView>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    flex: 2,
-    borderRadius: 12,
-  },
-  startButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 14,
-    borderRadius: 12,
-    gap: 8,
-    height: 56,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 8,
-  },
-  startButtonText: {
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-});
 
 export default GameButton;

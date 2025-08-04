@@ -1,17 +1,17 @@
-import ThemedView from './ThemedView';
+import { View } from 'react-native';
 import DurationInput from './DurationInput';
 import GameStatus from './GameStatus';
 import GameButton from './GameButton';
 
 export default function GameControls() {
   return (
-    <ThemedView>
-      {/* Gamke Status Display */}
+    <View className="bg-background">
+      {/* Game Status Display */}
       <GameStatus />
       {/* Duration Input */}
       <DurationInput />
       {/* Game Control Button */}
       <GameButton />
-    </ThemedView>
+    </View>
   );
 }

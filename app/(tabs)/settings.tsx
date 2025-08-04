@@ -1,14 +1,19 @@
-import { StyleSheet, ScrollView, useColorScheme } from 'react-native';
-import ThemedView from '@/mycomponents/ThemedView';
-import ThemedText from '@/mycomponents/ThemedText';
-import ThemedSwitch from '@/mycomponents/ThemedSwitch';
-import { Colors } from '@/constants/Colors';
+import {
+  ScrollView,
+  useColorScheme,
+  View,
+  Text,
+  SafeAreaView,
+} from 'react-native';
+import { Toggle } from '@/components/nativewindui/Toggle';
+import { COLORS } from '@/theme/colors';
 import { SoundService } from '@/services/soundService';
 import { useState } from 'react';
+import AdBanner from '@/mycomponents/AdBanner';
 
 export default function SettingsScreen() {
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const isDark = colorScheme === 'dark';
 
   // Initialize state from SoundService
   const [soundEnabled, setSoundEnabled] = useState(
@@ -30,192 +35,105 @@ export default function SettingsScreen() {
     SoundService.setHapticsEnabled(value);
   };
 
-  const dynamicStyles = StyleSheet.create({
-    title: {
-      color: theme.onBackground,
-    },
-    sectionTitle: {
-      color: theme.onBackground,
-    },
-    description: {
-      color: theme.onSurfaceVariant,
-    },
-    settingItem: {
-      backgroundColor: theme.surfaceContainerHigh,
-      borderColor: theme.outline,
-    },
-    headerDecoration: {
-      backgroundColor: theme.onBackground,
-    },
-  });
-
   return (
-    <ThemedView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <ThemedView style={styles.content}>
-          {/* Header */}
-          <ThemedView style={styles.header}>
-            <ThemedText
-              variant="heading"
-              size="3xl"
-              weight="bold"
-              style={[styles.title, dynamicStyles.title]}
-            >
-              ⚙️ Settings
-            </ThemedText>
-            <ThemedView
-              style={[styles.headerDecoration, dynamicStyles.headerDecoration]}
-            />
-          </ThemedView>
+    <SafeAreaView className="flex-1">
+      <View className="flex-1 bg-background">
+        <AdBanner />
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View className="flex-1 pb-10">
+            {/* Header */}
+            <View className="items-center pt-5 pb-4 px-5 min-h-[80px]">
+              <Text
+                className={`text-3xl font-bold text-center ${
+                  isDark ? 'text-white' : 'text-black'
+                }`}
+              >
+                ⚙️ Settings
+              </Text>
+              <View
+                className={`w-15 h-1 rounded-sm mt-2 opacity-80 ${
+                  isDark ? 'bg-white' : 'bg-black'
+                }`}
+              />
+            </View>
 
-          {/* Settings Section */}
-          <ThemedView style={styles.section}>
-            <ThemedText
-              variant="heading"
-              size="lg"
-              weight="bold"
-              style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
-            >
-              Audio & Feedback
-            </ThemedText>
+            {/* Settings Section */}
+            <View className="px-5 pt-2.5">
+              <Text
+                className={`text-lg font-bold mb-5 ${
+                  isDark ? 'text-white' : 'text-black'
+                }`}
+              >
+                Audio & Feedback
+              </Text>
 
-            {/* Sound Toggle */}
-            <ThemedView style={[styles.settingItem, dynamicStyles.settingItem]}>
-              <ThemedView style={styles.settingContent}>
-                <ThemedView style={styles.settingTextContainer}>
-                  <ThemedText
-                    variant="body"
-                    size="base"
-                    weight="semibold"
-                    style={[styles.settingTitle, dynamicStyles.sectionTitle]}
-                  >
-                    Sound Effects
-                  </ThemedText>
-                  <ThemedText
-                    variant="body"
-                    size="sm"
-                    style={[
-                      styles.settingDescription,
-                      dynamicStyles.description,
-                    ]}
-                  >
-                    Play sounds in game.
-                  </ThemedText>
-                </ThemedView>
-                <ThemedSwitch
-                  value={soundEnabled}
-                  onValueChange={handleSoundToggle}
-                />
-              </ThemedView>
-            </ThemedView>
+              {/* Sound Toggle */}
+              <View
+                className={`rounded-xl mb-3 border shadow-sm ${
+                  isDark
+                    ? 'bg-gray-800 border-gray-600'
+                    : 'bg-white border-gray-300'
+                }`}
+              >
+                <View className="flex-row items-center justify-between p-4">
+                  <View className="flex-1 mr-4">
+                    <Text
+                      className={`font-semibold mb-1 ${
+                        isDark ? 'text-white' : 'text-black'
+                      }`}
+                    >
+                      Sound Effects
+                    </Text>
+                    <Text
+                      className={`text-sm opacity-80 leading-[18px] ${
+                        isDark ? 'text-gray-300' : 'text-gray-600'
+                      }`}
+                    >
+                      Play sounds in game.
+                    </Text>
+                  </View>
+                  <Toggle
+                    value={soundEnabled}
+                    onValueChange={handleSoundToggle}
+                  />
+                </View>
+              </View>
 
-            {/* Haptics Toggle */}
-            <ThemedView style={[styles.settingItem, dynamicStyles.settingItem]}>
-              <ThemedView style={styles.settingContent}>
-                <ThemedView style={styles.settingTextContainer}>
-                  <ThemedText
-                    variant="body"
-                    size="base"
-                    weight="semibold"
-                    style={[styles.settingTitle, dynamicStyles.sectionTitle]}
-                  >
-                    Haptic Feedback
-                  </ThemedText>
-                  <ThemedText
-                    variant="body"
-                    size="sm"
-                    style={[
-                      styles.settingDescription,
-                      dynamicStyles.description,
-                    ]}
-                  >
-                    Vibrate on game interactions
-                  </ThemedText>
-                </ThemedView>
-                <ThemedSwitch
-                  value={hapticsEnabled}
-                  onValueChange={handleHapticsToggle}
-                />
-              </ThemedView>
-            </ThemedView>
-          </ThemedView>
-        </ThemedView>
-      </ScrollView>
-    </ThemedView>
+              {/* Haptics Toggle */}
+              <View
+                className={`rounded-xl mb-3 border shadow-sm ${
+                  isDark
+                    ? 'bg-gray-800 border-gray-600'
+                    : 'bg-white border-gray-300'
+                }`}
+              >
+                <View className="flex-row items-center justify-between p-4">
+                  <View className="flex-1 mr-4">
+                    <Text
+                      className={`font-semibold mb-1 ${
+                        isDark ? 'text-white' : 'text-black'
+                      }`}
+                    >
+                      Haptic Feedback
+                    </Text>
+                    <Text
+                      className={`text-sm opacity-80 leading-[18px] ${
+                        isDark ? 'text-gray-300' : 'text-gray-600'
+                      }`}
+                    >
+                      Vibrate on game interactions
+                    </Text>
+                  </View>
+                  <Toggle
+                    value={hapticsEnabled}
+                    onValueChange={handleHapticsToggle}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  gradient: {
-    flex: 1,
-  },
-  scrollContent: {
-    flexGrow: 1,
-  },
-  content: {
-    flex: 1,
-    paddingBottom: 40,
-  },
-  header: {
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 15,
-    paddingHorizontal: 20,
-    minHeight: 80,
-  },
-  section: {
-    paddingHorizontal: 20,
-    paddingTop: 10,
-  },
-  title: {
-    textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-  },
-  sectionTitle: {
-    marginBottom: 20,
-    textShadowColor: 'rgba(0, 0, 0, 0.2)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-  settingItem: {
-    borderRadius: 12,
-    marginBottom: 12,
-    borderWidth: 1,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  settingContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-  settingTextContainer: {
-    flex: 1,
-    marginRight: 16,
-  },
-  settingTitle: {
-    marginBottom: 4,
-  },
-  settingDescription: {
-    opacity: 0.8,
-    lineHeight: 18,
-  },
-  headerDecoration: {
-    width: 60,
-    height: 4,
-    opacity: 0.8,
-    borderRadius: 2,
-    marginTop: 8,
-  },
-});

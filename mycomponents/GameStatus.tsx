@@ -1,9 +1,7 @@
-import { StyleSheet, View, useColorScheme } from 'react-native';
-import ThemedView from './ThemedView';
-import ThemedText from './ThemedText';
+import { View, useColorScheme, Text } from 'react-native';
 import { useGameStore } from '@/stores/gameStore';
 import { GAME_STATUS } from '@/stores/gameStore';
-import { Colors } from '@/constants/Colors';
+import { COLORS } from '@/theme/colors';
 
 const GameStatus = () => {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -11,98 +9,44 @@ const GameStatus = () => {
   const currentTarget = useGameStore((state) => state.currentTarget);
 
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const isDark = colorScheme === 'dark';
 
   return (
-    <ThemedView
-      style={[
-        styles.statusContainer,
-        {
-          backgroundColor: theme.surfaceContainerHigh,
-          borderColor: theme.outline,
-          shadowColor: theme.shadow,
-        },
-      ]}
+    <View
+      className={`items-center mb-4 rounded-2xl p-4 border shadow-sm ${
+        isDark ? 'bg-gray-800 border-gray-600' : 'bg-white border-gray-300'
+      }`}
     >
       {gamePhase === 'playing' ? (
-        <ThemedView style={styles.statsContainer}>
-          <ThemedView
-            style={[
-              styles.statItem,
-              {
-                backgroundColor: theme.surfaceContainerHighest,
-                borderColor: theme.outlineVariant,
-              },
-            ]}
+        <View className="flex-row justify-around rounded-lg w-full gap-5">
+          <View
+            className={`flex-row items-center justify-center rounded-lg p-3 flex-1 border gap-2 ${
+              isDark
+                ? 'bg-gray-900 border-gray-700'
+                : 'bg-gray-50 border-gray-200'
+            }`}
           >
-            <ThemedText
-              variant="score"
-              size="sm"
-              weight="bold"
-              style={[styles.statLabel, { color: theme.onBackground }]}
+            <Text
+              className={`text-sm font-bold uppercase ${
+                isDark ? 'text-white' : 'text-black'
+              }`}
             >
               Search For : {currentTarget}
               {'  '}Moves : {moves}
-            </ThemedText>
-          </ThemedView>
-        </ThemedView>
+            </Text>
+          </View>
+        </View>
       ) : (
-        <ThemedText
-          variant="heading"
-          size="lg"
-          weight="bold"
-          style={[styles.statusMessage, { color: theme.onBackground }]}
+        <Text
+          className={`text-lg font-bold text-center mb-3 ${
+            isDark ? 'text-white' : 'text-black'
+          }`}
         >
           {GAME_STATUS[gamePhase] || 'Game Status'}
-        </ThemedText>
+        </Text>
       )}
-    </ThemedView>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  statusContainer: {
-    alignItems: 'center',
-    marginBottom: 15,
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1,
-    // minHeight: 60, // Ensure minimum height
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  statusMessage: {
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    borderRadius: 8,
-    width: '100%',
-    gap: 20,
-  },
-  statItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    padding: 12,
-    flex: 1,
-    borderWidth: 1,
-    gap: 8,
-  },
-  statLabel: {
-    textTransform: 'uppercase',
-  },
-  statValue: {
-    // Modern typography handled by ThemedText variant
-  },
-});
 
 export default GameStatus;

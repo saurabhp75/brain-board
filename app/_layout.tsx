@@ -1,28 +1,33 @@
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
-import { useColorScheme } from 'react-native';
-import { Colors } from '@/constants/Colors';
+import { COLORS } from '@/theme/colors';
+import { useColorScheme, useInitialAndroidBarSync } from '@/lib/useColorScheme';
+import { NAV_THEME } from '@/theme';
+import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 
 export default function RootLayout() {
   useFrameworkReady();
 
-  const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  useInitialAndroidBarSync();
+  const { colorScheme, isDarkColorScheme } = useColorScheme();
+  const theme = isDarkColorScheme ? COLORS.dark : COLORS.light;
 
   return (
     <>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          headerStyle: { backgroundColor: theme.navigationBackground },
-          headerTintColor: theme.onBackground,
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+      <NavThemeProvider value={NAV_THEME[colorScheme]}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            headerStyle: { backgroundColor: theme.background },
+            headerTintColor: theme.foreground,
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </NavThemeProvider>
     </>
   );
 }

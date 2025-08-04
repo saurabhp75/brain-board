@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
-import { KeyboardAvoidingView, StyleSheet, useColorScheme } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  useColorScheme,
+  View,
+  Text,
+  SafeAreaView,
+} from 'react-native';
 import GameGrid from '@/mycomponents/GameGrid';
 import GameStatus from '@/mycomponents/GameStatus';
 import DurationInput from '@/mycomponents/DurationInput';
@@ -8,9 +14,8 @@ import { useGameStore } from '@/stores/gameStore';
 // import { useAuthStore } from '@/stores/authStore';
 import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
-import ThemedView from '@/mycomponents/ThemedView';
-import ThemedText from '@/mycomponents/ThemedText';
-import { Colors } from '@/constants/Colors';
+import { COLORS } from '@/theme/colors';
+import AdBanner from '@/mycomponents/AdBanner';
 // import {
 //   KeyboardProvider,
 //   KeyboardAvoidingView,
@@ -19,19 +24,7 @@ import { Colors } from '@/constants/Colors';
 export default function GameScreen() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
-
-  const dynamicStyles = StyleSheet.create({
-    title: {
-      color: theme.onBackground,
-    },
-    headerDecoration: {
-      backgroundColor: theme.onBackground,
-    },
-    welcome: {
-      color: theme.onBackgroundVariant,
-    },
-  });
+  const isDark = colorScheme === 'dark';
 
   useEffect(() => {
     // Initialize sound service when component mounts
@@ -57,107 +50,65 @@ export default function GameScreen() {
   // }, [gamePhase, gameStartTime, updateStats]);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.keyboardView}
-      behavior={process.env.EXPO_OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={process.env.EXPO_OS === 'ios' ? 10 : 0}
-    >
-      <ThemedView style={styles.container}>
-        {/* Header */}
-        <ThemedView style={styles.header}>
-          <ThemedText
-            variant="heading"
-            size="3xl"
-            weight="bold"
-            style={[styles.title, dynamicStyles.title]}
-          >
-            🧠 Memory Game Pro
-          </ThemedText>
-          <ThemedView
-            style={[styles.headerDecoration, dynamicStyles.headerDecoration]}
-          />
-        </ThemedView>
+    <SafeAreaView className="flex-1">
+      <View className="flex-1 bg-background">
+        <AdBanner />
+        <KeyboardAvoidingView
+          className="flex-1"
+          behavior={process.env.EXPO_OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={process.env.EXPO_OS === 'ios' ? 10 : 0}
+        >
+          <View className="flex-1 bg-background">
+            {/* Header */}
+            <View className="items-center pt-5 pb-4 px-5 min-h-[80px]">
+              <Text
+                className={`text-3xl font-bold text-center ${
+                  isDark ? 'text-white' : 'text-black'
+                }`}
+              >
+                🧠 Memory Game Pro
+              </Text>
+              <View
+                className={`w-15 h-1 rounded-sm mt-2 opacity-80 ${
+                  isDark ? 'bg-white' : 'bg-black'
+                }`}
+              />
+            </View>
 
-        {/* Game Status - Above Grid */}
-        <ThemedView style={styles.statusContainer}>
-          <GameStatus />
-        </ThemedView>
+            {/* Game Status - Above Grid */}
+            <View className="px-4 mb-4 min-h-[60px]">
+              <GameStatus />
+            </View>
 
-        {/* Game Grid */}
-        <ThemedView style={styles.gridContainer}>
-          <GameGrid />
-        </ThemedView>
+            {/* Game Grid */}
+            <View className="flex-1 justify-center items-center px-4 py-2.5 min-h-[200px]">
+              <GameGrid />
+            </View>
 
-        {/* Bottom Controls - Fixed at bottom */}
-        <ThemedView style={styles.bottomControlsContainer}>
-          <ThemedText
-            weight="bold"
-            disabled={gamePhase !== 'setup'}
-            style={styles.timeLabel}
-          >
-            Time (ms):
-          </ThemedText>
-          <DurationInput />
-          <GameButton />
-        </ThemedView>
+            {/* Bottom Controls - Fixed at bottom */}
+            <View className="px-4 pt-2.5 pb-25 flex-col gap-4">
+              <Text
+                className={`text-center mb-1 font-bold ${
+                  gamePhase !== 'setup'
+                    ? isDark
+                      ? 'text-gray-500'
+                      : 'text-gray-400'
+                    : isDark
+                    ? 'text-white'
+                    : 'text-black'
+                }`}
+              >
+                Time (ms):
+              </Text>
+              <DurationInput />
+              <GameButton />
+            </View>
 
-        {/* Confetti Animation */}
-        {gamePhase === 'victory' && <Confetti />}
-      </ThemedView>
-    </KeyboardAvoidingView>
+            {/* Confetti Animation */}
+            {gamePhase === 'victory' && <Confetti />}
+          </View>
+        </KeyboardAvoidingView>
+      </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  keyboardView: {
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-  },
-  header: {
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 15,
-    paddingHorizontal: 20,
-    minHeight: 80,
-  },
-  headerDecoration: {
-    width: 60,
-    height: 4,
-    opacity: 0.8,
-    borderRadius: 2,
-    marginTop: 8,
-  },
-  title: {
-    textAlign: 'center',
-    textShadowColor: 'rgba(0, 0, 0, 0.3)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
-  },
-  statusContainer: {
-    paddingHorizontal: 15,
-    marginBottom: 15,
-    minHeight: 60, // Ensure minimum height for visibility
-  },
-  gridContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    minHeight: 200,
-  },
-  bottomControlsContainer: {
-    paddingHorizontal: 15,
-    paddingTop: 10,
-    paddingBottom: 100, // Space for tab bar
-    flexDirection: 'column',
-    gap: 15,
-    alignItems: 'stretch',
-  },
-  timeLabel: {
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-});
