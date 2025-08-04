@@ -1,6 +1,6 @@
 import { StyleSheet, ScrollView, useColorScheme } from 'react-native';
-import ThemedView from '@/components/ThemedView';
-import ThemedText from '@/components/ThemedText';
+import ThemedView from '@/mycomponents/ThemedView';
+import ThemedText from '@/mycomponents/ThemedText';
 import { Colors } from '@/constants/Colors';
 
 export default function AboutScreen() {

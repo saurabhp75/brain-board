@@ -1,7 +1,7 @@
 import { StyleSheet, ScrollView, useColorScheme } from 'react-native';
-import ThemedView from '@/components/ThemedView';
-import ThemedText from '@/components/ThemedText';
-import ThemedSwitch from '@/components/ThemedSwitch';
+import ThemedView from '@/mycomponents/ThemedView';
+import ThemedText from '@/mycomponents/ThemedText';
+import ThemedSwitch from '@/mycomponents/ThemedSwitch';
 import { Colors } from '@/constants/Colors';
 import { SoundService } from '@/services/soundService';
 import { useState } from 'react';

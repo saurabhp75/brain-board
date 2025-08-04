@@ -1,19 +1,15 @@
 import { useEffect } from 'react';
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
-import GameGrid from '@/components/GameGrid';
-import GameStatus from '@/components/GameStatus';
-import DurationInput from '@/components/DurationInput';
-import GameButton from '@/components/GameButton';
+import { KeyboardAvoidingView, StyleSheet, useColorScheme } from 'react-native';
+import GameGrid from '@/mycomponents/GameGrid';
+import GameStatus from '@/mycomponents/GameStatus';
+import DurationInput from '@/mycomponents/DurationInput';
+import GameButton from '@/mycomponents/GameButton';
 import { useGameStore } from '@/stores/gameStore';
 // import { useAuthStore } from '@/stores/authStore';
 import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
-import ThemedView from '@/components/ThemedView';
-import ThemedText from '@/components/ThemedText';
+import ThemedView from '@/mycomponents/ThemedView';
+import ThemedText from '@/mycomponents/ThemedText';
 import { Colors } from '@/constants/Colors';
 // import {
 //   KeyboardProvider,

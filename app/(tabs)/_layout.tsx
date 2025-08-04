@@ -2,8 +2,8 @@ import { Tabs } from 'expo-router';
 import { useColorScheme, StyleSheet, SafeAreaView } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import { Gamepad2, Info, Settings } from 'lucide-react-native';
-import AdBanner from '@/components/AdBanner';
-import ThemedView from '@/components/ThemedView';
+import AdBanner from '@/mycomponents/AdBanner';
+import ThemedView from '@/mycomponents/ThemedView';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
