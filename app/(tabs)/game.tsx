@@ -6,16 +6,16 @@ import {
   Text,
   SafeAreaView,
 } from 'react-native';
-import GameGrid from '@/mycomponents/GameGrid';
-import GameStatus from '@/mycomponents/GameStatus';
-import DurationInput from '@/mycomponents/DurationInput';
-import GameButton from '@/mycomponents/GameButton';
+import GameGrid from '@/components/GameGrid';
+import GameStatus from '@/components/GameStatus';
+import DurationInput from '@/components/DurationInput';
+import GameButton from '@/components/GameButton';
 import { useGameStore } from '@/stores/gameStore';
 // import { useAuthStore } from '@/stores/authStore';
 import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
 import { COLORS } from '@/theme/colors';
-import AdBanner from '@/mycomponents/AdBanner';
+import AdBanner from '@/components/AdBanner';
 // import {
 //   KeyboardProvider,
 //   KeyboardAvoidingView,

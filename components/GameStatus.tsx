@@ -1,7 +1,6 @@
 import { View, useColorScheme, Text } from 'react-native';
 import { useGameStore } from '@/stores/gameStore';
 import { GAME_STATUS } from '@/stores/gameStore';
-import { COLORS } from '@/theme/colors';
 
 const GameStatus = () => {
   const gamePhase = useGameStore((state) => state.gamePhase);

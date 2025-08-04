@@ -1,12 +1,7 @@
-import {
-  TouchableOpacity,
-  useColorScheme,
-  View,
-  TextInput,
-} from 'react-native';
+import { useColorScheme, View, TextInput } from 'react-native';
 import { Minus, Plus } from 'lucide-react-native';
 import { useGameStore } from '@/stores/gameStore';
-import { COLORS } from '@/theme/colors';
+import { Button } from '@/components/nativewindui/Button';
 
 const DurationInput = () => {
   const duration = useGameStore((state) => state.duration);
@@ -47,7 +42,9 @@ const DurationInput = () => {
       } shadow-sm`}
     >
       <View className="flex-row items-center gap-2">
-        <TouchableOpacity
+        <Button
+          variant={disabled ? 'secondary' : 'primary'}
+          size="icon"
           className={`rounded-lg w-11 h-11 justify-center items-center ${
             disabled
               ? isDark
@@ -65,7 +62,7 @@ const DurationInput = () => {
             size={20}
             strokeWidth={6}
           />
-        </TouchableOpacity>
+        </Button>
         <TextInput
           className={`flex-1 border-2 rounded-lg px-3 pt-4 pb-3 text-sm h-12 text-center font-bold ${
             disabled
@@ -84,7 +81,9 @@ const DurationInput = () => {
           editable={!disabled}
           selectTextOnFocus={!disabled}
         />
-        <TouchableOpacity
+        <Button
+          variant={disabled ? 'secondary' : 'primary'}
+          size="icon"
           className={`rounded-lg w-11 h-11 justify-center items-center ${
             disabled
               ? isDark
@@ -102,7 +101,7 @@ const DurationInput = () => {
             size={20}
             strokeWidth={6}
           />
-        </TouchableOpacity>
+        </Button>
       </View>
     </View>
   );

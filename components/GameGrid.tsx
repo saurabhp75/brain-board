@@ -2,7 +2,6 @@ import { useColorScheme, View } from 'react-native';
 import { useGameStore } from '@/stores/gameStore';
 import { Cell } from './GameCell';
 import { GRID_PADDING, GRID_SIZE } from '@/constants/layouts';
-import { COLORS } from '@/theme/colors';
 
 export default function GameGrid() {
   const cells = useGameStore((state) => state.cells);

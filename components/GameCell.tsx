@@ -6,13 +6,10 @@ import {
   TOTAL_CELL_SPACE,
 } from '@/constants/layouts';
 import { GameCell, useGameStore } from '@/stores/gameStore';
-import {
-  TouchableOpacity,
-  ViewStyle,
-  useColorScheme,
-  Text,
-} from 'react-native';
+import { ViewStyle, useColorScheme } from 'react-native';
 import { COLORS } from '@/theme/colors';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
 
 interface CellProps {
   cell: GameCell;
@@ -53,32 +50,37 @@ export function Cell({ cell }: CellProps) {
   };
 
   const getTextColor = () => {
-    if (cell.showError) return isDark ? '#ef4444' : '#dc2626'; // red
-    if (cell.isRevealed) return isDark ? '#3b82f6' : '#2563eb'; // blue
-    return isDark ? '#ffffff' : '#000000'; // default
+    if (cell.showError) return COLORS.dark.destructive; // red for both themes
+    if (cell.isRevealed)
+      return isDark ? COLORS.dark.primary : COLORS.light.primary; // blue
+    return isDark ? COLORS.white : COLORS.black; // default
+  };
+
+  const getBackgroundStyle = () => {
+    if (cell.isRevealed) {
+      return {
+        backgroundColor: isDark ? COLORS.dark.grey5 : COLORS.light.grey6,
+        borderColor: isDark ? COLORS.dark.primary : COLORS.light.primary,
+      };
+    }
+
+    return {
+      backgroundColor: isDark ? COLORS.dark.card : COLORS.light.card,
+      borderColor: isDark ? COLORS.dark.grey3 : COLORS.light.grey4,
+    };
   };
 
   const getBackgroundClasses = () => {
-    const baseClasses = `rounded-2xl items-center justify-center border-2 shadow-lg ${scaleClass}`;
-
-    if (cell.isRevealed) {
-      return `${baseClasses} ${
-        isDark ? 'bg-gray-800 border-blue-500' : 'bg-gray-100 border-blue-400'
-      }`;
-    }
-
-    return `${baseClasses} ${
-      isDark ? 'bg-gray-900 border-gray-600' : 'bg-white border-gray-300'
-    }`;
+    return `rounded-2xl items-center justify-center border-2 shadow-lg ${scaleClass}`;
   };
 
   return (
-    <TouchableOpacity
+    <Button
+      variant="secondary"
       className={getBackgroundClasses()}
-      style={cellPosition}
+      style={[cellPosition, getBackgroundStyle()]}
       onPress={() => handleCellClick(cell.id)}
       disabled={!isClickable}
-      activeOpacity={0.7}
     >
       <Text
         className="font-black text-center"
@@ -89,6 +91,6 @@ export function Cell({ cell }: CellProps) {
       >
         {cellContent}
       </Text>
-    </TouchableOpacity>
+    </Button>
   );
 }

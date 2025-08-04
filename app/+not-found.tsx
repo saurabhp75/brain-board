@@ -1,66 +1,59 @@
-import ThemedView from '@/mycomponents/ThemedView';
-import ThemedText from '@/mycomponents/ThemedText';
-import { Colors } from '@/constants/Colors';
 import { Link, Stack } from 'expo-router';
-import { StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, useColorScheme } from 'react-native';
+import { COLORS } from '@/theme/colors';
 
 export default function NotFoundScreen() {
   const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+  const isDark = colorScheme === 'dark';
+
   return (
     <>
       <Stack.Screen
         options={{
           title: 'Oops!',
-          headerStyle: { backgroundColor: theme.navigationBackground },
-          headerTintColor: theme.onBackground,
+          headerStyle: {
+            backgroundColor: isDark
+              ? COLORS.dark.background
+              : COLORS.light.background,
+          },
+          headerTintColor: isDark
+            ? COLORS.dark.foreground
+            : COLORS.light.foreground,
         }}
       />
-      <ThemedView style={styles.container}>
-        <ThemedText
-          variant="heading"
-          size="xl"
-          weight="semibold"
-          style={[styles.text, { color: theme.onBackground }]}
+      <View
+        className="flex-1 items-center justify-center p-5"
+        style={{
+          backgroundColor: isDark
+            ? COLORS.dark.background
+            : COLORS.light.background,
+        }}
+      >
+        <Text
+          className="text-2xl font-semibold text-center mb-4"
+          style={{
+            color: isDark ? COLORS.dark.foreground : COLORS.light.foreground,
+          }}
         >
           This screen doesn&apos;t exist.
-        </ThemedText>
+        </Text>
         <Link
           href="/"
-          style={[styles.link, { backgroundColor: theme.primary }]}
+          className="mt-4 py-4 px-6 rounded-lg items-center"
+          style={{
+            backgroundColor: isDark
+              ? COLORS.dark.primary
+              : COLORS.light.primary,
+          }}
         >
-          <ThemedText
-            variant="heading"
-            size="base"
-            weight="semibold"
-            style={[styles.linkText, { color: '#ffffff' }]}
+          <Text
+            className="text-base font-semibold"
+            style={{ color: COLORS.white }}
           >
             Go to home screen!
-          </ThemedText>
+          </Text>
         </Link>
-      </ThemedView>
+      </View>
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  text: {
-    // Modern typography handled by ThemedText
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-    paddingHorizontal: 25,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  linkText: {
-    // Modern typography handled by ThemedText
-  },
-});

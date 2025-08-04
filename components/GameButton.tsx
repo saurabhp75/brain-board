@@ -1,7 +1,9 @@
-import { TouchableOpacity, useColorScheme, View, Text } from 'react-native';
+import { useColorScheme, View } from 'react-native';
 import { useGameStore } from '@/stores/gameStore';
 import { Play, RotateCcw } from 'lucide-react-native';
 import { COLORS } from '@/theme/colors';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
 
 const GameButton = () => {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -45,38 +47,57 @@ const GameButton = () => {
     }
   };
 
+  const getButtonVariant = () => {
+    if (isStartDisabled) {
+      return 'secondary';
+    }
+    if (gamePhase === 'victory') {
+      return 'tonal';
+    }
+    return 'primary';
+  };
+
   const getButtonClasses = () => {
     if (isStartDisabled) {
-      return isDark ? 'bg-gray-700' : 'bg-gray-300';
+      return 'opacity-50';
     }
     if (gamePhase === 'victory') {
       return 'bg-green-500';
     }
-    return isDark ? 'bg-blue-600' : 'bg-blue-500';
+    return '';
+  };
+
+  const getIconColor = () => {
+    if (isStartDisabled) {
+      return isDark ? COLORS.dark.grey2 : COLORS.light.grey2;
+    }
+    if (gamePhase === 'victory') {
+      return isDark ? COLORS.white : COLORS.black;
+    }
+    return COLORS.white;
   };
 
   return (
-    <View className="flex-[2] rounded-xl">
-      <TouchableOpacity
-        className={`flex-row items-center justify-center p-3.5 rounded-xl gap-2 h-14 shadow-lg ${getButtonClasses()}`}
+    <View className="flex-[2]">
+      <Button
+        variant={getButtonVariant()}
+        size="lg"
+        className={`h-14 ${getButtonClasses()}`}
         onPress={handleStartGame}
         disabled={isStartDisabled}
-        activeOpacity={0.8}
       >
         {/* Show play icon in setup phase, reset icon in playing phase */}
         {gamePhase === 'setup' && (
-          <Play color="#ffffff" size={16} fill="#ffffff" />
+          <Play color={getIconColor()} size={16} fill={getIconColor()} />
         )}
         {gamePhase === 'victory' && (
-          <Play color="#ffffff" size={16} fill="#ffffff" />
+          <Play color={getIconColor()} size={16} fill={getIconColor()} />
         )}
         {gamePhase === 'playing' && (
-          <RotateCcw color="#ffffff" size={16} strokeWidth={3} />
+          <RotateCcw color={getIconColor()} size={16} strokeWidth={3} />
         )}
-        <Text className="text-base font-semibold text-white">
-          {getButtonText()}
-        </Text>
-      </TouchableOpacity>
+        <Text>{getButtonText()}</Text>
+      </Button>
     </View>
   );
 };
