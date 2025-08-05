@@ -73,7 +73,6 @@ const GameButton = () => {
         className="h-14"
         style={{
           opacity: isStartDisabled ? 0.5 : 1,
-          backgroundColor: gamePhase === 'victory' ? '#22c55e' : undefined,
         }}
         onPress={handleStartGame}
         disabled={isStartDisabled}

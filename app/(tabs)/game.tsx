@@ -100,7 +100,7 @@ export default function GameScreen() {
               <Text
                 style={{
                   textAlign: 'center',
-                  marginBottom: 2,
+                  marginBottom: 12,
                   fontWeight: 'bold',
                   color:
                     gamePhase !== 'setup'
@@ -111,7 +111,7 @@ export default function GameScreen() {
                 Time (ms):
               </Text>
               <DurationInput />
-              <View style={{ marginTop: 16 }}>
+              <View className="pt-5">
                 <GameButton />
               </View>
             </View>
