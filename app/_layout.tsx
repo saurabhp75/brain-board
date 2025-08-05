@@ -5,13 +5,14 @@ import { COLORS } from '@/theme/colors';
 import { useColorScheme, useInitialAndroidBarSync } from '@/lib/useColorScheme';
 import { NAV_THEME } from '@/theme';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
+import '../global.css';
 
 export default function RootLayout() {
   useFrameworkReady();
 
   useInitialAndroidBarSync();
-  const { colorScheme, isDarkColorScheme } = useColorScheme();
-  const theme = isDarkColorScheme ? COLORS.dark : COLORS.light;
+  const { colorScheme } = useColorScheme();
+  const currentColors = COLORS[colorScheme];
 
   return (
     <>
@@ -19,8 +20,8 @@ export default function RootLayout() {
         <Stack
           screenOptions={{
             headerShown: false,
-            headerStyle: { backgroundColor: theme.background },
-            headerTintColor: theme.foreground,
+            headerStyle: { backgroundColor: currentColors.background },
+            headerTintColor: currentColors.foreground,
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
