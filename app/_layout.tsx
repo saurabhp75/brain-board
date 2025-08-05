@@ -15,20 +15,18 @@ export default function RootLayout() {
   const currentColors = COLORS[colorScheme];
 
   return (
-    <>
-      <NavThemeProvider value={NAV_THEME[colorScheme]}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            headerStyle: { backgroundColor: currentColors.background },
-            headerTintColor: currentColors.foreground,
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </NavThemeProvider>
-    </>
+    <NavThemeProvider value={NAV_THEME[colorScheme]}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          headerStyle: { backgroundColor: currentColors.background },
+          headerTintColor: currentColors.foreground,
+        }}
+      >
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style="auto" />
+    </NavThemeProvider>
   );
 }

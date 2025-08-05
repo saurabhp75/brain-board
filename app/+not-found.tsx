@@ -11,7 +11,7 @@ export default function NotFoundScreen() {
     <>
       <Stack.Screen
         options={{
-          title: 'Oops!',
+          title: 'MemoryGamePro',
           headerStyle: {
             backgroundColor: currentColors.background,
           },
