@@ -14,7 +14,7 @@ export default function GameGrid() {
   return (
     <View className="items-center justify-center">
       <View
-        className="rounded-2xl border-2 items-center justify-center shadow-xl"
+        className="rounded-2xl border-2 items-center justify-center shadow-md"
         style={{
           width: GRID_SIZE,
           height: GRID_SIZE,

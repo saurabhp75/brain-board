@@ -12,3 +12,4 @@ export const CELLS_PER_ROW = 3;
 export const TOTAL_CELL_SPACE = GRID_SIZE - GRID_PADDING * 2;
 const TOTAL_GAP_SPACE = CELL_GAP * (CELLS_PER_ROW - 1);
 export const CELL_SIZE = (TOTAL_CELL_SPACE - TOTAL_GAP_SPACE) / CELLS_PER_ROW;
+export const SQUARES_IN_GRID = 9; // 3x3 grid

@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 import { combine } from 'zustand/middleware';
 import { SoundService } from '@/services/soundService';
-
-const SQUARES_IN_GRID = 9; // 3x3 grid
+import { SQUARES_IN_GRID } from '@/constants/layouts';
 
 export const GAME_STATUS = {
   setup: 'Set duration and press Start Game',

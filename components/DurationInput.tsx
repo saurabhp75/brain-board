@@ -37,9 +37,9 @@ const DurationInput = () => {
 
   return (
     <View
-      className="flex-1 rounded-xl justify-center p-3 border shadow-sm"
+      className="flex-1 justify-center p-3"
       style={{
-        backgroundColor: currentColors.card,
+        backgroundColor: currentColors.background,
         borderColor: currentColors.grey4,
       }}
     >
@@ -50,14 +50,14 @@ const DurationInput = () => {
           className="rounded-lg w-11 h-11 justify-center items-center shadow-sm"
           style={{
             backgroundColor: disabled
-              ? currentColors.grey4
+              ? currentColors.grey6
               : currentColors.primary,
           }}
           onPress={handleDecrement}
           disabled={disabled}
         >
           <Minus
-            color={disabled ? currentColors.grey2 : COLORS.white}
+            color={disabled ? currentColors.grey4 : COLORS.white}
             size={20}
             strokeWidth={6}
           />
@@ -65,11 +65,11 @@ const DurationInput = () => {
         <TextInput
           className="flex-1 border-2 rounded-lg px-3 pt-4 pb-3 text-sm h-12 text-center font-bold shadow-sm"
           style={{
-            borderColor: disabled ? currentColors.grey4 : currentColors.primary,
+            borderColor: disabled ? currentColors.grey5 : currentColors.primary,
             backgroundColor: disabled
               ? currentColors.grey6
               : currentColors.background,
-            color: disabled ? currentColors.grey2 : currentColors.foreground,
+            color: disabled ? currentColors.grey4 : currentColors.foreground,
           }}
           value={duration.toString()}
           onChangeText={handleDurationChange}
@@ -85,14 +85,14 @@ const DurationInput = () => {
           className="rounded-lg w-11 h-11 justify-center items-center shadow-sm"
           style={{
             backgroundColor: disabled
-              ? currentColors.grey4
+              ? currentColors.grey6
               : currentColors.primary,
           }}
           onPress={handleIncrement}
           disabled={disabled}
         >
           <Plus
-            color={disabled ? currentColors.grey2 : COLORS.white}
+            color={disabled ? currentColors.grey4 : COLORS.white}
             size={20}
             strokeWidth={6}
           />

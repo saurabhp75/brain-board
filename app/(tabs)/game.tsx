@@ -104,7 +104,7 @@ export default function GameScreen() {
                   fontWeight: 'bold',
                   color:
                     gamePhase !== 'setup'
-                      ? currentColors.grey2
+                      ? currentColors.grey4
                       : currentColors.foreground,
                 }}
               >

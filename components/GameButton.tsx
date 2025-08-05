@@ -52,9 +52,6 @@ const GameButton = () => {
     if (isStartDisabled) {
       return 'secondary';
     }
-    if (gamePhase === 'victory') {
-      return 'tonal';
-    }
     return 'primary';
   };
 

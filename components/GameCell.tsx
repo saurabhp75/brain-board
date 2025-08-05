@@ -72,8 +72,8 @@ export function Cell({ cell }: CellProps) {
 
   return (
     <Button
-      variant="secondary"
-      className={`rounded-2xl items-center justify-center border-2 shadow-lg ${scaleClass}`}
+      variant="tonal"
+      className={`rounded-2xl items-center justify-center border-2 shadow-sm ${scaleClass}`}
       style={[cellPosition, getBackgroundStyle()]}
       onPress={() => handleCellClick(cell.id)}
       disabled={!isClickable}
