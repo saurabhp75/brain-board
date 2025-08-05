@@ -6,7 +6,8 @@ import {
   TOTAL_CELL_SPACE,
 } from '@/constants/layouts';
 import { GameCell, useGameStore } from '@/stores/gameStore';
-import { ViewStyle, useColorScheme } from 'react-native';
+import { ViewStyle } from 'react-native';
+import { useColorScheme } from '@/lib/useColorScheme';
 import { COLORS } from '@/theme/colors';
 import { Button } from '@/components/nativewindui/Button';
 import { Text } from '@/components/nativewindui/Text';
@@ -19,8 +20,8 @@ export function Cell({ cell }: CellProps) {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const handleCellClick = useGameStore((state) => state.handleCellClick);
 
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const { colorScheme } = useColorScheme();
+  const currentColors = COLORS[colorScheme];
 
   const isClickable = gamePhase === 'playing' && !cell.isRevealed;
 
@@ -50,34 +51,29 @@ export function Cell({ cell }: CellProps) {
   };
 
   const getTextColor = () => {
-    if (cell.showError) return COLORS.dark.destructive; // red for both themes
-    if (cell.isRevealed)
-      return isDark ? COLORS.dark.primary : COLORS.light.primary; // blue
-    return isDark ? COLORS.white : COLORS.black; // default
+    if (cell.showError) return currentColors.destructive;
+    if (cell.isRevealed) return currentColors.primary;
+    return currentColors.foreground;
   };
 
   const getBackgroundStyle = () => {
     if (cell.isRevealed) {
       return {
-        backgroundColor: isDark ? COLORS.dark.grey5 : COLORS.light.grey6,
-        borderColor: isDark ? COLORS.dark.primary : COLORS.light.primary,
+        backgroundColor: currentColors.grey5,
+        borderColor: currentColors.primary,
       };
     }
 
     return {
-      backgroundColor: isDark ? COLORS.dark.card : COLORS.light.card,
-      borderColor: isDark ? COLORS.dark.grey3 : COLORS.light.grey4,
+      backgroundColor: currentColors.card,
+      borderColor: currentColors.grey3,
     };
-  };
-
-  const getBackgroundClasses = () => {
-    return `rounded-2xl items-center justify-center border-2 shadow-lg ${scaleClass}`;
   };
 
   return (
     <Button
       variant="secondary"
-      className={getBackgroundClasses()}
+      className={`rounded-2xl items-center justify-center border-2 shadow-lg ${scaleClass}`}
       style={[cellPosition, getBackgroundStyle()]}
       onPress={() => handleCellClick(cell.id)}
       disabled={!isClickable}

@@ -1,10 +1,5 @@
-import {
-  ScrollView,
-  useColorScheme,
-  View,
-  Text,
-  SafeAreaView,
-} from 'react-native';
+import { ScrollView, View, Text, SafeAreaView } from 'react-native';
+import { useColorScheme } from '@/lib/useColorScheme';
 import { Toggle } from '@/components/nativewindui/Toggle';
 import { COLORS } from '@/theme/colors';
 import { SoundService } from '@/services/soundService';
@@ -12,9 +7,8 @@ import { useState } from 'react';
 import AdBanner from '@/components/AdBanner';
 
 export default function SettingsScreen() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = isDark ? COLORS.dark : COLORS.light;
+  const { colorScheme } = useColorScheme();
+  const currentColors = COLORS[colorScheme];
 
   // Initialize state from SoundService
   const [soundEnabled, setSoundEnabled] = useState(
@@ -39,9 +33,12 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView
       className="flex-1"
-      style={{ backgroundColor: theme.background }}
+      style={{ backgroundColor: currentColors.background }}
     >
-      <View className="flex-1" style={{ backgroundColor: theme.background }}>
+      <View
+        className="flex-1"
+        style={{ backgroundColor: currentColors.background }}
+      >
         <AdBanner />
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View className="flex-1 pb-10">
@@ -49,13 +46,13 @@ export default function SettingsScreen() {
             <View className="items-center pt-5 pb-4 px-5 min-h-[80px]">
               <Text
                 className="text-3xl font-bold text-center"
-                style={{ color: theme.foreground }}
+                style={{ color: currentColors.foreground }}
               >
                 ⚙️ Settings
               </Text>
               <View
                 className="w-15 h-1 rounded-sm mt-2 opacity-80"
-                style={{ backgroundColor: theme.primary }}
+                style={{ backgroundColor: currentColors.primary }}
               />
             </View>
 
@@ -65,19 +62,22 @@ export default function SettingsScreen() {
               <View
                 className="rounded-xl mb-4 p-4 border-l-4"
                 style={{
-                  backgroundColor: theme.card,
-                  borderLeftColor: theme.primary,
-                  borderColor: theme.grey4,
+                  backgroundColor: currentColors.card,
+                  borderLeftColor: currentColors.primary,
+                  borderColor: currentColors.grey4,
                   borderWidth: 1,
                 }}
               >
                 <Text
                   className="text-lg font-bold"
-                  style={{ color: theme.foreground }}
+                  style={{ color: currentColors.foreground }}
                 >
                   🔊 Audio & Feedback
                 </Text>
-                <Text className="text-sm mt-1" style={{ color: theme.grey2 }}>
+                <Text
+                  className="text-sm mt-1"
+                  style={{ color: currentColors.grey2 }}
+                >
                   Customize your game experience
                 </Text>
               </View>
@@ -86,8 +86,8 @@ export default function SettingsScreen() {
               <View
                 className="rounded-xl mb-3 border shadow-sm"
                 style={{
-                  backgroundColor: theme.card,
-                  borderColor: theme.grey4,
+                  backgroundColor: currentColors.card,
+                  borderColor: currentColors.grey4,
                 }}
               >
                 <View className="flex-row items-center justify-between p-4">
@@ -97,14 +97,16 @@ export default function SettingsScreen() {
                         className="w-8 h-8 rounded-lg items-center justify-center mr-3"
                         style={{
                           backgroundColor: soundEnabled
-                            ? theme.primary
-                            : theme.grey4,
+                            ? currentColors.primary
+                            : currentColors.grey4,
                         }}
                       >
                         <Text
                           className="text-sm font-bold"
                           style={{
-                            color: soundEnabled ? theme.card : theme.grey2,
+                            color: soundEnabled
+                              ? currentColors.card
+                              : currentColors.grey2,
                           }}
                         >
                           🔊
@@ -112,14 +114,14 @@ export default function SettingsScreen() {
                       </View>
                       <Text
                         className="font-semibold text-base"
-                        style={{ color: theme.foreground }}
+                        style={{ color: currentColors.foreground }}
                       >
                         Sound Effects
                       </Text>
                     </View>
                     <Text
                       className="text-sm leading-[18px] ml-11"
-                      style={{ color: theme.grey2 }}
+                      style={{ color: currentColors.grey2 }}
                     >
                       Play audio feedback during gameplay interactions
                     </Text>
@@ -135,8 +137,8 @@ export default function SettingsScreen() {
               <View
                 className="rounded-xl mb-3 border shadow-sm"
                 style={{
-                  backgroundColor: theme.card,
-                  borderColor: theme.grey4,
+                  backgroundColor: currentColors.card,
+                  borderColor: currentColors.grey4,
                 }}
               >
                 <View className="flex-row items-center justify-between p-4">
@@ -146,14 +148,16 @@ export default function SettingsScreen() {
                         className="w-8 h-8 rounded-lg items-center justify-center mr-3"
                         style={{
                           backgroundColor: hapticsEnabled
-                            ? theme.primary
-                            : theme.grey4,
+                            ? currentColors.primary
+                            : currentColors.grey4,
                         }}
                       >
                         <Text
                           className="text-sm font-bold"
                           style={{
-                            color: hapticsEnabled ? theme.card : theme.grey2,
+                            color: hapticsEnabled
+                              ? currentColors.card
+                              : currentColors.grey2,
                           }}
                         >
                           📳
@@ -161,14 +165,14 @@ export default function SettingsScreen() {
                       </View>
                       <Text
                         className="font-semibold text-base"
-                        style={{ color: theme.foreground }}
+                        style={{ color: currentColors.foreground }}
                       >
                         Haptic Feedback
                       </Text>
                     </View>
                     <Text
                       className="text-sm leading-[18px] ml-11"
-                      style={{ color: theme.grey2 }}
+                      style={{ color: currentColors.grey2 }}
                     >
                       Feel vibrations for game interactions and feedback
                     </Text>
@@ -184,13 +188,13 @@ export default function SettingsScreen() {
               <View
                 className="rounded-xl mt-6 p-4 border"
                 style={{
-                  backgroundColor: theme.grey6,
-                  borderColor: theme.grey4,
+                  backgroundColor: currentColors.grey6,
+                  borderColor: currentColors.grey4,
                 }}
               >
                 <Text
                   className="text-sm text-center"
-                  style={{ color: theme.grey }}
+                  style={{ color: currentColors.grey }}
                 >
                   💡 Settings are automatically saved and will persist between
                   app sessions

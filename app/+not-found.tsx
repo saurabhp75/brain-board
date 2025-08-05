@@ -1,10 +1,11 @@
 import { Link, Stack } from 'expo-router';
-import { View, Text, useColorScheme } from 'react-native';
+import { View, Text } from 'react-native';
 import { COLORS } from '@/theme/colors';
+import { useColorScheme } from '@/lib/useColorScheme';
 
 export default function NotFoundScreen() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const { colorScheme } = useColorScheme();
+  const currentColors = COLORS[colorScheme];
 
   return (
     <>
@@ -12,27 +13,21 @@ export default function NotFoundScreen() {
         options={{
           title: 'Oops!',
           headerStyle: {
-            backgroundColor: isDark
-              ? COLORS.dark.background
-              : COLORS.light.background,
+            backgroundColor: currentColors.background,
           },
-          headerTintColor: isDark
-            ? COLORS.dark.foreground
-            : COLORS.light.foreground,
+          headerTintColor: currentColors.foreground,
         }}
       />
       <View
         className="flex-1 items-center justify-center p-5"
         style={{
-          backgroundColor: isDark
-            ? COLORS.dark.background
-            : COLORS.light.background,
+          backgroundColor: currentColors.background,
         }}
       >
         <Text
           className="text-2xl font-semibold text-center mb-4"
           style={{
-            color: isDark ? COLORS.dark.foreground : COLORS.light.foreground,
+            color: currentColors.foreground,
           }}
         >
           This screen doesn&apos;t exist.
@@ -41,9 +36,7 @@ export default function NotFoundScreen() {
           href="/"
           className="mt-4 py-4 px-6 rounded-lg items-center"
           style={{
-            backgroundColor: isDark
-              ? COLORS.dark.primary
-              : COLORS.light.primary,
+            backgroundColor: currentColors.primary,
           }}
         >
           <Text

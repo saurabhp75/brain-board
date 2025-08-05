@@ -1,24 +1,21 @@
-import {
-  ScrollView,
-  useColorScheme,
-  View,
-  Text,
-  SafeAreaView,
-} from 'react-native';
+import { ScrollView, View, Text, SafeAreaView } from 'react-native';
+import { useColorScheme } from '@/lib/useColorScheme';
 import { COLORS } from '@/theme/colors';
 import AdBanner from '@/components/AdBanner';
 
 export default function AboutScreen() {
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
-  const theme = isDark ? COLORS.dark : COLORS.light;
+  const { colorScheme } = useColorScheme();
+  const currentColors = COLORS[colorScheme];
 
   return (
     <SafeAreaView
       className="flex-1"
-      style={{ backgroundColor: theme.background }}
+      style={{ backgroundColor: currentColors.background }}
     >
-      <View className="flex-1" style={{ backgroundColor: theme.background }}>
+      <View
+        className="flex-1"
+        style={{ backgroundColor: currentColors.background }}
+      >
         <AdBanner />
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View className="flex-1 pb-10">
@@ -26,13 +23,13 @@ export default function AboutScreen() {
             <View className="items-center pt-5 pb-4 px-5 min-h-[80px]">
               <Text
                 className="text-3xl font-bold text-center"
-                style={{ color: theme.foreground }}
+                style={{ color: currentColors.foreground }}
               >
                 🧠 Memory Game Pro
               </Text>
               <View
                 className="w-15 h-1 rounded-sm mt-2 opacity-80"
-                style={{ backgroundColor: theme.primary }}
+                style={{ backgroundColor: currentColors.primary }}
               />
             </View>
 
@@ -42,19 +39,19 @@ export default function AboutScreen() {
               <View
                 className="rounded-xl mb-6 p-4 border shadow-sm"
                 style={{
-                  backgroundColor: theme.card,
-                  borderColor: theme.grey4,
+                  backgroundColor: currentColors.card,
+                  borderColor: currentColors.grey4,
                 }}
               >
                 <Text
                   className="text-lg text-center mb-3 font-semibold"
-                  style={{ color: theme.foreground }}
+                  style={{ color: currentColors.foreground }}
                 >
                   Welcome to Memory Game Pro - the ultimate brain challenge!
                 </Text>
                 <Text
                   className="text-base text-center leading-5"
-                  style={{ color: theme.grey2 }}
+                  style={{ color: currentColors.grey2 }}
                 >
                   Test and improve your memory skills with our fun and
                   challenging game. Flip cards to find the numbers in sequence
@@ -66,13 +63,13 @@ export default function AboutScreen() {
               <View
                 className="rounded-xl mb-6 p-4 border shadow-sm"
                 style={{
-                  backgroundColor: theme.card,
-                  borderColor: theme.grey4,
+                  backgroundColor: currentColors.card,
+                  borderColor: currentColors.grey4,
                 }}
               >
                 <Text
                   className="text-lg font-bold mb-4"
-                  style={{ color: theme.foreground }}
+                  style={{ color: currentColors.foreground }}
                 >
                   How to Play:
                 </Text>
@@ -86,18 +83,18 @@ export default function AboutScreen() {
                   <View key={index} className="flex-row items-start mb-3">
                     <View
                       className="w-6 h-6 rounded-full items-center justify-center mr-3 mt-0.5"
-                      style={{ backgroundColor: theme.primary }}
+                      style={{ backgroundColor: currentColors.primary }}
                     >
                       <Text
                         className="text-sm font-bold"
-                        style={{ color: theme.card }}
+                        style={{ color: currentColors.card }}
                       >
                         {index + 1}
                       </Text>
                     </View>
                     <Text
                       className="flex-1 text-base leading-5"
-                      style={{ color: theme.grey2 }}
+                      style={{ color: currentColors.grey2 }}
                     >
                       {step}
                     </Text>
@@ -109,13 +106,13 @@ export default function AboutScreen() {
               <View
                 className="rounded-xl mb-6 p-4 border shadow-sm"
                 style={{
-                  backgroundColor: theme.card,
-                  borderColor: theme.grey4,
+                  backgroundColor: currentColors.card,
+                  borderColor: currentColors.grey4,
                 }}
               >
                 <Text
                   className="text-lg font-bold mb-4"
-                  style={{ color: theme.foreground }}
+                  style={{ color: currentColors.foreground }}
                 >
                   Game Features:
                 </Text>
@@ -130,7 +127,7 @@ export default function AboutScreen() {
                   <Text
                     key={index}
                     className="text-base mb-2 leading-5"
-                    style={{ color: theme.grey2 }}
+                    style={{ color: currentColors.grey2 }}
                   >
                     {feature}
                   </Text>

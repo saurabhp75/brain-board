@@ -1,11 +1,11 @@
 import { Tabs } from 'expo-router';
-import { useColorScheme } from 'react-native';
 import { Gamepad2, Info, Settings } from 'lucide-react-native';
 import { COLORS } from '@/theme/colors';
+import { useColorScheme } from '@/lib/useColorScheme';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const currentColors = COLORS[colorScheme ?? 'light'];
+  const { colorScheme } = useColorScheme();
+  const currentColors = COLORS[colorScheme];
 
   return (
     <Tabs

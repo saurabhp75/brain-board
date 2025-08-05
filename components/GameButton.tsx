@@ -1,4 +1,5 @@
-import { useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
+import { useColorScheme } from '@/lib/useColorScheme';
 import { useGameStore } from '@/stores/gameStore';
 import { Play, RotateCcw } from 'lucide-react-native';
 import { COLORS } from '@/theme/colors';
@@ -10,8 +11,8 @@ const GameButton = () => {
   const startGame = useGameStore((state) => state.startGame);
   const resetGame = useGameStore((state) => state.resetGame);
 
-  const colorScheme = useColorScheme();
-  const isDark = colorScheme === 'dark';
+  const { colorScheme } = useColorScheme();
+  const currentColors = COLORS[colorScheme];
 
   const isStartDisabled = gamePhase === 'memorizing';
 
@@ -57,22 +58,9 @@ const GameButton = () => {
     return 'primary';
   };
 
-  const getButtonClasses = () => {
-    if (isStartDisabled) {
-      return 'opacity-50';
-    }
-    if (gamePhase === 'victory') {
-      return 'bg-green-500';
-    }
-    return '';
-  };
-
   const getIconColor = () => {
     if (isStartDisabled) {
-      return isDark ? COLORS.dark.grey2 : COLORS.light.grey2;
-    }
-    if (gamePhase === 'victory') {
-      return isDark ? COLORS.white : COLORS.black;
+      return currentColors.grey2;
     }
     return COLORS.white;
   };
@@ -82,7 +70,11 @@ const GameButton = () => {
       <Button
         variant={getButtonVariant()}
         size="lg"
-        className={`h-14 ${getButtonClasses()}`}
+        className="h-14"
+        style={{
+          opacity: isStartDisabled ? 0.5 : 1,
+          backgroundColor: gamePhase === 'victory' ? '#22c55e' : undefined,
+        }}
         onPress={handleStartGame}
         disabled={isStartDisabled}
       >
@@ -96,7 +88,7 @@ const GameButton = () => {
         {gamePhase === 'playing' && (
           <RotateCcw color={getIconColor()} size={16} strokeWidth={3} />
         )}
-        <Text>{getButtonText()}</Text>
+        <Text style={{ color: COLORS.white }}>{getButtonText()}</Text>
       </Button>
     </View>
   );
