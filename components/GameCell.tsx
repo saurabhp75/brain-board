@@ -5,12 +5,10 @@ import {
   GRID_PADDING,
   TOTAL_CELL_SPACE,
 } from '@/constants/layouts';
-import { GameCell, useGameStore } from '@/stores/gameStore';
-import { ViewStyle } from 'react-native';
 import { useColorScheme } from '@/lib/useColorScheme';
+import { GameCell, useGameStore } from '@/stores/gameStore';
 import { COLORS } from '@/theme/colors';
-import { Button } from '@/components/nativewindui/Button';
-import { Text } from '@/components/nativewindui/Text';
+import { TouchableOpacity, ViewStyle, StyleSheet, Text } from 'react-native';
 
 interface CellProps {
   cell: GameCell;
@@ -23,19 +21,25 @@ export function Cell({ cell }: CellProps) {
   const { colorScheme } = useColorScheme();
   const currentColors = COLORS[colorScheme];
 
+  const dynamicStyles = StyleSheet.create({
+    cellText: {
+      textShadowColor: currentColors.background,
+    },
+  });
+
   const isClickable = gamePhase === 'playing' && !cell.isRevealed;
 
   let cellContent = '?';
-  let scaleClass = '';
+  let cellStyle: ViewStyle[] = [styles.cell];
 
   if (cell.isRevealed) {
     cellContent = cell.value.toString();
-    scaleClass = 'scale-95';
+    cellStyle.push(styles.cellRevealed);
   }
 
   if (cell.showError) {
     cellContent = '✕';
-    scaleClass = 'scale-90';
+    cellStyle.push(styles.cellError);
   }
 
   // Calculate cell's row and column
@@ -56,37 +60,72 @@ export function Cell({ cell }: CellProps) {
     return currentColors.foreground;
   };
 
-  const getBackgroundStyle = () => {
-    if (cell.isRevealed) {
-      return {
-        backgroundColor: currentColors.grey5,
-        borderColor: currentColors.primary,
-      };
-    }
-
-    return {
-      backgroundColor: currentColors.card,
-      borderColor: currentColors.grey3,
-    };
-  };
-
   return (
-    <Button
-      variant="tonal"
-      className={`rounded-2xl items-center justify-center border-2 shadow-sm ${scaleClass}`}
-      style={[cellPosition, getBackgroundStyle()]}
+    <TouchableOpacity
+      style={[
+        cellStyle,
+        cellPosition,
+        {
+          backgroundColor: cell.isRevealed
+            ? currentColors.background
+            : currentColors.card,
+          borderColor: cell.isRevealed
+            ? currentColors.foreground
+            : currentColors.background,
+          shadowColor: currentColors.background,
+        },
+      ]}
       onPress={() => handleCellClick(cell.id)}
       disabled={!isClickable}
+      activeOpacity={0.7}
     >
       <Text
-        className="font-black text-center"
-        style={{
-          color: getTextColor(),
-          fontSize: Math.min(CELL_SIZE * 0.45, 24),
-        }}
+        style={[
+          styles.cellText,
+          dynamicStyles.cellText,
+          {
+            color: getTextColor(),
+            fontSize: Math.min(CELL_SIZE * 0.45, 24),
+          },
+        ]}
       >
         {cellContent}
       </Text>
-    </Button>
+    </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  cellContainer: {
+    position: 'relative',
+    borderRadius: 16,
+    width: TOTAL_CELL_SPACE,
+    height: TOTAL_CELL_SPACE,
+  },
+  cell: {
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  cellRevealed: {
+    transform: [{ scale: 0.95 }],
+  },
+  cellCorrect: {
+    transform: [{ scale: 1.05 }],
+  },
+  cellError: {
+    transform: [{ scale: 0.9 }],
+  },
+  cellText: {
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+});

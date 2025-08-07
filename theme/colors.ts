@@ -1,5 +1,3 @@
-import { Platform } from 'react-native';
-
 const IOS_SYSTEM_COLORS = {
   white: 'rgb(255, 255, 255)',
   black: 'rgb(0, 0, 0)',

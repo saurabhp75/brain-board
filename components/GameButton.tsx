@@ -1,10 +1,8 @@
-import { View } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import { useColorScheme } from '@/lib/useColorScheme';
 import { useGameStore } from '@/stores/gameStore';
 import { Play, RotateCcw } from 'lucide-react-native';
 import { COLORS } from '@/theme/colors';
-import { Button } from '@/components/nativewindui/Button';
-import { Text } from '@/components/nativewindui/Text';
 
 const GameButton = () => {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -63,13 +61,23 @@ const GameButton = () => {
   };
 
   return (
-    <View className="flex-[2]">
-      <Button
-        variant={getButtonVariant()}
-        size="lg"
-        className="h-14"
+    <View className="flex-1">
+      <TouchableOpacity
+        className="rounded-lg gap-2 flex-row items-center justify-center py-4 px-6"
         style={{
-          opacity: isStartDisabled ? 0.5 : 1,
+          backgroundColor: isStartDisabled
+            ? currentColors.grey4
+            : currentColors.primary,
+          borderWidth: 2,
+          borderColor: isStartDisabled
+            ? currentColors.grey3
+            : currentColors.primary,
+          opacity: isStartDisabled ? 0.7 : 1,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.15,
+          shadowRadius: 4,
+          elevation: 3,
         }}
         onPress={handleStartGame}
         disabled={isStartDisabled}
@@ -84,8 +92,16 @@ const GameButton = () => {
         {gamePhase === 'playing' && (
           <RotateCcw color={getIconColor()} size={16} strokeWidth={3} />
         )}
-        <Text style={{ color: COLORS.white }}>{getButtonText()}</Text>
-      </Button>
+        <Text
+          style={{
+            color: isStartDisabled ? currentColors.grey2 : COLORS.white,
+            fontWeight: 'bold',
+            fontSize: 16,
+          }}
+        >
+          {getButtonText()}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };

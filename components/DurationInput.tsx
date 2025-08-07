@@ -1,8 +1,8 @@
-import { View, TextInput } from 'react-native';
-import { useColorScheme } from '@/lib/useColorScheme';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Minus, Plus } from 'lucide-react-native';
+import ThemedTextInput from './ThemedTextInput';
 import { useGameStore } from '@/stores/gameStore';
-import { Button } from '@/components/nativewindui/Button';
+import { useColorScheme } from '@/lib/useColorScheme';
 import { COLORS } from '@/theme/colors';
 
 const DurationInput = () => {
@@ -37,69 +37,144 @@ const DurationInput = () => {
 
   return (
     <View
-      className="flex-1 justify-center p-3"
-      style={{
-        backgroundColor: currentColors.background,
-        borderColor: currentColors.grey4,
-      }}
+      style={[
+        styles.inputContainer,
+        {
+          backgroundColor: currentColors.background,
+          borderColor: currentColors.root,
+          shadowColor: currentColors.root,
+        },
+      ]}
     >
-      <View className="flex-row items-center gap-2">
-        <Button
-          variant={disabled ? 'secondary' : 'primary'}
-          size="icon"
-          className="rounded-lg w-11 h-11 justify-center items-center shadow-sm"
-          style={{
-            backgroundColor: disabled
-              ? currentColors.grey6
-              : currentColors.primary,
-          }}
+      <View style={styles.inputRow}>
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: disabled
+                ? currentColors.background
+                : currentColors.primary,
+              shadowColor: disabled
+                ? currentColors.root
+                : currentColors.primary,
+            },
+          ]}
           onPress={handleDecrement}
           disabled={disabled}
         >
           <Minus
-            color={disabled ? currentColors.grey4 : COLORS.white}
+            color={disabled ? currentColors.background : '#ffffff'}
             size={20}
             strokeWidth={6}
           />
-        </Button>
-        <TextInput
-          className="flex-1 border-2 rounded-lg px-3 pt-4 pb-3 text-sm h-12 text-center font-bold shadow-sm"
-          style={{
-            borderColor: disabled ? currentColors.grey5 : currentColors.primary,
-            backgroundColor: disabled
-              ? currentColors.grey6
-              : currentColors.background,
-            color: disabled ? currentColors.grey4 : currentColors.foreground,
-          }}
+        </TouchableOpacity>
+        <ThemedTextInput
+          style={[
+            styles.durationInput,
+            {
+              borderColor: disabled
+                ? currentColors.background
+                : currentColors.foreground,
+              backgroundColor: disabled
+                ? currentColors.background
+                : currentColors.foreground,
+              color: disabled
+                ? currentColors.background
+                : currentColors.primary,
+              shadowColor: currentColors.root,
+              fontFamily: 'System',
+              fontWeight: 'bold',
+            },
+          ]}
           value={duration.toString()}
           onChangeText={handleDurationChange}
           keyboardType="numeric"
           placeholder="3000"
-          placeholderTextColor={currentColors.grey2}
+          placeholderTextColor={currentColors.background}
           editable={!disabled}
           selectTextOnFocus={!disabled}
         />
-        <Button
-          variant={disabled ? 'secondary' : 'primary'}
-          size="icon"
-          className="rounded-lg w-11 h-11 justify-center items-center shadow-sm"
-          style={{
-            backgroundColor: disabled
-              ? currentColors.grey6
-              : currentColors.primary,
-          }}
+        <TouchableOpacity
+          style={[
+            styles.button,
+            {
+              backgroundColor: disabled
+                ? currentColors.background
+                : currentColors.primary,
+              shadowColor: disabled
+                ? currentColors.root
+                : currentColors.primary,
+            },
+          ]}
           onPress={handleIncrement}
           disabled={disabled}
         >
           <Plus
-            color={disabled ? currentColors.grey4 : COLORS.white}
+            color={disabled ? currentColors.background : '#ffffff'}
             size={20}
             strokeWidth={6}
           />
-        </Button>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  inputContainer: {
+    flex: 1,
+    borderRadius: 12,
+    justifyContent: 'center',
+    padding: 12,
+    borderWidth: 1,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  durationInput: {
+    flex: 1,
+    borderWidth: 2,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingTop: 16,
+    paddingBottom: 12,
+    fontSize: 14,
+    height: 48,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    lineHeight: 18,
+    includeFontPadding: false,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  button: {
+    borderRadius: 8,
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+});
 
 export default DurationInput;
