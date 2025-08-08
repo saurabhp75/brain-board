@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { combine } from 'zustand/middleware';
+import { combine, persist, createJSONStorage } from 'zustand/middleware';
+import { mmkvStorage } from '@/services/mmkv';
 import { SoundService } from '@/services/soundService';
 
 const SQUARES_IN_GRID = 9; // 3x3 grid
@@ -36,131 +37,150 @@ const createEmptyGrid = (n: number = 9, show: boolean = false): GameCell[] => {
 };
 
 export const useGameStore = create(
-  combine(
-    // Initial state
-    {
-      // Game state
-      cells: createEmptyGrid(),
-      currentTarget: 1,
-      gamePhase: 'setup' as 'setup' | 'memorizing' | 'playing' | 'victory',
+  persist(
+    combine(
+      // Initial state
+      {
+        // Game state
+        cells: createEmptyGrid(),
+        currentTarget: 1,
+        gamePhase: 'setup' as 'setup' | 'memorizing' | 'playing' | 'victory',
 
-      // Settings
-      duration: 3000,
+        // Settings
+        duration: 3000,
 
-      // Stats
-      moves: 0,
-      misses: 0,
-      gamesPlayed: 0,
-      gamesWon: 0,
-      userName: '',
-    },
-
-    // Actions
-    (set, get) => ({
-      startGame: () => {
-        const { duration } = get();
-
-        // Create grid with numbers showing for memorization phase
-        const memoryCells = createEmptyGrid(SQUARES_IN_GRID, true);
-
-        // Show the numbers for memorization phase
-        set({
-          cells: memoryCells,
-          gamePhase: 'memorizing',
-        });
-
-        // Hide numbers after duration
-        setTimeout(() => {
-          const hiddenCells = memoryCells.map((cell) => ({
-            ...cell,
-            isRevealed: false, // Hide the number
-          }));
-
-          // Hide the numbers and start the game
-          set({
-            cells: hiddenCells,
-            gamePhase: 'playing',
-          });
-        }, duration);
+        // Stats
+        moves: 0,
+        misses: 0,
+        gamesPlayed: 0,
+        gamesWon: 0,
+        userName: '',
       },
 
-      handleCellClick: (cellId: number) => {
-        const { cells, currentTarget, gamePhase, moves } = get();
+      // Actions
+      (set, get) => ({
+        startGame: () => {
+          const { duration } = get();
 
-        if (gamePhase !== 'playing') return;
+          // Create grid with numbers showing for memorization phase
+          const memoryCells = createEmptyGrid(SQUARES_IN_GRID, true);
 
-        const clickedCell = cells[cellId];
-        if (clickedCell.isRevealed) return;
-
-        const newMoves = moves + 1;
-
-        if (clickedCell.value === currentTarget) {
-          // Correct click - play success sound
-          SoundService.playCorrectSound();
-
-          // Update the cell to be revealed and marked as correct
-          const newCells = cells.map((cell) =>
-            cell.id === cellId ? { ...cell, isRevealed: true } : cell
-          );
-
-          const nextTarget = currentTarget + 1;
-
-          if (nextTarget > 9) {
-            // Victory! Play celebration sound
-            SoundService.playVictorySound();
-
-            set({
-              cells: newCells,
-              gamePhase: 'victory',
-              moves: newMoves,
-            });
-          } else {
-            set({
-              cells: newCells,
-              currentTarget: nextTarget,
-              moves: newMoves,
-            });
-          }
-        } else {
-          // Wrong click - play error sound
-          SoundService.playErrorSound();
-
-          const newCells = cells.map((cell) =>
-            cell.id === cellId ? { ...cell, showError: true } : cell
-          );
-
+          // Show the numbers for memorization phase
           set({
-            cells: newCells,
-            moves: newMoves,
+            cells: memoryCells,
+            gamePhase: 'memorizing',
           });
-
-          // Hide error after 200ms
+          // Hide numbers after duration
           setTimeout(() => {
-            const resetCells = get().cells.map((cell) =>
-              cell.id === cellId ? { ...cell, showError: false } : cell
+            const hiddenCells = memoryCells.map((cell) => ({
+              ...cell,
+              isRevealed: false, // Hide the number
+            }));
+
+            // Hide the numbers and start the game
+            set({
+              cells: hiddenCells,
+              gamePhase: 'playing',
+            });
+          }, duration);
+        },
+
+        handleCellClick: (cellId: number) => {
+          const { cells, currentTarget, gamePhase, moves } = get();
+
+          if (gamePhase !== 'playing') return;
+
+          const clickedCell = cells[cellId];
+          if (clickedCell.isRevealed) return;
+
+          const newMoves = moves + 1;
+
+          if (clickedCell.value === currentTarget) {
+            // Correct click - play success sound
+            SoundService.playCorrectSound();
+
+            // Update the cell to be revealed and marked as correct
+            const newCells = cells.map((cell) =>
+              cell.id === cellId ? { ...cell, isRevealed: true } : cell
+            );
+
+            const nextTarget = currentTarget + 1;
+
+            if (nextTarget > 9) {
+              // Victory! Play celebration sound
+              SoundService.playVictorySound();
+
+              set({
+                cells: newCells,
+                gamePhase: 'victory',
+                moves: newMoves,
+              });
+            } else {
+              set({
+                cells: newCells,
+                currentTarget: nextTarget,
+                moves: newMoves,
+              });
+            }
+          } else {
+            // Wrong click - play error sound
+            SoundService.playErrorSound();
+
+            const newCells = cells.map((cell) =>
+              cell.id === cellId ? { ...cell, showError: true } : cell
             );
 
             set({
-              cells: resetCells,
+              cells: newCells,
+              moves: newMoves,
             });
-          }, 200);
-        }
-      },
 
-      setDuration: (duration: number) => {
-        // Keep the duration within bounds
-        const clampedDuration = Math.max(0, Math.min(10000, duration));
-        set({ duration: clampedDuration });
-      },
+            // Hide error after 200ms
+            setTimeout(() => {
+              const resetCells = get().cells.map((cell) =>
+                cell.id === cellId ? { ...cell, showError: false } : cell
+              );
 
-      resetGame: () => {
-        set({
-          cells: createEmptyGrid(),
-          currentTarget: 1,
-          gamePhase: 'setup',
-          moves: 0,
-        });
+              set({
+                cells: resetCells,
+              });
+            }, 200);
+          }
+        },
+
+        setDuration: (duration: number) => {
+          // Keep the duration within bounds
+          const clampedDuration = Math.max(0, Math.min(10000, duration));
+          set({ duration: clampedDuration });
+        },
+
+        resetGame: () => {
+          set({
+            cells: createEmptyGrid(),
+            currentTarget: 1,
+            gamePhase: 'setup',
+            moves: 0,
+          });
+        },
+      })
+    ),
+    {
+      name: 'game-store-v1',
+      storage: createJSONStorage(() => mmkvStorage),
+      // Only persist the settings and stats; avoid transient game board/phase
+      partialize: (state: any) => ({
+        duration: state.duration,
+        moves: state.moves,
+        misses: state.misses,
+        gamesPlayed: state.gamesPlayed,
+        gamesWon: state.gamesWon,
+        userName: state.userName,
+      }),
+      version: 1,
+      migrate: (persisted: any, _version: number) => {
+        // Currently no migrations needed
+        return persisted as any;
       },
-    })
+    }
   )
 );
