@@ -1,126 +1,105 @@
 # Brain Board - Memory Game Pro
 
-## Architecture Overview
+## Project Overview
 
-This is an **Expo React Native** memory game with **Expo Router** file-based navigation. The app uses a tabbed layout with Game and About screens, implementing a 3x3 grid number sequence memory challenge.
+Brain Board is a React Native memory game built with Expo, featuring a 3x3 grid-based number sequence challenge. It uses Expo Router for navigation, Zustand for state management, and a robust theming system for dark/light mode support. The app is designed for mobile platforms with a focus on performance and accessibility.
 
-### Core Tech Stack
+## Core Technologies
 
-- **Expo 53** with new architecture enabled
-- **Expo Router 5** for navigation (tabs in `app/(tabs)/`)
-- **Zustand** for state management (`stores/gameStore.ts`)
-- **Lucide React Native** for consistent iconography
-- **TypeScript** throughout
+- **Framework/Platform**: React Native with Expo
+- **Navigation**: Expo Router (file-based navigation)
+- **State Management**: Zustand
+- **Styling**: NativeWind (Tailwind CSS for React Native)
+- **Icons**: Lucide React Native
+- **Theming**: Custom dark/light mode with centralized color constants
+- **Build Tools**: Expo CLI, Expo Application Services (EAS)
 
-## Essential Patterns
+## UI/Styling Approach
 
-### Theme System
+- **Component Libraries**: Custom Themed Components (`ThemedText`, `ThemedView`, `ThemedButton`, etc.)
+- **Styling Framework**: NativeWind for Tailwind-like utility classes
+- **Theming**:
+  - Centralized color system in `constants/Colors.ts` and `constants/myColors.ts`
+  - Dynamic theming using `useColorScheme` hook
+  - Consistent dark/light mode implementation across all components
+- **Typography**: Custom text variants (e.g., `text-foreground`, `text-muted`) with reusable `Text` components
 
-The app uses a comprehensive theme system in `constants/Colors.ts` with **dark/light mode support**:
+## Data Architecture
 
-```tsx
-// Always follow this pattern for theme-aware components
-const colorScheme = useColorScheme();
-const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
+- **State Management**: Zustand for managing game phases, grid state, and user interactions
+- **Local Storage**: AsyncStorage (if used for persistence, though not explicitly mentioned)
+- **API Layer**: No external API integration; game logic is self-contained
+- **Game Logic**:
+  - Fisher-Yates shuffle for randomizing grid numbers
+  - Zustand store for managing game phases (`setup`, `memorizing`, `playing`, `victory`)
 
-// Separate static styles from dynamic theme styles
-const dynamicStyles = StyleSheet.create({
-  text: { color: theme.onBackground },
-  surface: { backgroundColor: theme.surface },
-});
+## Key Development Patterns
 
-// Combine with style arrays: [staticStyles.layout, dynamicStyles.colors]
-```
+- **File Structure**:
+  - `app/`: Screens and navigation (e.g., `game.tsx`, `about.tsx`, `settings.tsx`)
+  - `components/`: Reusable UI components (e.g., `GameButton`, `GameGrid`, `DurationInput`)
+  - `constants/`: Theming and layout constants (e.g., `Colors.ts`, `myColors.ts`)
+  - `stores/`: Zustand stores for state management
+  - `services/`: Utility services (e.g., `soundService.ts`)
+- **Component Patterns**:
+  - Themed components (`ThemedText`, `ThemedView`) for consistent styling
+  - Utility-first styling with NativeWind
+- **Error Handling**: Minimal error handling; focus on game logic
+- **Code Quality**:
+  - TypeScript for type safety
+  - ESLint for linting
+  - Prettier for code formatting
 
-**Key theme tokens**: Use `theme.onBackground` for primary text, `theme.onSurfaceVariant` for secondary text, `theme.surface`/`theme.surfaceVariant` for backgrounds.
+## Build & Deployment
 
-### Themed Components
+- **Build Process**:
+  - `expo start` for development
+  - `expo run:android` and `expo run:ios` for platform-specific builds
+  - EAS for managed builds and deployments
+- **Environment Management**:
+  - Expo configuration in `app.json` and `eas.json`
+  - Dark/light mode toggles based on system preferences
+- **Deployment Platform**: Expo Application Services (EAS)
 
-- **ThemedText**: Has semantic props (`title`, `secondary`, `tertiary`) and typography variants (`heading`, `numbers`, `score`, `body`, `caption`)
-- **ThemedView**: Auto-applies theme background, supports `safe` prop for SafeArea insets
-- All custom components follow `Themed*` naming and implement theme switching
+## Getting Started
 
-### Game State Architecture
+### **Setup**
 
-The game uses **Zustand** with a single store (`gameStore.ts`) managing:
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd brain-board
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-- **Game phases**: `setup` → `memorizing` → `playing` → `victory`
-- **Cell grid**: Array of `GameCell` objects with Fisher-Yates shuffle
-- **Sound integration**: Automatic sound/haptic feedback via `SoundService`
+### **Development**
 
-### Layout Constants
+- Start the development server:
+  ```bash
+  expo start
+  ```
 
-Game grid sizing is calculated dynamically in `constants/layouts.ts` based on screen dimensions. Always import layout constants rather than hardcoding sizes.
+### **Build**
 
-## Development Workflows
+- Build for Android:
+  ```bash
+  expo run:android
+  ```
+- Build for iOS:
+  ```bash
+  expo run:ios
+  ```
 
-### Build Commands
+### **Linting & Formatting**
 
-- `expo start` - Development server
-- `expo run:android` - Android build
-- `expo run:ios` - iOS build
-- `expo lint` - ESLint
-
-### Key Files to Understand
-
-- `stores/gameStore.ts` - Complete game logic and state
-- `constants/Colors.ts` - Comprehensive theme system
-- `components/GameCell.tsx` - Complex positioned grid cell with theme integration
-- `app/(tabs)/_layout.tsx` - Expo Router tabs setup with Lucide icons
-
-### Debugging Game Logic
-
-The game phases follow a strict sequence. Debug by checking:
-
-1. `gamePhase` state in store
-2. `cells` array structure (9 items, shuffled values 1-9)
-3. `currentTarget` progression (1→9)
-4. Sound/haptic integration via `SoundService`
-
-## Project Conventions
-
-### Icon Usage
-
-- **Exclusively use Lucide React Native** - never Expo vector icons
-- Common icons: `Gamepad2`, `Info`, `Plus`, `Minus`, `Play`, `RotateCcw`
-- Always implement focused/unfocused states for tab icons
-
-### Styling Patterns
-
-- **Split static vs dynamic styles**: Layout properties in `StyleSheet.create()`, colors in component-level `dynamicStyles`
-- **Use style arrays**: `style={[staticStyles.layout, dynamicStyles.colors]}`
-- **Typography**: Leverage `ThemedText` variants rather than custom text styling
-
-### Component Organization
-
-- Themed components in `components/` with consistent `Themed*` naming
-- Game-specific components: `GameGrid`, `GameCell`, `GameStatus`, `GameButton`, `DurationInput`
-- Services in `services/` (currently `soundService.ts` and `authService.ts`)
-
-### File Structure
-
-- `app/(tabs)/` - Tab screens (game.tsx, about.tsx)
-- `constants/` - Colors, Fonts, layouts
-- `stores/` - Zustand stores
-- `components/` - Reusable UI components
-- `services/` - Business logic services
-
-### Audio Integration
-
-Sound effects are managed by `SoundService` class with automatic cleanup. Haptic feedback is integrated for error states. Always call `SoundService.initialize()` in game screens.
-
-## Critical Implementation Details
-
-### Grid Positioning
-
-Game cells use **absolute positioning** calculated from `constants/layouts.ts`. The 3x3 grid is rendered as positioned children within a container, not a traditional grid layout.
-
-### State Management
-
-Zustand store uses `combine` middleware pattern. Game logic handles Fisher-Yates shuffling, error states with timeouts, and automatic sound triggering.
-
-### Navigation Structure
-
-- Root: Stack navigator with tabs and error handling
-- Tabs: Game (default) and About screens
-- Redirects: `app/index.tsx` redirects to `(tabs)/game`
+- Run ESLint:
+  ```bash
+  npm run lint
+  ```
+- Format code with Prettier:
+  ```bash
+  npm run format
+  ```

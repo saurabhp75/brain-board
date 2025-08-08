@@ -49,6 +49,10 @@ export const useGameStore = create(
 
       // Stats
       moves: 0,
+      misses: 0,
+      gamesPlayed: 0,
+      gamesWon: 0,
+      userName: '',
     },
 
     // Actions
