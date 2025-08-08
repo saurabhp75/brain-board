@@ -66,12 +66,10 @@
         "expo-build-properties",
         {
           "ios": {
-            "useFrameworks": "static",
-            "newArchEnabled": true
+            "useFrameworks": "static"
           },
           "android": {
-            "enableProguardInReleaseBuilds": true,
-            "newArchEnabled": true
+            "enableProguardInReleaseBuilds": true
           }
         }
       ],
