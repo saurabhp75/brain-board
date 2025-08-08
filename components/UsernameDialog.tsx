@@ -132,7 +132,7 @@ export default function UsernameDialog({
                   borderColor: theme.primary,
                 }}
               >
-                <ThemedText variant="body" size="base" weight="bold">
+                <ThemedText variant="body" size="base" weight="bold" style={{ color: '#ffffff'}}>
                   Save
                 </ThemedText>
               </TouchableOpacity>
