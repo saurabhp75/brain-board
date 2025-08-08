@@ -1,27 +1,22 @@
-import { useEffect } from 'react';
-import {
-  KeyboardAvoidingView,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import { useEffect, useState } from 'react';
+import { KeyboardAvoidingView, StyleSheet, useColorScheme } from 'react-native';
 import GameGrid from '@/components/GameGrid';
 import GameStatus from '@/components/GameStatus';
 import DurationInput from '@/components/DurationInput';
 import GameButton from '@/components/GameButton';
 import { useGameStore } from '@/stores/gameStore';
-// import { useAuthStore } from '@/stores/authStore';
+import UsernameDialog from '@/components/UsernameDialog';
 import { SoundService } from '@/services/soundService';
 import { Confetti } from 'react-native-fast-confetti';
 import ThemedView from '@/components/ThemedView';
 import ThemedText from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
-// import {
-//   KeyboardProvider,
-//   KeyboardAvoidingView,
-// } from 'react-native-keyboard-controller';
 
 export default function GameScreen() {
   const gamePhase = useGameStore((state) => state.gamePhase);
+  const userName = useGameStore((s) => s.userName);
+  const setUserName = useGameStore((s) => s.setUserName);
+
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
@@ -50,15 +45,11 @@ export default function GameScreen() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (gamePhase === 'playing' && gameStartTime === null) {
-  //     setGameStartTime(Date.now());
-  //   } else if (gamePhase === 'victory' && gameStartTime !== null) {
-  //     const timeElapsed = Date.now() - gameStartTime;
-  //     updateStats(timeElapsed);
-  //     setGameStartTime(null);
-  //   }
-  // }, [gamePhase, gameStartTime, updateStats]);
+  const showNameDialog = !userName || userName.trim().length === 0;
+
+  const handleSubmitName = (name: string) => {
+    setUserName(name);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -108,6 +99,12 @@ export default function GameScreen() {
         {/* Confetti Animation */}
         {gamePhase === 'victory' && <Confetti />}
       </ThemedView>
+
+      <UsernameDialog
+        visible={showNameDialog}
+        initialValue=""
+        onSubmit={handleSubmitName}
+      />
     </KeyboardAvoidingView>
   );
 }

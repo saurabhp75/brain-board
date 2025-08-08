@@ -154,6 +154,11 @@ export const useGameStore = create(
           set({ duration: clampedDuration });
         },
 
+        setUserName: (name: string) => {
+          const trimmed = (name ?? '').trim();
+          set({ userName: trimmed });
+        },
+
         resetGame: () => {
           set({
             cells: createEmptyGrid(),
