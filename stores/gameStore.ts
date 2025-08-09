@@ -133,6 +133,8 @@ export const useGameStore = create(
             set({
               cells: newCells,
               moves: newMoves,
+              // Increment misses counter on wrong click
+              misses: get().misses + 1,
             });
 
             // Hide error after 200ms
