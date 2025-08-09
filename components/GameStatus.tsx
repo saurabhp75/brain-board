@@ -9,6 +9,7 @@ const GameStatus = () => {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const moves = useGameStore((state) => state.moves);
   const currentTarget = useGameStore((state) => state.currentTarget);
+  const misses = useGameStore((state) => state.misses);
 
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
@@ -41,8 +42,7 @@ const GameStatus = () => {
               weight="bold"
               style={[styles.statLabel, { color: theme.onBackground }]}
             >
-              Search For : {currentTarget}
-              {'  '}Moves : {moves}
+              Search: {currentTarget} Moves: {moves} Misses: {misses}
             </ThemedText>
           </ThemedView>
         </ThemedView>

@@ -10,12 +10,13 @@ export const GAME_STATUS = {
   memorizing: 'Memorize the numbers',
   playing: 'Find the number',
   victory: 'Congratulations! You have won! 🎉',
+  defeat: 'You lost the game. Try again!',
 };
 
 export interface GameCell {
   id: number; // Index
   value: number; // Number value (1-9) or 0(default) if empty
-  isRevealed: boolean; // Show the cell value? default false
+  isRevealed: boolean; // Show the cell content or question mark, default false
   showError: boolean; // if true show 'X' instead of value (default false)
 }
 
@@ -44,7 +45,12 @@ export const useGameStore = create(
         // Game state
         cells: createEmptyGrid(),
         currentTarget: 1,
-        gamePhase: 'setup' as 'setup' | 'memorizing' | 'playing' | 'victory',
+        gamePhase: 'setup' as
+          | 'setup'
+          | 'memorizing'
+          | 'playing'
+          | 'victory'
+          | 'defeat',
 
         // Settings
         duration: 3000,
@@ -86,7 +92,7 @@ export const useGameStore = create(
         },
 
         handleCellClick: (cellId: number) => {
-          const { cells, currentTarget, gamePhase, moves } = get();
+          const { cells, currentTarget, gamePhase, moves, misses } = get();
 
           if (gamePhase !== 'playing') return;
 
@@ -130,11 +136,31 @@ export const useGameStore = create(
               cell.id === cellId ? { ...cell, showError: true } : cell
             );
 
+            const updatedMisses = misses + 1;
+
+            // If this is the second miss, end the game as defeat
+            if (updatedMisses >= 2) {
+              // Reveal all cells for feedback
+              const revealedCells = newCells.map((c) => ({
+                ...c,
+                isRevealed: true,
+                showError: false,
+              }));
+
+              set({
+                cells: revealedCells,
+                moves: newMoves,
+                misses: updatedMisses,
+                gamePhase: 'defeat',
+              });
+
+              return; // Early exit, no timeout needed
+            }
+
             set({
               cells: newCells,
               moves: newMoves,
-              // Increment misses counter on wrong click
-              misses: get().misses + 1,
+              misses: updatedMisses,
             });
 
             // Hide error after 200ms
@@ -167,6 +193,7 @@ export const useGameStore = create(
             currentTarget: 1,
             gamePhase: 'setup',
             moves: 0,
+            misses: 0,
           });
         },
       })

@@ -44,6 +44,9 @@ const GameButton = () => {
       case 'victory':
         resetGame();
         break;
+      case 'defeat':
+        resetGame();
+        break;
       default:
         resetGame();
         break;
@@ -60,6 +63,8 @@ const GameButton = () => {
         return 'Reset Game';
       case 'victory':
         return 'Play Again';
+      case 'defeat':
+        return 'Try Again';
       default:
         return 'Start Game';
     }
@@ -68,12 +73,14 @@ const GameButton = () => {
   const getButtonColor = () => {
     if (isStartDisabled) return theme.surfaceContainerLow;
     if (gamePhase === 'victory') return theme.success;
+    if (gamePhase === 'defeat') return theme.error;
     return theme.primary;
   };
 
   const getButtonPressedColor = () => {
     if (isStartDisabled) return theme.surfaceContainerLow;
     if (gamePhase === 'victory') return theme.successFixed;
+    if (gamePhase === 'defeat') return theme.errorFixed;
     return theme.primaryContainer;
   };
 
@@ -96,6 +103,9 @@ const GameButton = () => {
           <Play color={getIconColor()} size={16} fill={getIconColor()} />
         )}
         {gamePhase === 'victory' && (
+          <Play color={getIconColor()} size={16} fill={getIconColor()} />
+        )}
+        {gamePhase === 'defeat' && (
           <Play color={getIconColor()} size={16} fill={getIconColor()} />
         )}
         {gamePhase === 'playing' && (
