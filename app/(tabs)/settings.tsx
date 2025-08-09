@@ -1,10 +1,12 @@
-import { StyleSheet, ScrollView, useColorScheme } from 'react-native';
+import { StyleSheet, ScrollView, useColorScheme, TouchableOpacity } from 'react-native';
 import ThemedView from '@/components/ThemedView';
 import ThemedText from '@/components/ThemedText';
 import ThemedSwitch from '@/components/ThemedSwitch';
 import { Colors } from '@/constants/Colors';
 import { SoundService } from '@/services/soundService';
 import { useState } from 'react';
+import { useGameStore } from '@/stores/gameStore';
+import UsernameDialog from '@/components/UsernameDialog';
 
 export default function SettingsScreen() {
   const colorScheme = useColorScheme();
@@ -17,6 +19,9 @@ export default function SettingsScreen() {
   const [hapticsEnabled, setHapticsEnabled] = useState(
     SoundService.isHapticServiceEnabled()
   );
+  const userName = useGameStore((s) => s.userName);
+  const setUserName = useGameStore((s) => s.setUserName);
+  const [showNameDialog, setShowNameDialog] = useState(false);
 
   // Handle sound toggle
   const handleSoundToggle = (value: boolean) => {
@@ -70,6 +75,58 @@ export default function SettingsScreen() {
 
           {/* Settings Section */}
           <ThemedView style={styles.section}>
+            {/* User Profile Section */}
+            <ThemedText
+              variant="heading"
+              size="lg"
+              weight="bold"
+              style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
+            >
+              Player
+            </ThemedText>
+            <ThemedView style={[styles.settingItem, dynamicStyles.settingItem]}>
+              <ThemedView style={styles.settingContent}>
+                <ThemedView style={styles.settingTextContainer}>
+                  <ThemedText
+                    variant="body"
+                    size="base"
+                    weight="semibold"
+                    style={[styles.settingTitle, dynamicStyles.sectionTitle]}
+                  >
+                    Username
+                  </ThemedText>
+                  <ThemedText
+                    variant="body"
+                    size="sm"
+                    style={[styles.settingDescription, dynamicStyles.description]}
+                  >
+                    {userName ? `Current: ${userName}` : 'No name set'}
+                  </ThemedText>
+                </ThemedView>
+                <TouchableOpacity
+                  onPress={() => setShowNameDialog(true)}
+                  style={{
+                    paddingVertical: 10,
+                    paddingHorizontal: 14,
+                    borderRadius: 10,
+                    backgroundColor: theme.primary,
+                    borderWidth: 1,
+                    borderColor: theme.primaryContainer,
+                  }}
+                  activeOpacity={0.85}
+                >
+                  <ThemedText
+                    variant="body"
+                    size="sm"
+                    weight="bold"
+                    style={{ color: '#ffffff' }}
+                  >
+                    Change
+                  </ThemedText>
+                </TouchableOpacity>
+              </ThemedView>
+            </ThemedView>
+
             <ThemedText
               variant="heading"
               size="lg"
@@ -140,6 +197,14 @@ export default function SettingsScreen() {
             </ThemedView>
           </ThemedView>
         </ThemedView>
+        <UsernameDialog
+          visible={showNameDialog}
+          initialValue={userName}
+          onSubmit={(name) => {
+            setUserName(name);
+            setShowNameDialog(false);
+          }}
+        />
       </ScrollView>
     </ThemedView>
   );
