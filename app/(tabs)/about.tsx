@@ -78,16 +78,22 @@ export default function AboutScreen() {
               </ThemedText>
 
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                1. Set your game time in milliseconds.
+                1. Set the memorization time (in milliseconds) and press "Start Game".
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                2. Tap "Start Game" to begin.
+                2. Memorize the positions of the numbers while they are visible.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                3. Tap the squares to find the next number starting from 1.
+                3. Once hidden, tap squares in ascending order starting from 1.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                4. Repeat until you have found all numbers in sequence.
+                4. You are allowed only ONE wrong guess. A second mistake ends the game.
+              </ThemedText>
+              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
+                5. Win Condition: Reveal all numbers 1 through 9 in order.
+              </ThemedText>
+              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
+                6. Lose Condition: Make two incorrect selections before completing the sequence.
               </ThemedText>
             </ThemedView>
           </ThemedView>

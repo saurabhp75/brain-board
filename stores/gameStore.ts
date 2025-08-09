@@ -60,6 +60,8 @@ export const useGameStore = create(
         misses: 0,
         gamesPlayed: 0,
         gamesWon: 0,
+  // Per-user statistics keyed by userName
+  statsByUser: {} as Record<string, { gamesPlayed: number; gamesWon: number; gamesLost: number }>,
         userName: '',
       },
 
@@ -116,6 +118,32 @@ export const useGameStore = create(
               // Victory! Play celebration sound
               SoundService.playVictorySound();
 
+              // Update stats for current user
+              const { userName, statsByUser, gamesPlayed, gamesWon } = get();
+              if (userName) {
+                const existing = statsByUser[userName] || {
+                  gamesPlayed: 0,
+                  gamesWon: 0,
+                  gamesLost: 0,
+                };
+                const updated = {
+                  gamesPlayed: existing.gamesPlayed + 1,
+                  gamesWon: existing.gamesWon + 1,
+                  gamesLost: existing.gamesLost,
+                };
+                set({
+                  statsByUser: { ...statsByUser, [userName]: updated },
+                  gamesPlayed: gamesPlayed + 1,
+                  gamesWon: gamesWon + 1,
+                });
+              } else {
+                // Still update global counters even if no userName set
+                set({
+                  gamesPlayed: get().gamesPlayed + 1,
+                  gamesWon: get().gamesWon + 1,
+                });
+              }
+
               set({
                 cells: newCells,
                 gamePhase: 'victory',
@@ -146,6 +174,27 @@ export const useGameStore = create(
                 isRevealed: true,
                 showError: false,
               }));
+
+              // Update defeat stats
+              const { userName, statsByUser, gamesPlayed } = get();
+              if (userName) {
+                const existing = statsByUser[userName] || {
+                  gamesPlayed: 0,
+                  gamesWon: 0,
+                  gamesLost: 0,
+                };
+                const updated = {
+                  gamesPlayed: existing.gamesPlayed + 1,
+                  gamesWon: existing.gamesWon,
+                  gamesLost: existing.gamesLost + 1,
+                };
+                set({
+                  statsByUser: { ...statsByUser, [userName]: updated },
+                  gamesPlayed: gamesPlayed + 1,
+                });
+              } else {
+                set({ gamesPlayed: get().gamesPlayed + 1 });
+              }
 
               set({
                 cells: revealedCells,
@@ -184,7 +233,16 @@ export const useGameStore = create(
 
         setUserName: (name: string) => {
           const trimmed = (name ?? '').trim();
-          set({ userName: trimmed });
+          if (!trimmed) {
+            set({ userName: '' });
+            return;
+          }
+          const { statsByUser } = get();
+            // Initialize stats for new user if not present
+          if (!statsByUser[trimmed]) {
+            statsByUser[trimmed] = { gamesPlayed: 0, gamesWon: 0, gamesLost: 0 };
+          }
+          set({ userName: trimmed, statsByUser: { ...statsByUser } });
         },
 
         resetGame: () => {
@@ -208,6 +266,7 @@ export const useGameStore = create(
         misses: state.misses,
         gamesPlayed: state.gamesPlayed,
         gamesWon: state.gamesWon,
+  statsByUser: state.statsByUser,
         userName: state.userName,
       }),
       version: 1,
