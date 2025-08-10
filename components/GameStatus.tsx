@@ -10,6 +10,7 @@ const GameStatus = () => {
   const moves = useGameStore((state) => state.moves);
   const currentTarget = useGameStore((state) => state.currentTarget);
   const misses = useGameStore((state) => state.misses);
+  const userName = useGameStore((state) => state.userName);
 
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
@@ -42,19 +43,40 @@ const GameStatus = () => {
               weight="bold"
               style={[styles.statLabel, { color: theme.onBackground }]}
             >
-              Search: {currentTarget} Moves: {moves} Misses: {misses}
+              {userName ? userName + ' | ' : ''}Search: {currentTarget} Moves:{' '}
+              {moves} Misses: {misses}
             </ThemedText>
           </ThemedView>
         </ThemedView>
       ) : (
-        <ThemedText
-          variant="heading"
-          size="lg"
-          weight="bold"
-          style={[styles.statusMessage, { color: theme.onBackground }]}
+        <ThemedView
+          style={{
+            alignItems: 'center',
+            gap: 4,
+            borderRadius: 8,
+            paddingHorizontal: 24,
+            paddingVertical: 8,
+          }}
         >
-          {GAME_STATUS[gamePhase] || 'Game Status'}
-        </ThemedText>
+          {userName ? (
+            <ThemedText
+              variant="body"
+              size="sm"
+              weight="bold"
+              style={{ color: theme.onSurfaceVariant }}
+            >
+              Player: {userName}
+            </ThemedText>
+          ) : null}
+          <ThemedText
+            variant="heading"
+            size="sm"
+            weight="semibold"
+            style={[styles.statusMessage, { color: theme.onBackground }]}
+          >
+            {GAME_STATUS[gamePhase] || 'Game Status'}
+          </ThemedText>
+        </ThemedView>
       )}
     </ThemedView>
   );
