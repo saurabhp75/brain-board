@@ -86,8 +86,8 @@ const styles = StyleSheet.create({
   statusContainer: {
     alignItems: 'center',
     marginBottom: 15,
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 12,
+    padding: 8,
     borderWidth: 1,
     // minHeight: 60, // Ensure minimum height
     shadowOffset: {

@@ -42,15 +42,15 @@ const styles = StyleSheet.create({
   grid: {
     width: GRID_SIZE,
     height: GRID_SIZE,
-    borderRadius: 20,
+    borderRadius: 15,
     padding: GRID_PADDING,
     shadowOffset: {
       width: 0,
       height: 8,
     },
     shadowOpacity: 0.15,
-    shadowRadius: 12,
-    elevation: 12,
+    shadowRadius: 8,
+    // elevation: 12,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,

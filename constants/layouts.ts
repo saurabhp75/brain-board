@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get('window');
 const AVAILABLE_HEIGHT = Math.min(height * 0.35, 300); // Reduced from 40% to 35%
 const AVAILABLE_WIDTH = width - 40;
 export const GRID_SIZE = Math.min(AVAILABLE_WIDTH, AVAILABLE_HEIGHT, 260); // Reduced max size
-export const GRID_PADDING = 12;
+export const GRID_PADDING = 8;
 export const CELL_GAP = 6;
 export const CELLS_PER_ROW = 3;
 

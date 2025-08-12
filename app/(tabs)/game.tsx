@@ -118,8 +118,8 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 15,
+    paddingTop: 10,
+    paddingBottom: 10,
     paddingHorizontal: 20,
     minHeight: 80,
   },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     height: 4,
     opacity: 0.8,
     borderRadius: 2,
-    marginTop: 8,
+    marginTop: 4,
   },
   title: {
     textAlign: 'center',
@@ -138,16 +138,16 @@ const styles = StyleSheet.create({
   },
   statusContainer: {
     paddingHorizontal: 15,
-    marginBottom: 15,
-    minHeight: 60, // Ensure minimum height for visibility
+    marginBottom: 10,
+    // minHeight: 60, // Ensure minimum height for visibility
   },
   gridContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    minHeight: 200,
+    // paddingHorizontal: 15,
+    // paddingVertical: 5,
+    // minHeight: 200,
   },
   bottomControlsContainer: {
     paddingHorizontal: 15,
