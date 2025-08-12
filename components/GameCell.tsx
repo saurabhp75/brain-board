@@ -11,15 +11,18 @@ import {
   ViewStyle,
   StyleSheet,
   useColorScheme,
+  Animated,
 } from 'react-native';
 import { Colors } from '@/constants/Colors';
 import ThemedText from './ThemedText';
 
 interface CellProps {
   cell: GameCell;
+  defeatScale?: Animated.Value;
+  isDefeat?: boolean;
 }
 
-export function Cell({ cell }: CellProps) {
+export function Cell({ cell, defeatScale, isDefeat }: CellProps) {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const handleCellClick = useGameStore((state) => state.handleCellClick);
 
@@ -65,8 +68,14 @@ export function Cell({ cell }: CellProps) {
     return theme.onSurface;
   };
 
+  const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
+
+  // Build animated style, only adding transform key when needed to avoid RN style flattener issues
+  const defeatTransform =
+    isDefeat && defeatScale ? [{ scale: defeatScale }] : null;
+
   return (
-    <TouchableOpacity
+    <AnimatedTouchable
       style={[
         cellStyle,
         cellPosition,
@@ -76,6 +85,7 @@ export function Cell({ cell }: CellProps) {
             : theme.surface,
           borderColor: cell.isRevealed ? theme.outlineFocus : theme.outline,
           shadowColor: theme.shadow,
+          ...(defeatTransform ? { transform: defeatTransform } : {}),
         },
       ]}
       onPress={() => handleCellClick(cell.id)}
@@ -96,7 +106,7 @@ export function Cell({ cell }: CellProps) {
       >
         {cellContent}
       </ThemedText>
-    </TouchableOpacity>
+    </AnimatedTouchable>
   );
 }
 

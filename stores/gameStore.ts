@@ -243,7 +243,7 @@ export const useGameStore = create(
       // Only persist the settings and stats; avoid transient game board/phase
       partialize: (state: any) => ({
         duration: state.duration,
-        moves: state.moves,
+        // moves: state.moves,
         gamesPlayed: state.gamesPlayed,
         gamesWon: state.gamesWon,
         statsByUser: state.statsByUser,
