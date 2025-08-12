@@ -57,11 +57,13 @@ export const useGameStore = create(
 
         // Stats
         moves: 0,
-        misses: 0,
         gamesPlayed: 0,
         gamesWon: 0,
-  // Per-user statistics keyed by userName
-  statsByUser: {} as Record<string, { gamesPlayed: number; gamesWon: number; gamesLost: number }>,
+        // Per-user statistics keyed by userName
+        statsByUser: {} as Record<
+          string,
+          { gamesPlayed: number; gamesWon: number; gamesLost: number }
+        >,
         userName: '',
       },
 
@@ -94,7 +96,7 @@ export const useGameStore = create(
         },
 
         handleCellClick: (cellId: number) => {
-          const { cells, currentTarget, gamePhase, moves, misses } = get();
+          const { cells, currentTarget, gamePhase, moves } = get();
 
           if (gamePhase !== 'playing') return;
 
@@ -164,64 +166,40 @@ export const useGameStore = create(
               cell.id === cellId ? { ...cell, showError: true } : cell
             );
 
-            const updatedMisses = misses + 1;
+            // Reveal all cells for feedback immediately
+            const revealedCells = newCells.map((c) => ({
+              ...c,
+              isRevealed: true,
+              showError: false,
+            }));
 
-            // If this is the second miss, end the game as defeat
-            if (updatedMisses >= 2) {
-              // Reveal all cells for feedback
-              const revealedCells = newCells.map((c) => ({
-                ...c,
-                isRevealed: true,
-                showError: false,
-              }));
-
-              // Update defeat stats
-              const { userName, statsByUser, gamesPlayed } = get();
-              if (userName) {
-                const existing = statsByUser[userName] || {
-                  gamesPlayed: 0,
-                  gamesWon: 0,
-                  gamesLost: 0,
-                };
-                const updated = {
-                  gamesPlayed: existing.gamesPlayed + 1,
-                  gamesWon: existing.gamesWon,
-                  gamesLost: existing.gamesLost + 1,
-                };
-                set({
-                  statsByUser: { ...statsByUser, [userName]: updated },
-                  gamesPlayed: gamesPlayed + 1,
-                });
-              } else {
-                set({ gamesPlayed: get().gamesPlayed + 1 });
-              }
-
+            // Update defeat stats on first miss
+            const { userName, statsByUser, gamesPlayed } = get();
+            if (userName) {
+              const existing = statsByUser[userName] || {
+                gamesPlayed: 0,
+                gamesWon: 0,
+                gamesLost: 0,
+              };
+              const updated = {
+                gamesPlayed: existing.gamesPlayed + 1,
+                gamesWon: existing.gamesWon,
+                gamesLost: existing.gamesLost + 1,
+              };
               set({
-                cells: revealedCells,
-                moves: newMoves,
-                misses: updatedMisses,
-                gamePhase: 'defeat',
+                statsByUser: { ...statsByUser, [userName]: updated },
+                gamesPlayed: gamesPlayed + 1,
               });
-
-              return; // Early exit, no timeout needed
+            } else {
+              set({ gamesPlayed: get().gamesPlayed + 1 });
             }
 
             set({
-              cells: newCells,
+              cells: revealedCells,
               moves: newMoves,
-              misses: updatedMisses,
+              gamePhase: 'defeat',
             });
-
-            // Hide error after 200ms
-            setTimeout(() => {
-              const resetCells = get().cells.map((cell) =>
-                cell.id === cellId ? { ...cell, showError: false } : cell
-              );
-
-              set({
-                cells: resetCells,
-              });
-            }, 200);
+            return; // Early exit
           }
         },
 
@@ -238,9 +216,13 @@ export const useGameStore = create(
             return;
           }
           const { statsByUser } = get();
-            // Initialize stats for new user if not present
+          // Initialize stats for new user if not present
           if (!statsByUser[trimmed]) {
-            statsByUser[trimmed] = { gamesPlayed: 0, gamesWon: 0, gamesLost: 0 };
+            statsByUser[trimmed] = {
+              gamesPlayed: 0,
+              gamesWon: 0,
+              gamesLost: 0,
+            };
           }
           set({ userName: trimmed, statsByUser: { ...statsByUser } });
         },
@@ -251,7 +233,6 @@ export const useGameStore = create(
             currentTarget: 1,
             gamePhase: 'setup',
             moves: 0,
-            misses: 0,
           });
         },
       })
@@ -263,10 +244,9 @@ export const useGameStore = create(
       partialize: (state: any) => ({
         duration: state.duration,
         moves: state.moves,
-        misses: state.misses,
         gamesPlayed: state.gamesPlayed,
         gamesWon: state.gamesWon,
-  statsByUser: state.statsByUser,
+        statsByUser: state.statsByUser,
         userName: state.userName,
       }),
       version: 1,

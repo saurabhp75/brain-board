@@ -78,7 +78,8 @@ export default function AboutScreen() {
               </ThemedText>
 
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                1. Set the memorization time (in milliseconds) and press "Start Game".
+                1. Set the memorization time (in milliseconds) and press "Start
+                Game".
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                 2. Memorize the positions of the numbers while they are visible.
@@ -87,13 +88,16 @@ export default function AboutScreen() {
                 3. Once hidden, tap squares in ascending order starting from 1.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                4. You are allowed only ONE wrong guess. A second mistake ends the game.
+                4. Do NOT make a wrong guess – a single mistake ends the game
+                immediately.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                5. Win Condition: Reveal all numbers 1 through 9 in order.
+                5. Win Condition: Reveal all numbers 1 through 9 in order
+                without any mistakes.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                6. Lose Condition: Make two incorrect selections before completing the sequence.
+                6. Lose Condition: Make any incorrect selection before
+                completing the sequence.
               </ThemedText>
             </ThemedView>
           </ThemedView>
