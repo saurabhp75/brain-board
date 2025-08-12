@@ -99,6 +99,11 @@ export default function AboutScreen() {
                 6. Lose Condition: Make any incorrect selection before
                 completing the sequence.
               </ThemedText>
+              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
+                Tip: After a few wins, start lowering the memorization time. The
+                leaderboard shows your best (shortest) successful completion
+                time—challenge yourself to improve it.
+              </ThemedText>
             </ThemedView>
           </ThemedView>
         </ThemedView>

@@ -8,7 +8,8 @@ interface StatItemProps {
   user: string;
   gamesPlayed: number;
   gamesWon: number;
-  gamesLost: number; // still coming from store but not displayed directly
+  gamesLost: number;
+  bestDuration?: number | null;
 }
 
 export default function StatsScreen() {
@@ -16,9 +17,16 @@ export default function StatsScreen() {
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
   const statsByUser = useGameStore((s) => s.statsByUser);
 
-  const data: StatItemProps[] = Object.entries(statsByUser).map(
-    ([user, stats]) => ({ user, ...stats })
-  );
+  const data: StatItemProps[] = Object.entries(statsByUser)
+    .map(([user, stats]) => ({ user, ...stats }))
+    .sort((a, b) => {
+      // Sort by bestDuration ascending (nulls last)
+      if (a.bestDuration == null && b.bestDuration == null)
+        return a.user.localeCompare(b.user);
+      if (a.bestDuration == null) return 1;
+      if (b.bestDuration == null) return -1;
+      return a.bestDuration - b.bestDuration;
+    });
 
   return (
     <ThemedView style={styles.container}>
@@ -44,9 +52,8 @@ export default function StatsScreen() {
         keyExtractor={(item) => item.user}
         contentContainerStyle={{ paddingVertical: 16 }}
         renderItem={({ item }) => {
-          const winRate = item.gamesPlayed
-            ? Math.round((item.gamesWon / item.gamesPlayed) * 100)
-            : 0;
+          const best =
+            item.bestDuration == null ? '-' : item.bestDuration + ' ms';
           return (
             <ThemedView
               style={[
@@ -58,7 +65,7 @@ export default function StatsScreen() {
                 },
               ]}
             >
-              <View style={styles.cardHeader}>                
+              <View style={styles.cardHeader}>
                 <ThemedText
                   variant="heading"
                   size="lg"
@@ -72,13 +79,21 @@ export default function StatsScreen() {
                   size="sm"
                   style={{ color: theme.onSurfaceVariant }}
                 >
-                  Win Rate: {winRate}%
+                  Best: {best}
                 </ThemedText>
               </View>
-              <View style={styles.row}>                
-                <Stat label="Played" value={item.gamesPlayed} color={theme.info} />
+              <View style={styles.row}>
+                <Stat
+                  label="Played"
+                  value={item.gamesPlayed}
+                  color={theme.info}
+                />
                 <Stat label="Won" value={item.gamesWon} color={theme.success} />
-                <Stat label="Success %" value={winRate} color={theme.primary} />
+                <Stat
+                  label="Best (ms)"
+                  value={item.bestDuration ?? 0}
+                  color={theme.primary}
+                />
               </View>
             </ThemedView>
           );
@@ -88,15 +103,18 @@ export default function StatsScreen() {
   );
 }
 
-const Stat = ({ label, value, color }: { label: string; value: number; color: string }) => {
+const Stat = ({
+  label,
+  value,
+  color,
+}: {
+  label: string;
+  value: number;
+  color: string;
+}) => {
   return (
     <ThemedView style={styles.statItem}>
-      <ThemedText
-        variant="body"
-        size="xs"
-        weight="semibold"
-        style={{ color }}
-      >
+      <ThemedText variant="body" size="xs" weight="semibold" style={{ color }}>
         {label}
       </ThemedText>
       <ThemedText

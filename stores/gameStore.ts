@@ -62,7 +62,12 @@ export const useGameStore = create(
         // Per-user statistics keyed by userName
         statsByUser: {} as Record<
           string,
-          { gamesPlayed: number; gamesWon: number; gamesLost: number }
+          {
+            gamesPlayed: number;
+            gamesWon: number;
+            gamesLost: number;
+            bestDuration: number | null;
+          }
         >,
         userName: '',
       },
@@ -121,17 +126,25 @@ export const useGameStore = create(
               SoundService.playVictorySound();
 
               // Update stats for current user
-              const { userName, statsByUser, gamesPlayed, gamesWon } = get();
+              const { userName, statsByUser, gamesPlayed, gamesWon, duration } =
+                get();
               if (userName) {
                 const existing = statsByUser[userName] || {
                   gamesPlayed: 0,
                   gamesWon: 0,
                   gamesLost: 0,
+                  bestDuration: null,
                 };
+                const improvedBest =
+                  existing.bestDuration == null ||
+                  duration < existing.bestDuration
+                    ? duration
+                    : existing.bestDuration;
                 const updated = {
                   gamesPlayed: existing.gamesPlayed + 1,
                   gamesWon: existing.gamesWon + 1,
                   gamesLost: existing.gamesLost,
+                  bestDuration: improvedBest,
                 };
                 set({
                   statsByUser: { ...statsByUser, [userName]: updated },
@@ -180,11 +193,13 @@ export const useGameStore = create(
                 gamesPlayed: 0,
                 gamesWon: 0,
                 gamesLost: 0,
+                bestDuration: null,
               };
               const updated = {
                 gamesPlayed: existing.gamesPlayed + 1,
                 gamesWon: existing.gamesWon,
                 gamesLost: existing.gamesLost + 1,
+                bestDuration: existing.bestDuration,
               };
               set({
                 statsByUser: { ...statsByUser, [userName]: updated },
@@ -222,6 +237,7 @@ export const useGameStore = create(
               gamesPlayed: 0,
               gamesWon: 0,
               gamesLost: 0,
+              bestDuration: null,
             };
           }
           set({ userName: trimmed, statsByUser: { ...statsByUser } });
@@ -238,20 +254,19 @@ export const useGameStore = create(
       })
     ),
     {
-      name: 'game-store-v1',
+      name: 'memoryGameProv1',
       storage: createJSONStorage(() => mmkvStorage),
       // Only persist the settings and stats; avoid transient game board/phase
       partialize: (state: any) => ({
         duration: state.duration,
-        // moves: state.moves,
         gamesPlayed: state.gamesPlayed,
         gamesWon: state.gamesWon,
         statsByUser: state.statsByUser,
         userName: state.userName,
       }),
       version: 1,
-      migrate: (persisted: any, _version: number) => {
-        // Currently no migrations needed
+      migrate: (persisted: any, version: number) => {
+        // Currently no migration needed
         return persisted as any;
       },
     }
