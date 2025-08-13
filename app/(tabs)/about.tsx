@@ -54,17 +54,7 @@ export default function AboutScreen() {
               size="lg"
               style={[styles.description, dynamicStyles.description]}
             >
-              Welcome to Memory Game Pro - the ultimate brain challenge!
-            </ThemedText>
-
-            <ThemedText
-              variant="body"
-              size="base"
-              style={[styles.bodyText, dynamicStyles.bodyText]}
-            >
-              Test and improve your memory skills with our fun and challenging
-              game. Flip cards to find the numbers in sequence as quickly as
-              possible.
+              Welcome to Memory Game Pro - A fun memory challenge!
             </ThemedText>
 
             <ThemedView style={styles.featureSection}>
@@ -82,27 +72,27 @@ export default function AboutScreen() {
                 Game".
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                2. Memorize the positions of the numbers while they are visible.
+                2. The numbers from 1 to 9 will be shown briefly. Memorize the
+                positions of the numbers while they are visible.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
                 3. Once hidden, tap squares in ascending order starting from 1.
+                Any incorrect guess and you lose.
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                4. Do NOT make a wrong guess – a single mistake ends the game
-                immediately.
+                4. Reveal all numbers 1 through 9 in order to win.
+              </ThemedText>
+              <ThemedText
+                variant="heading"
+                size="lg"
+                weight="semibold"
+                style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
+              >
+                Tip:
               </ThemedText>
               <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                5. Win Condition: Reveal all numbers 1 through 9 in order
-                without any mistakes.
-              </ThemedText>
-              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                6. Lose Condition: Make any incorrect selection before
-                completing the sequence.
-              </ThemedText>
-              <ThemedText style={[styles.feature, dynamicStyles.feature]}>
-                Tip: After a few wins, start lowering the memorization time. The
-                leaderboard shows your best (shortest) successful completion
-                time—challenge yourself to improve it.
+                Lower the memorization time to increase difficulty. The
+                stats of your win rate and best time are maintained—challenge yourself to improve it.
               </ThemedText>
             </ThemedView>
           </ThemedView>
