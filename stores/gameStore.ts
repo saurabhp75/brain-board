@@ -56,7 +56,6 @@ export const useGameStore = create(
         duration: 3000,
 
         // Stats
-        moves: 0,
         gamesPlayed: 0,
         gamesWon: 0,
         // Per-user statistics keyed by userName
@@ -70,6 +69,8 @@ export const useGameStore = create(
           }
         >,
         userName: '',
+        // Monetization
+        adsRemoved: false,
       },
 
       // Actions
@@ -101,14 +102,12 @@ export const useGameStore = create(
         },
 
         handleCellClick: (cellId: number) => {
-          const { cells, currentTarget, gamePhase, moves } = get();
+          const { cells, currentTarget, gamePhase } = get();
 
           if (gamePhase !== 'playing') return;
 
           const clickedCell = cells[cellId];
           if (clickedCell.isRevealed) return;
-
-          const newMoves = moves + 1;
 
           if (clickedCell.value === currentTarget) {
             // Correct click - play success sound
@@ -162,13 +161,11 @@ export const useGameStore = create(
               set({
                 cells: newCells,
                 gamePhase: 'victory',
-                moves: newMoves,
               });
             } else {
               set({
                 cells: newCells,
                 currentTarget: nextTarget,
-                moves: newMoves,
               });
             }
           } else {
@@ -211,7 +208,6 @@ export const useGameStore = create(
 
             set({
               cells: revealedCells,
-              moves: newMoves,
               gamePhase: 'defeat',
             });
             return; // Early exit
@@ -243,12 +239,16 @@ export const useGameStore = create(
           set({ userName: trimmed, statsByUser: { ...statsByUser } });
         },
 
+        // Monetization
+        setAdsRemoved: (value: boolean) => {
+          set({ adsRemoved: !!value });
+        },
+
         resetGame: () => {
           set({
             cells: createEmptyGrid(),
             currentTarget: 1,
             gamePhase: 'setup',
-            moves: 0,
           });
         },
       })
@@ -263,10 +263,11 @@ export const useGameStore = create(
         gamesWon: state.gamesWon,
         statsByUser: state.statsByUser,
         userName: state.userName,
+        adsRemoved: state.adsRemoved,
       }),
       version: 1,
-      migrate: (persisted: any, version: number) => {
-        // Currently no migration needed
+      migrate: (persisted: any, _version: number) => {
+        // No migrations; app not released
         return persisted as any;
       },
     }
