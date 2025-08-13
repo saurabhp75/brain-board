@@ -40,10 +40,10 @@ const GameStatus = () => {
               variant="score"
               size="sm"
               weight="bold"
-              style={[styles.statLabel, { color: theme.onBackground }]}
+              style={[styles.statLabel, { color: theme.onSurface }]}
             >
-              {userName ? userName + ' | ' : ''}Search: {currentTarget} Moves:{' '}
-              {moves}
+              {userName ? 'Player: ' + userName + '   ' : ''}Search:{' '}
+              {currentTarget}
             </ThemedText>
           </ThemedView>
         </ThemedView>
