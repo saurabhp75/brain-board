@@ -24,58 +24,37 @@ const GameStatus = () => {
         },
       ]}
     >
-      {gamePhase === 'playing' ? (
-        <ThemedView style={styles.statsContainer}>
-          <ThemedView
-            style={[
-              styles.statItem,
-              {
-                backgroundColor: theme.surfaceContainerHighest,
-                borderColor: theme.outlineVariant,
-              },
-            ]}
-          >
-            <ThemedText
-              variant="score"
-              size="sm"
-              weight="bold"
-              style={[styles.statLabel, { color: theme.onSurface }]}
-            >
-              {userName ? 'Player: ' + userName + '   ' : ''}Search:{' '}
-              {currentTarget}
-            </ThemedText>
-          </ThemedView>
-        </ThemedView>
-      ) : (
-        <ThemedView
-          style={{
-            alignItems: 'center',
-            gap: 4,
-            borderRadius: 8,
-            paddingHorizontal: 24,
-            paddingVertical: 8,
-          }}
-        >
-          {userName ? (
-            <ThemedText
-              variant="body"
-              size="sm"
-              weight="bold"
-              style={{ color: theme.onSurfaceVariant }}
-            >
-              {userName}
-            </ThemedText>
-          ) : null}
+      <ThemedView
+        style={{
+          alignItems: 'center',
+          gap: 4,
+          borderRadius: 8,
+          paddingHorizontal: 24,
+          paddingVertical: 8,
+        }}
+      >
+        {userName ? (
           <ThemedText
-            variant="heading"
+            variant="body"
             size="sm"
-            weight="semibold"
-            style={[styles.statusMessage, { color: theme.onSurface }]}
+            weight="bold"
+            style={{ color: theme.onSurfaceVariant }}
           >
-            {GAME_STATUS[gamePhase] || 'Game Status'}
+            {userName}
           </ThemedText>
-        </ThemedView>
-      )}
+        ) : null}
+        <ThemedText
+          variant="heading"
+          size="sm"
+          weight="semibold"
+          style={[styles.statusMessage, { color: theme.onSurface }]}
+        >
+          {gamePhase === 'playing'
+            ? GAME_STATUS[gamePhase] + currentTarget
+            : GAME_STATUS[gamePhase]}
+        </ThemedText>
+      </ThemedView>
+      )
     </ThemedView>
   );
 };
@@ -87,7 +66,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 8,
     borderWidth: 1,
-    // minHeight: 60, // Ensure minimum height
     shadowOffset: {
       width: 0,
       height: 2,
@@ -119,9 +97,6 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     textTransform: 'uppercase',
-  },
-  statValue: {
-    // Modern typography handled by ThemedText variant
   },
 });
 

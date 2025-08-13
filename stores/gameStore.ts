@@ -8,7 +8,7 @@ const SQUARES_IN_GRID = 9; // 3x3 grid
 export const GAME_STATUS = {
   setup: 'Set duration and press Start Game',
   memorizing: 'Memorize the numbers',
-  playing: 'Find the number',
+  playing: 'Find the number : ',
   victory: 'Congratulations! You have won! 🎉',
   defeat: 'You lost the game. Try again!',
 };
