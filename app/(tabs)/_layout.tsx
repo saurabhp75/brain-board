@@ -4,17 +4,15 @@ import { Colors } from '@/constants/Colors';
 import { Gamepad2, Info, Settings, BarChart3 } from 'lucide-react-native';
 import AdBanner from '@/components/AdBanner';
 import ThemedView from '@/components/ThemedView';
-import { useGameStore } from '../../stores/gameStore';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-  const adsRemoved = useGameStore((s) => s.adsRemoved);
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   return (
     <SafeAreaView style={styles.container}>
       <ThemedView style={styles.content}>
-        {!adsRemoved && <AdBanner />}
+        <AdBanner />
         <Tabs
           screenOptions={{
             tabBarActiveTintColor: theme.primary,

@@ -26,8 +26,6 @@ export default function SettingsScreen() {
   );
   const userName = useGameStore((s) => s.userName);
   const setUserName = useGameStore((s) => s.setUserName);
-  const adsRemoved = useGameStore((s) => s.adsRemoved);
-  const setAdsRemoved = useGameStore((s) => s.setAdsRemoved);
   const [showNameDialog, setShowNameDialog] = useState(false);
 
   // Handle sound toggle
@@ -203,66 +201,6 @@ export default function SettingsScreen() {
                   value={hapticsEnabled}
                   onValueChange={handleHapticsToggle}
                 />
-              </ThemedView>
-            </ThemedView>
-
-            <ThemedText
-              variant="heading"
-              size="lg"
-              weight="bold"
-              style={[styles.sectionTitle, dynamicStyles.sectionTitle]}
-            >
-              Google Ads
-            </ThemedText>
-            <ThemedView style={[styles.settingItem, dynamicStyles.settingItem]}>
-              <ThemedView style={styles.settingContent}>
-                <ThemedView style={styles.settingTextContainer}>
-                  <ThemedText
-                    variant="body"
-                    size="base"
-                    weight="semibold"
-                    style={[styles.settingTitle, dynamicStyles.sectionTitle]}
-                  >
-                    Banner Ads
-                  </ThemedText>
-                  <ThemedText
-                    variant="body"
-                    size="sm"
-                    style={[
-                      styles.settingDescription,
-                      dynamicStyles.description,
-                    ]}
-                  >
-                    {adsRemoved
-                      ? 'Ads are hidden.'
-                      : 'A small banner shows below the tabs.'}
-                  </ThemedText>
-                </ThemedView>
-                <TouchableOpacity
-                  onPress={() => setAdsRemoved(!adsRemoved)}
-                  style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 14,
-                    borderRadius: 10,
-                    backgroundColor: adsRemoved ? 'transparent' : theme.primary,
-                    borderWidth: 1,
-                    borderColor: adsRemoved
-                      ? theme.outline
-                      : theme.primaryContainer,
-                  }}
-                  activeOpacity={0.85}
-                >
-                  <ThemedText
-                    variant="body"
-                    size="sm"
-                    weight="bold"
-                    style={{
-                      color: adsRemoved ? theme.onBackground : '#ffffff',
-                    }}
-                  >
-                    {adsRemoved ? 'Enable Ads' : 'Remove Ads'}
-                  </ThemedText>
-                </TouchableOpacity>
               </ThemedView>
             </ThemedView>
           </ThemedView>

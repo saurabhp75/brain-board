@@ -69,8 +69,6 @@ export const useGameStore = create(
           }
         >,
         userName: '',
-        // Monetization
-        adsRemoved: false,
       },
 
       // Actions
@@ -239,11 +237,6 @@ export const useGameStore = create(
           set({ userName: trimmed, statsByUser: { ...statsByUser } });
         },
 
-        // Monetization
-        setAdsRemoved: (value: boolean) => {
-          set({ adsRemoved: !!value });
-        },
-
         resetGame: () => {
           set({
             cells: createEmptyGrid(),
@@ -263,7 +256,6 @@ export const useGameStore = create(
         gamesWon: state.gamesWon,
         statsByUser: state.statsByUser,
         userName: state.userName,
-        adsRemoved: state.adsRemoved,
       }),
       version: 1,
       migrate: (persisted: any, _version: number) => {
