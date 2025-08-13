@@ -80,7 +80,8 @@ export default function StatsScreen() {
                   size="sm"
                   style={{ color: theme.onSurfaceVariant }}
                 >
-                  Win Rate: {`${winRate}${winRate === '-' ? '' : '%'}`}
+                  Win Rate:{' '}
+                  {`${winRate === '-' ? winRate : winRate.toFixed(1)}%`}
                 </ThemedText>
               </View>
               <View style={styles.row}>
