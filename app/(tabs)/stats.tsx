@@ -52,8 +52,9 @@ export default function StatsScreen() {
         keyExtractor={(item) => item.user}
         contentContainerStyle={{ paddingVertical: 16 }}
         renderItem={({ item }) => {
-          const best =
-            item.bestDuration == null ? '-' : item.bestDuration + ' ms';
+          const winRate = item.gamesPlayed
+            ? (item.gamesWon / item.gamesPlayed) * 100
+            : '-';
           return (
             <ThemedView
               style={[
@@ -79,7 +80,7 @@ export default function StatsScreen() {
                   size="sm"
                   style={{ color: theme.onSurfaceVariant }}
                 >
-                  Best: {best}
+                  Win Rate: {`${winRate}${winRate === '-' ? '' : '%'}`}
                 </ThemedText>
               </View>
               <View style={styles.row}>
