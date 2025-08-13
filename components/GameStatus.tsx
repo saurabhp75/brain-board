@@ -54,7 +54,6 @@ const GameStatus = () => {
             : GAME_STATUS[gamePhase]}
         </ThemedText>
       </ThemedView>
-      )
     </ThemedView>
   );
 };
