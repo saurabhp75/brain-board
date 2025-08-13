@@ -7,7 +7,6 @@ import { Colors } from '@/constants/Colors';
 
 const GameStatus = () => {
   const gamePhase = useGameStore((state) => state.gamePhase);
-  const moves = useGameStore((state) => state.moves);
   const currentTarget = useGameStore((state) => state.currentTarget);
   const userName = useGameStore((state) => state.userName);
 
@@ -64,14 +63,14 @@ const GameStatus = () => {
               weight="bold"
               style={{ color: theme.onSurfaceVariant }}
             >
-              Player: {userName}
+              {userName}
             </ThemedText>
           ) : null}
           <ThemedText
             variant="heading"
             size="sm"
             weight="semibold"
-            style={[styles.statusMessage, { color: theme.onBackground }]}
+            style={[styles.statusMessage, { color: theme.onSurface }]}
           >
             {GAME_STATUS[gamePhase] || 'Game Status'}
           </ThemedText>
