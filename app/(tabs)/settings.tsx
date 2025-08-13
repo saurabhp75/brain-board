@@ -100,7 +100,7 @@ export default function SettingsScreen() {
                     size="sm"
                     style={[styles.settingDescription, dynamicStyles.description]}
                   >
-                    {userName ? `Current: ${userName}` : 'No name set'}
+                    {userName ? `${userName}` : 'No name set'}
                   </ThemedText>
                 </ThemedView>
                 <TouchableOpacity
