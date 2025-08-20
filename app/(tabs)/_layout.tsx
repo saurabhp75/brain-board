@@ -4,8 +4,17 @@ import { Colors } from '@/constants/Colors';
 import { Gamepad2, Info, Settings, BarChart3 } from 'lucide-react-native';
 import AdBanner from '@/components/AdBanner';
 import ThemedView from '@/components/ThemedView';
+import { useEffect } from 'react';
+import mobileAds from 'react-native-google-mobile-ads';
 
 export default function TabLayout() {
+  useEffect(() => {
+    (async () => {
+      // Initialize the ads
+      await mobileAds().initialize();
+    })();
+  }, []);
+
   const colorScheme = useColorScheme();
   const theme = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
